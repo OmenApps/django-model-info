@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from django.apps import apps as django_apps
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandParser, DjangoHelpFormatter
 from django.db.models import Model
 from rich.align import Align
@@ -100,7 +101,7 @@ class Command(BaseCommand):
     A management command which lists models within your project, and optionally, details about model fields and methods
 
     Verbosity outputs:
-        0   Model names only
+        0   Model names only - Convenient when you just need a list of all your project's models in one place
         1   Model names, field names, and non-dunder/common method names
         2 * Model names, field names & details, and non-dunder/common method names & details
         3   Model names, field names & details, and all method names & full details
@@ -115,7 +116,7 @@ class Command(BaseCommand):
         Create and return the ``ArgumentParser`` which will be used to
         parse the arguments to this command.
 
-        Reimplemented to allow new verbosity default
+        Reimplemented to allow new default verbosity of 2
         """
         parser = CommandParser(
             prog="%s %s" % (os.path.basename(prog_name), subcommand),
@@ -167,34 +168,58 @@ class Command(BaseCommand):
             type=int,
             choices=[0, 1, 2, 3],
             help="Verbosity level: "
-            "0 Model names only, "
+            "0 Model names only - Convenient when you just need a list of all your project's models in one place, "
             "1 Model names + field names +non-dunder/common method names, "
             "2 (default) Model names + field names & details + non-dunder/common method names & details, "
             "3 Model names + field names & details + all method names & details.",
         )
         parser.add_argument(
-            "--filename",
+            "-e",
+            "--export",
             nargs="?",
             type=str,
             default=None,
-            help="Filename to save output to (optional). If provided, "
-            "must have a file extension of `.txt`, `.html`, or `htm`",
+            help="Filename to export. The filename must have a file extension of `.txt`, `.html`, or `htm`",
         )
         parser.add_argument(
-            "--model",
-            nargs="?",
+            "-f",
+            "--filter",
+            nargs="+",
             type=str,
             default=None,
-            help="list the details for a single model. Input should be in the form `appname.Modelname`",
+            help="Provide one or more apps or models, to which the results will be limited. "
+            "Input should be in the form `appname` or `appname.Modelname`.",
         )
 
-    def model_info(self, options):
+    def model_info(self, options) -> tuple:
         section_style = Style(color="green", bold=True, underline=True)
         subsection_style = Style(color="green", bold=True)
 
-        VERBOSITY = options["verbosity"]
-        MODEL = options.get("model", None)
-        FILENAME = options.get("filename", None)
+        def get_options():
+            VERBOSITY = options.get("verbosity", None)
+            if VERBOSITY is None:
+                VERBOSITY = (
+                    getattr(settings, "MODEL_INFO_VERBOSITY", 2)
+                    if type(getattr(settings, "MODEL_INFO_VERBOSITY", 2)) is int
+                    else 2
+                )
+
+            FILTER = options.get("filter", None)
+            if FILTER is None:
+                FILTER = (
+                    getattr(settings, "MODEL_INFO_FILTER", None)
+                    if type(getattr(settings, "MODEL_INFO_FILTER", None)) is list
+                    else None
+                )
+            FILENAME = (
+                options.get("export")
+                if options.get("export", None) is not None and type(options.get("export", None)) is str
+                else None
+            )
+
+            return VERBOSITY, FILTER, FILENAME
+
+        VERBOSITY, FILTER, FILENAME = get_options()
 
         def build_model_objects(model) -> ModelInfo:
             """
@@ -425,12 +450,35 @@ class Command(BaseCommand):
             method_table = _fill_table(method_table, info_object_list, Method, column_count)
             _print_table(method_table)
 
-        if MODEL is not None:
-            model_list = [django_apps.get_model(MODEL)]
-        else:
-            model_list = sorted(
-                django_apps.get_models(), key=lambda x: (x._meta.app_label, x._meta.object_name), reverse=False
-            )
+        def get_model_list():
+            if FILTER is not None:
+                model_list = []
+                for filter_item in FILTER:
+                    if filter_item.count(".") == 0:
+                        # Get the models and add to the list
+                        # model_list.append(django_apps.get_app_config(filter_item).get_models())
+                        try:
+                            app_models = [x for x in django_apps.get_app_config(filter_item).get_models()]
+                        except LookupError as e:
+                            print(f"Error while looking up `{filter_item}`: {e}")
+                        else:
+                            model_list.extend(app_models)
+                    elif filter_item.count(".") == 1:
+                        # Add to the model list
+                        try:
+                            filter_model = django_apps.get_model(filter_item)
+                        except LookupError as e:
+                            print(f"Error while looking up `{filter_item}`: {e}")
+                        else:
+                            model_list.append(filter_model)
+            else:
+                model_list = sorted(
+                    django_apps.get_models(), key=lambda x: (x._meta.app_label, x._meta.object_name), reverse=False
+                )
+            return model_list
+
+        model_list = get_model_list()
+
         for model in model_list:
             if VERBOSITY > 0:
                 console.print(Padding("", (1, 0, 0, 0)))
