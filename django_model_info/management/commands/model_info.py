@@ -191,11 +191,11 @@ class Command(BaseCommand):
             "Input should be in the form `appname` or `appname.Modelname`.",
         )
 
-    def model_info(self, options) -> tuple:
+    def model_info(self, options):
         section_style = Style(color="green", bold=True, underline=True)
         subsection_style = Style(color="green", bold=True)
 
-        def get_options():
+        def get_options() -> tuple:
             VERBOSITY = options.get("verbosity", None)
             if VERBOSITY is None:
                 VERBOSITY = (
