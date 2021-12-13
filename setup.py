@@ -41,8 +41,12 @@ if sys.argv[-1] == 'tag':
     os.system("git push --tags")
     sys.exit()
 
-readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+with open("README.md", "r", encoding="utf-8") as fh:
+    readme = fh.read()
+
+with open("HISTORY.md", "r", encoding="utf-8") as fh:
+    history = fh.read()
+
 requirements = open('requirements.txt').readlines()
 
 setup(
@@ -50,6 +54,7 @@ setup(
     version=version,
     description="""A Django Management Command for displaying details about your project's models""",
     long_description=readme + '\n\n' + history,
+    long_description_content_type="text/markdown",
     author='Jack Linke',
     author_email='jack@watervize.com',
     url='https://github.com/jacklinke/django-model-info',
