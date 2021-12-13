@@ -1,0 +1,6 @@
+include AUTHORS.md
+include CONTRIBUTING.md
+include HISTORY.md
+include LICENSE
+include README.md
+recursive-include django_model_info *.html *.png *.gif *js *.css *jpg *jpeg *svg *py
