@@ -2,6 +2,6 @@ invoke
 twine
 wheel
 zest.releaser
-django>=2
-rich>=10
+django>=4
+rich>=12
 

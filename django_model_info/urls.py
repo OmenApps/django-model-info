@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-from django.conf.urls import url
-from django.views.generic import TemplateView
+"""URLs for the django_model_info app."""
 
-from . import views
-
-
-app_name = 'django_model_info'
+app_name = "django_model_info"
 urlpatterns = []
