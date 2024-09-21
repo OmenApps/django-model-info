@@ -1,6 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8
-from __future__ import unicode_literals, absolute_import
+"""Run tests for django-model-info."""
+from __future__ import absolute_import, unicode_literals
 
 import os
 import sys
@@ -11,6 +10,7 @@ from django.test.utils import get_runner
 
 
 def run_tests(*test_args):
+    """Run tests."""
     if not test_args:
         test_args = ["tests"]
 

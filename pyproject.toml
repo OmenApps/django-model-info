@@ -1,0 +1,56 @@
+[project]
+name = "django-model-info"
+version = "0.3.0"
+description = "A Django Management Command for displaying details about your project's models"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Jack Linke", email = "jack@watervize.com" }]
+keywords = ["django-model-info", "django", "models", "utilities"]
+homepage = "https://github.com/jacklinke/django-model-info"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Plugins",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Documentation",
+    "Topic :: Utilities",
+]
+dependencies = ["django>=5.1.1", "rich>=13.8.1"]
+
+[tool.uv]
+dev-dependencies = [
+    "black>=24.8.0",
+    "codecov>=2.1.13",
+    "coverage>=7.6.1",
+    "flake8>=7.1.1",
+    "invoke>=2.2.0",
+    "mock>=5.1.0",
+    "tox>=4.20.0",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["django_model_info"]
+
+[tool.flake8]
+ignore = ["D203"]
+exclude = [
+    "django_model_info/migrations",
+    ".git",
+    ".tox",
+    "docs/conf.py",
+    "build",
+    "dist",
+]
+max-line-length = 120

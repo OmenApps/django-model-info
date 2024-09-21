@@ -427,7 +427,7 @@ class Command(BaseCommand):
     def append_abstract_models(self, model_list: List[Model]):
         """Retrieve abstract models.
 
-        For each model in the model list, we look at the MRO, and add any class in the MRO that is in the same app as the model.
+        For each model in the model list, we get MRO, and add any class in the MRO that is in the same app as the model.
         """
         abstract_models = []
         for model in model_list:

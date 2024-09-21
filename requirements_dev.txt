@@ -1,7 +1,0 @@
-invoke
-twine
-wheel
-zest.releaser
-django>=4
-rich>=12
-
