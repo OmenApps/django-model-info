@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=75.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django_model_info"
+version = "2024.11.1"
+description = "A Django app to provide information about models"
+authors = [{ name = "Jack Linke", email = "jacklinke@gmail.com" }]
+license = { text = "MIT" }
+readme = "README.md"
+classifiers = [
+    "Framework :: Django",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Documentation",
+    "Topic :: Utilities",
+]
+requires-python = ">=3.10,<4.0"
+dependencies = ["django", "rich>=13"]
+
+[project.urls]
+Homepage = "https://github.com/jacklinke/django-model-info"
+Repository = "https://github.com/jacklinke/django-model-info"
+Documentation = "https://django-model-info.readthedocs.io/en/latest/"
+Changelog = "https://github.com/jacklinke/django-model-info/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+dev = [
+    "invoke>=2",
+    "twine>=4",
+    "wheel>=0.38.1",
+    "coverage>=7",
+    "flake8>=5",
+    "tox>=4",
+    "coverage>=7",
+    "black==23.3.0",
+    "flake8==6.0.0",
+    "isort==5.11.4",
+    "pydocstyle[toml]==6.2.3",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+target-version = ["py310"]
+
+[tool.flake8]
+max-line-length = 88
+
+[tool.isort]
+atomic = true
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+combine_as_imports = true
