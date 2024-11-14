@@ -1,45 +1,32 @@
-
 # django-model-info
 
-[![image][]][1]
+[![PyPI version](https://badge.fury.io/py/django-model-info.svg)](https://badge.fury.io/py/django-model-info)
+[![Build Status](https://travis-ci.org/jacklinke/django-model-info.svg?branch=master)](https://travis-ci.org/jacklinke/django-model-info)
+[![codecov](https://codecov.io/gh/jacklinke/django-model-info/branch/master/graph/badge.svg)](https://codecov.io/gh/jacklinke/django-model-info)
 
-[![image][2]][3]
+**Instantly understand your Django models' structure and relationships with beautiful, intuitive output.**
 
-[![image][4]][5]
+Working with complex Django projects? Need to quickly understand model relationships and fields? `django-model-info` is an ideal solution for diving into any Django codebase with confidence.
 
-A Django Management Command for displaying details about your project's models.
+## Why django-model-info?
 
-**Warning**: This project is still very new. Expect to see proper testing and an example app demonstrating the command soon.
+- **Perfect for New Team Members**: Quickly understand existing codebases without diving through multiple files
+- **Great for Documentation**: Export beautiful HTML or Markdown documentation of your models' structure
+- **Ideal for Large Projects**: Filter by app or model to focus on what matters
+- **Time-Saving**: Instantly see all fields, relationships, and methods in one place
+- **Rich Output**: Leverages [rich](https://github.com/willmcgugan/rich/) for beautiful, clear console output
 
-When working with large projects or when returning to a code base after some time away, it can be challenging to remember all of the fields and methods associated with your models. This command makes it easy to see:
+See an example of the [HTML output](https://htmlpreview.github.io/?https://github.com/jacklinke/django-model-info/blob/master/example-output.html) or the [Markdown Output](https://github.com/OmenApps/django-model-info/blob/main/example-output.md).
 
-- basic details about each model, such as the database table name, the file and line number where the model is located, etc.
-- what fields are available
-- how each field is referred to in queries (direct/reverse relations)
-- each field’s class
-- each field’s representation type in the database
-- what methods are available
-- method signatures
-- method location and line number
-- etc
+## Quick Start
 
-This package takes the original [`list_model_info`](https://django-extensions.readthedocs.io/en/latest/list_model_info.html) command I wrote for django-extensions to a whole new level. I attempted to simplify some aspects of configuration, while increasing the overall amount of information provided.
+1. Install the package:
+```bash
+pip install django-model-info
+```
 
-The beautiful interface is thanks to [`rich`](https://github.com/willmcgugan/rich/)
-
-## Documentation
-
-The full documentation will (soon) be at <https://django-model-info.readthedocs.io>.
-
-## Quickstart
-
-Install django-model-info:
-
-    pip install django-model-info
-
-Add it to your \`INSTALLED_APPS\`:
-
-``` python
+2. Add to INSTALLED_APPS:
+```python
 INSTALLED_APPS = (
     ...
     'django_model_info.apps.DjangoModelInfoConfig',
@@ -47,92 +34,74 @@ INSTALLED_APPS = (
 )
 ```
 
-Run the management command:
-
-``` bash
->>> python manage.py model_info
+3. Run the command:
+```bash
+python manage.py model_info
 ```
 
-An example of the resulting output can be seen [here](https://htmlpreview.github.io/?https://github.com/jacklinke/django-model-info/blob/master/example-output.html). This example shows the most verbose (level 3)  details for a single model.
+That's it! You'll see a beautiful overview of all your models.
 
-## Features
+## Key Features
 
-You can customize the output in a number of ways.
+- **Multiple Output Levels**: Choose from 4 verbosity levels to see exactly what you need
+  - Level 0: Just model names
+  - Level 1: Fields and basic method names
+  - Level 2: Detailed field info and method signatures
+  - Level 3: Complete information including docstrings and source locations
 
-### Verbosity
-
-Verbosity levels adjust the amount of information displayed to the console, and is set with the `-v` or `--verbosity` argument.
-
-- 0  - Model names only - Convenient when you just need a list of all your project's models in one place
-- 1  - Model names, field names, and non-dunder/common model method names
-- 2  - Model names, field names & details, and non-dunder/common model method names & details
-- 3  - Model names, field names & details, and all model method names & full details
-
-Note: The default verbosity in `django-model-info` is **2**
-
-From the command-line:
-``` bash
->>> python manage.py model_info --v 0
->>> python manage.py model_info --verbosity 0
+- **Smart Filtering**: Focus on specific apps or models:
+```bash
+python manage.py model_info -f myapp myapp.SpecificModel
 ```
 
-You can specify a different default verbosity value in your settings file.
-
-``` python
-MODEL_INFO_VERBOSITY = 1
+- **Export Options**: Generate documentation in multiple formats:
+```bash
+python manage.py model_info -e documentation.html  # HTML output
+python manage.py model_info -e documentation.md    # Markdown output
 ```
 
-### Filter
-
-By default, all models within your project are processed and displayed. For large projects, this can result in an enormous output. If you want to limit output to a subset of models, you can use the `-f` or `--filter` argument, providing one or more of the following:
-
-- Models, in the form of `appname.Model`
-- Apps, in the form of `appname`
-
-If Django is unable to find provided entries, a message will be written to the console, and the remaining models will be processed and displayed.
-
-From the command-line, here is an example that processes all models in the `myapp` and `auth` apps, and also the `otherapp.SpecificModel` model:
-``` bash
->>> python manage.py model_info --f myapp otherapp.SpecificModel auth
->>> python manage.py model_info --filter myapp otherapp.SpecificModel auth
+- **Print Markdown to screen**: As an alternative to the rich output:
+```bash
+python manage.py model_info --markdown
 ```
 
-You can specify a list of default apps and models to process in your settings file. Using the command-line example names above:
+- **Rich or Markdown Information Display**:
+  - Field types and database representations
+  - Relationship mappings (forward and reverse)
+  - Method signatures and locations
+  - Database details (table names, indexes, etc.)
+  - Source file locations and line numbers
 
-``` python
-MODEL_INFO_FILTER = ["myapp", "otherapp.SpecificModel", "auth"]
+## Configuration
+
+Optionally configure defaults in your Django settings:
+
+```python
+# Default verbosity level (0-3)
+MODEL_INFO_VERBOSITY = 2
+
+# Default models/apps to display
+MODEL_INFO_FILTER = ["myapp", "otherapp.SpecificModel"]
 ```
 
-### Export
+## Documentation
 
-`django-model-info` can optionally export the console output to an html or text file. The extension of the provided filename must be `.txt`, `.htm`, or `.html`.
+For detailed usage and examples, visit our [full documentation](https://django-model-info.readthedocs.io).
 
-``` bash
->>> python manage.py model_info -e myfilename.html
->>> python manage.py model_info --export myfilename.html
-```
+## Roadmap
 
+- [ ] List manager and queryset methods
+- [ ] Include signals and other model-level methods
+- [ ] Add MermaidJS support for visualizing relationships
 
-## Running Tests
+## Contributing
 
-In progress.
+We welcome contributions! This project uses:
 
-    source <YOURVIRTUALENV>/bin/activate
-    (myenv) $ pip install tox
-    (myenv) $ tox
+- [Cookiecutter](https://github.com/audreyr/cookiecutter)
+- [cookiecutter-djangopackage](https://github.com/pydanny/cookiecutter-djangopackage)
+- [rich](https://github.com/willmcgugan/rich/)
 
-## Credits
+## License
 
-Tools used in rendering this package:
-
--   [Cookiecutter](https://github.com/audreyr/cookiecutter)
--   [cookiecutter-djangopackage](https://github.com/pydanny/cookiecutter-djangopackage)
--   [rich](https://github.com/willmcgugan/rich/)
-
-  [image]: https://badge.fury.io/py/django-model-info.svg
-  [1]: https://badge.fury.io/py/django-model-info
-  [2]: https://travis-ci.org/jacklinke/django-model-info.svg?branch=master
-  [3]: https://travis-ci.org/jacklinke/django-model-info
-  [4]: https://codecov.io/gh/jacklinke/django-model-info/branch/master/graph/badge.svg
-  [5]: https://codecov.io/gh/jacklinke/django-model-info
-  
+MIT License
