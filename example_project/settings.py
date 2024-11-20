@@ -117,3 +117,5 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+FIXTURE_DIRS = [os.path.join(BASE_DIR, "example_project", "fixtures")]

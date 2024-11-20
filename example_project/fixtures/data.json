@@ -1,0 +1,2596 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "john_doe",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@example.com",
+      "password": "pbkdf2_sha256$260000$VZB6b...$aBcdEfGh...",
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "jane_smith",
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "email": "jane.smith@example.com",
+      "password": "pbkdf2_sha256$260000$AbCdEfGh$123456...",
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "terra_jones",
+      "first_name": "Terra",
+      "last_name": "Jones",
+      "email": "terra.jones@example.com",
+      "password": "pbkdf2_sha256$260000$XyZaBcD$987654...",
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "sam_wilson",
+      "first_name": "Sam",
+      "last_name": "Wilson",
+      "email": "sammy@example.com",
+      "password": "pbkdf2_sha256$260000$MnOpQrSt$456789...",
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "lisa_brown",
+      "first_name": "Lisa",
+      "last_name": "Brown",
+      "email": "lbrown@example.com",
+      "password": "pbkdf2_sha256$260000$UvWxYzAb$234567...",
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "username": "mike_jackson",
+      "first_name": "Mike",
+      "last_name": "Jackson",
+      "email": "mike.a.johnson",
+      "password": "pbkdf2_sha256$260000$CdEfGhIj$345678...",
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+      "username": "bobby_smith",
+      "first_name": "Bobby",
+      "last_name": "Smith",
+      "email": "bobs@example.com",
+      "password": "pbkdf2_sha256$260000$KlMnOpQr$567890...",
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+      "username": "paul_marshall",
+      "first_name": "Paul",
+      "last_name": "Marshall",
+      "email": "pmarshall@example.com",
+      "password": "pbkdf2_sha256$260000$EfGhIjKl$678901...",
+      "is_active": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 9,
+    "fields": {
+      "username": "tina_hunter",
+      "first_name": "Tina",
+      "last_name": "Hunter",
+      "email": "thunter@example.com",
+      "password": "pbkdf2_sha256$260000$AbCdEfGh$789012...",
+      "is_active": true
+    }
+  },
+  {
+    "model": "common.customer",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "phone": "123-456-7890",
+      "company_name": "Doe Industries",
+      "tax_id": "TAX-123456",
+      "notes": "Preferred customer, handles large volume orders.",
+      "credit_limit": "5000.00",
+      "created_at": "2024-01-01T10:00:00Z",
+      "updated_at": "2024-02-01T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "common.customer",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "phone": "987-654-3210",
+      "company_name": "Smith Solutions",
+      "tax_id": "TAX-654321",
+      "notes": "Regular customer, good payment history.",
+      "credit_limit": "2000.00",
+      "created_at": "2024-01-05T11:00:00Z",
+      "updated_at": "2024-02-10T13:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "common.customer",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "phone": "456-789-0123",
+      "company_name": "Independent Traders",
+      "tax_id": "",
+      "notes": "Walk-in customer with no tax ID.",
+      "credit_limit": "1000.00",
+      "created_at": "2024-02-01T09:00:00Z",
+      "updated_at": "2024-02-15T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "common.customer",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "phone": "555-678-1234",
+      "company_name": "Sam's Supplies",
+      "tax_id": "TAX-987654",
+      "notes": "New customer, credit terms to be determined.",
+      "credit_limit": "0.00",
+      "created_at": "2024-02-05T10:00:00Z",
+      "updated_at": "2024-02-20T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "common.customer",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "phone": "444-123-7890",
+      "company_name": "Brown's Hardware",
+      "tax_id": "TAX-123987",
+      "notes": "Hardware store customer, good payment history.",
+      "credit_limit": "3000.00",
+      "created_at": "2024-02-10T11:00:00Z",
+      "updated_at": "2024-02-25T13:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "common.customer",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "phone": "333-789-4561",
+      "company_name": "Jackson Office Supplies",
+      "tax_id": "TAX-456789",
+      "notes": "Office supplies customer, regular orders.",
+      "credit_limit": "2500.00",
+      "created_at": "2024-02-15T09:00:00Z",
+      "updated_at": "2024-02-28T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "common.customer",
+    "pk": 7,
+    "fields": {
+      "user": 7,
+      "phone": "123-456-7890",
+      "company_name": "Doe Industries",
+      "tax_id": "TAX-123456",
+      "notes": "Preferred customer, handles large volume orders.",
+      "credit_limit": "5000.00",
+      "created_at": "2024-01-01T10:00:00Z",
+      "updated_at": "2024-02-01T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "common.customer",
+    "pk": 8,
+    "fields": {
+      "user": 8,
+      "phone": "987-654-3210",
+      "company_name": "Smith Solutions",
+      "tax_id": "TAX-654321",
+      "notes": "Regular customer, good payment history.",
+      "credit_limit": "2000.00",
+      "created_at": "2024-01-05T11:00:00Z",
+      "updated_at": "2024-02-10T13:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "common.customer",
+    "pk": 9,
+    "fields": {
+      "user": 9,
+      "phone": "456-789-0123",
+      "company_name": "Independent Traders",
+      "tax_id": "",
+      "notes": "Walk-in customer with no tax ID.",
+      "credit_limit": "1000.00",
+      "created_at": "2024-02-01T09:00:00Z",
+      "updated_at": "2024-02-15T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.category",
+    "pk": 1,
+    "fields": {
+      "name": "Electronics",
+      "slug": "electronics",
+      "parent": null,
+      "description": "Category for electronic products",
+      "created_at": "2024-01-01T10:00:00Z",
+      "updated_at": "2024-02-01T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.category",
+    "pk": 2,
+    "fields": {
+      "name": "Home Appliances",
+      "slug": "home-appliances",
+      "parent": null,
+      "description": "Category for home appliances",
+      "created_at": "2024-01-02T11:00:00Z",
+      "updated_at": "2024-02-02T13:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.category",
+    "pk": 3,
+    "fields": {
+      "name": "Mobile Phones",
+      "slug": "mobile-phones",
+      "parent": 1,
+      "description": "Category for mobile phones",
+      "created_at": "2024-01-05T12:00:00Z",
+      "updated_at": "2024-02-05T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.category",
+    "pk": 4,
+    "fields": {
+      "name": "Laptops",
+      "slug": "laptops",
+      "parent": 1,
+      "description": "Category for laptops",
+      "created_at": "2024-01-10T10:00:00Z",
+      "updated_at": "2024-02-10T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.category",
+    "pk": 5,
+    "fields": {
+      "name": "Kitchen Appliances",
+      "slug": "kitchen-appliances",
+      "parent": 2,
+      "description": "Category for kitchen appliances",
+      "created_at": "2024-01-15T11:00:00Z",
+      "updated_at": "2024-02-15T13:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.supplier",
+    "pk": 1,
+    "fields": {
+      "name": "Tech Suppliers Co.",
+      "code": "TECH123",
+      "contact_email": "contact@techsuppliers.com",
+      "contact_phone": "123-456-7890",
+      "address": "123 Tech St, Silicon Valley, CA",
+      "payment_terms": 30,
+      "tax_id": "TAX-987654",
+      "created_at": "2024-01-10T08:00:00Z",
+      "updated_at": "2024-01-20T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.supplier",
+    "pk": 2,
+    "fields": {
+      "name": "Home Appliance Distributors",
+      "code": "HOME456",
+      "contact_email": "info@homeappliances.com",
+      "contact_phone": "987-654-3210",
+      "address": "456 Home St, Appliance City, NY",
+      "payment_terms": 45,
+      "tax_id": "TAX-123987",
+      "created_at": "2024-01-15T09:00:00Z",
+      "updated_at": "2024-01-25T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.supplier",
+    "pk": 3,
+    "fields": {
+      "name": "Gadget World",
+      "code": "GADGET789",
+      "contact_email": "sales@gadgetworld.com",
+      "contact_phone": "555-678-1234",
+      "address": "789 Gadget Ave, Tech City, TX",
+      "payment_terms": 60,
+      "tax_id": "TAX-456123",
+      "created_at": "2024-01-20T08:30:00Z",
+      "updated_at": "2024-02-01T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.supplier",
+    "pk": 4,
+    "fields": {
+      "name": "Kitchen Essentials",
+      "code": "KIT123",
+      "contact_email": "support@kitchenessentials.com",
+      "contact_phone": "444-123-7890",
+      "address": "123 Kitchen Rd, Cook Town, IL",
+      "payment_terms": 30,
+      "tax_id": "TAX-987321",
+      "created_at": "2024-01-25T09:00:00Z",
+      "updated_at": "2024-02-05T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.supplier",
+    "pk": 5,
+    "fields": {
+      "name": "Office Tech Supplies",
+      "code": "OFFTECH001",
+      "contact_email": "info@officetech.com",
+      "contact_phone": "333-789-4561",
+      "address": "789 Office Blvd, Business City, FL",
+      "payment_terms": 50,
+      "tax_id": "TAX-456789",
+      "created_at": "2024-01-30T10:00:00Z",
+      "updated_at": "2024-02-10T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.supplier",
+    "pk": 6,
+    "fields": {
+      "name": "Home Decor Inc.",
+      "code": "HOMEDECOR123",
+      "contact_email": "myshop@example.com",
+      "contact_phone": "111-222-3333",
+      "address": "123 Home Decor St, Decor City, CA",
+      "payment_terms": 45,
+      "tax_id": "TAX-123456",
+      "created_at": "2024-02-05T09:00:00Z",
+      "updated_at": "2024-02-15T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.supplier",
+    "pk": 7,
+    "fields": {
+      "name": "Patio Furniture Co.",
+      "code": "PATIO456",
+      "contact_email": "patio@example.com",
+      "contact_phone": "222-333-4444",
+      "address": "456 Patio Ave, Outdoor City, TX",
+      "payment_terms": 30,
+      "tax_id": "TAX-654321",
+      "created_at": "2024-02-10T08:00:00Z",
+      "updated_at": "2024-02-20T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.supplier",
+    "pk": 8,
+    "fields": {
+      "name": "Health & Wellness Supplies",
+      "code": "HEALTH123",
+      "contact_email": "health@example.com",
+      "contact_phone": "987-654-3210",
+      "address": "123 Health St, Wellness City, NY",
+      "payment_terms": 45,
+      "tax_id": "TAX-938475",
+      "created_at": "2024-02-15T09:00:00Z",
+      "updated_at": "2024-02-25T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 1,
+    "fields": {
+      "name": "Smartphone X",
+      "sku": "SPX-001",
+      "category": 3,
+      "description": "Latest generation smartphone",
+      "price": "799.99",
+      "weight": "0.2",
+      "created_at": "2024-02-01T10:00:00Z",
+      "updated_at": "2024-02-10T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 2,
+    "fields": {
+      "name": "Washing Machine Z",
+      "sku": "WMZ-002",
+      "category": 2,
+      "description": "High efficiency washing machine",
+      "price": "499.99",
+      "weight": "75.0",
+      "created_at": "2024-02-05T11:00:00Z",
+      "updated_at": "2024-02-15T13:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 3,
+    "fields": {
+      "name": "Laptop Pro",
+      "sku": "LTP-003",
+      "category": 1,
+      "description": "Professional grade laptop",
+      "price": "1199.99",
+      "weight": "2.5",
+      "created_at": "2024-02-10T09:00:00Z",
+      "updated_at": "2024-02-20T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 4,
+    "fields": {
+      "name": "Blender Max",
+      "sku": "BLD-004",
+      "category": 5,
+      "description": "High performance kitchen blender",
+      "price": "149.99",
+      "weight": "3.5",
+      "created_at": "2024-02-15T09:30:00Z",
+      "updated_at": "2024-02-25T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 5,
+    "fields": {
+      "name": "Microwave Oven Y",
+      "sku": "MWY-005",
+      "category": 5,
+      "description": "Compact microwave oven",
+      "price": "199.99",
+      "weight": "12.0",
+      "created_at": "2024-02-20T10:00:00Z",
+      "updated_at": "2024-02-28T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 6,
+    "fields": {
+      "name": "Smartphone G",
+      "sku": "SPG-001",
+      "category": 3,
+      "description": "Old generation smartphone",
+      "price": "599.99",
+      "weight": "0.3",
+      "created_at": "2024-02-01T10:00:00Z",
+      "updated_at": "2024-02-14T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 7,
+    "fields": {
+      "name": "Tiger Washing Machine",
+      "sku": "TWM-002",
+      "category": 2,
+      "description": "Made for washing clothes and tiger costumes",
+      "price": "599.99",
+      "weight": "79.0",
+      "created_at": "2024-02-05T11:00:00Z",
+      "updated_at": "2024-02-15T13:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 8,
+    "fields": {
+      "name": "Laptop Lite",
+      "sku": "LTL-003",
+      "category": 1,
+      "description": "Lightweight laptop for everyday use",
+      "price": "1099.99",
+      "weight": "2.0",
+      "created_at": "2024-02-10T09:00:00Z",
+      "updated_at": "2024-02-20T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 9,
+    "fields": {
+      "name": "Ninja Blender",
+      "sku": "NBL-004",
+      "category": 5,
+      "description": "Professional grade kitchen blender",
+      "price": "199.99",
+      "weight": "4.5",
+      "created_at": "2024-02-15T09:30:00Z",
+      "updated_at": "2024-02-25T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 10,
+    "fields": {
+      "name": "Air Fryer",
+      "sku": "AFR-005",
+      "category": 5,
+      "description": "Compact air fryer for healthy cooking",
+      "price": "99.99",
+      "weight": "10.0",
+      "created_at": "2024-02-20T10:00:00Z",
+      "updated_at": "2024-02-28T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 11,
+    "fields": {
+      "name": "Robot Vacuum",
+      "sku": "RBV-006",
+      "category": 3,
+      "description": "Smart robot vacuum for automated cleaning",
+      "price": "299.99",
+      "weight": "5.0",
+      "created_at": "2024-02-01T10:00:00Z",
+      "updated_at": "2024-02-10T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 12,
+    "fields": {
+      "name": "Front Load Washer",
+      "sku": "FLW-007",
+      "category": 2,
+      "description": "High efficiency front load washer",
+      "price": "699.99",
+      "weight": "80.0",
+      "created_at": "2024-02-05T11:00:00Z",
+      "updated_at": "2024-02-15T13:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 13,
+    "fields": {
+      "name": "Value Laptop",
+      "sku": "VLP-003",
+      "category": 1,
+      "description": "Budget friendly laptop for basic use",
+      "price": "899.99",
+      "weight": "2.5",
+      "created_at": "2024-02-10T09:00:00Z",
+      "updated_at": "2024-02-20T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 14,
+    "fields": {
+      "name": "Digital Blender",
+      "sku": "DBL-004",
+      "category": 5,
+      "description": "Digital blender with touch screen controls",
+      "price": "249.99",
+      "weight": "4.0",
+      "created_at": "2024-02-15T09:30:00Z",
+      "updated_at": "2024-02-25T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.product",
+    "pk": 15,
+    "fields": {
+      "name": "Compact Microwave",
+      "sku": "CMW-005",
+      "category": 5,
+      "description": "Compact microwave oven for small spaces",
+      "price": "149.99",
+      "weight": "10.0",
+      "created_at": "2024-02-20T10:00:00Z",
+      "updated_at": "2024-02-28T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "supplier": 1,
+      "supplier_sku": "TECH-SPX001",
+      "cost": "600.00",
+      "lead_time_days": 15,
+      "is_preferred": true,
+      "created_at": "2024-02-01T10:10:00Z",
+      "updated_at": "2024-02-11T10:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 2,
+    "fields": {
+      "product": 2,
+      "supplier": 2,
+      "supplier_sku": "HOME-WMZ002",
+      "cost": "400.00",
+      "lead_time_days": 20,
+      "is_preferred": true,
+      "created_at": "2024-02-05T11:10:00Z",
+      "updated_at": "2024-02-16T11:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "supplier": 1,
+      "supplier_sku": "TECH-LTP003",
+      "cost": "1000.00",
+      "lead_time_days": 10,
+      "is_preferred": false,
+      "created_at": "2024-02-10T09:10:00Z",
+      "updated_at": "2024-02-21T09:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 4,
+    "fields": {
+      "product": 4,
+      "supplier": 4,
+      "supplier_sku": "KIT-BLD004",
+      "cost": "120.00",
+      "lead_time_days": 14,
+      "is_preferred": true,
+      "created_at": "2024-02-15T09:40:00Z",
+      "updated_at": "2024-02-25T10:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 5,
+    "fields": {
+      "product": 5,
+      "supplier": 5,
+      "supplier_sku": "KIT-MWY005",
+      "cost": "160.00",
+      "lead_time_days": 18,
+      "is_preferred": false,
+      "created_at": "2024-02-20T10:10:00Z",
+      "updated_at": "2024-02-28T11:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 6,
+    "fields": {
+      "product": 1,
+      "supplier": 3,
+      "supplier_sku": "GADGET-SPX001",
+      "cost": "700.00",
+      "lead_time_days": 12,
+      "is_preferred": false,
+      "created_at": "2024-02-01T10:20:00Z",
+      "updated_at": "2024-02-11T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 7,
+    "fields": {
+      "product": 2,
+      "supplier": 4,
+      "supplier_sku": "KIT-WMZ002",
+      "cost": "450.00",
+      "lead_time_days": 16,
+      "is_preferred": false,
+      "created_at": "2024-02-05T11:20:00Z",
+      "updated_at": "2024-02-16T11:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 8,
+    "fields": {
+      "product": 3,
+      "supplier": 2,
+      "supplier_sku": "HOME-LTP003",
+      "cost": "1100.00",
+      "lead_time_days": 8,
+      "is_preferred": true,
+      "created_at": "2024-02-10T09:20:00Z",
+      "updated_at": "2024-02-21T09:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 9,
+    "fields": {
+      "product": 4,
+      "supplier": 5,
+      "supplier_sku": "OFFTECH-BLD004",
+      "cost": "130.00",
+      "lead_time_days": 10,
+      "is_preferred": false,
+      "created_at": "2024-02-15T09:50:00Z",
+      "updated_at": "2024-02-25T10:50:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 10,
+    "fields": {
+      "product": 5,
+      "supplier": 3,
+      "supplier_sku": "GADGET-MWY005",
+      "cost": "150.00",
+      "lead_time_days": 14,
+      "is_preferred": true,
+      "created_at": "2024-02-20T10:20:00Z",
+      "updated_at": "2024-02-28T11:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 11,
+    "fields": {
+      "product": 1,
+      "supplier": 4,
+      "supplier_sku": "HOME-SPX001",
+      "cost": "650.00",
+      "lead_time_days": 15,
+      "is_preferred": true,
+      "created_at": "2024-02-01T10:10:00Z",
+      "updated_at": "2024-02-11T10:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 12,
+    "fields": {
+      "product": 5,
+      "supplier": 2,
+      "supplier_sku": "HOME-VZ002",
+      "cost": "400.00",
+      "lead_time_days": 20,
+      "is_preferred": true,
+      "created_at": "2024-02-05T11:10:00Z",
+      "updated_at": "2024-02-16T11:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 13,
+    "fields": {
+      "product": 6,
+      "supplier": 1,
+      "supplier_sku": "TECH-JTP003",
+      "cost": "1000.00",
+      "lead_time_days": 10,
+      "is_preferred": false,
+      "created_at": "2024-02-10T09:10:00Z",
+      "updated_at": "2024-02-21T09:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 14,
+    "fields": {
+      "product": 7,
+      "supplier": 4,
+      "supplier_sku": "KIT-IID004",
+      "cost": "120.00",
+      "lead_time_days": 14,
+      "is_preferred": true,
+      "created_at": "2024-02-15T09:40:00Z",
+      "updated_at": "2024-02-25T10:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 15,
+    "fields": {
+      "product": 8,
+      "supplier": 5,
+      "supplier_sku": "KIT-LMW005",
+      "cost": "160.00",
+      "lead_time_days": 18,
+      "is_preferred": false,
+      "created_at": "2024-02-20T10:10:00Z",
+      "updated_at": "2024-02-28T11:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 16,
+    "fields": {
+      "product": 9,
+      "supplier": 3,
+      "supplier_sku": "GADGET-BSPX001",
+      "cost": "700.00",
+      "lead_time_days": 12,
+      "is_preferred": false,
+      "created_at": "2024-02-01T10:20:00Z",
+      "updated_at": "2024-02-11T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 17,
+    "fields": {
+      "product": 4,
+      "supplier": 8,
+      "supplier_sku": "KIT-AWMZ002",
+      "cost": "450.00",
+      "lead_time_days": 16,
+      "is_preferred": false,
+      "created_at": "2024-02-05T11:20:00Z",
+      "updated_at": "2024-02-16T11:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 18,
+    "fields": {
+      "product": 6,
+      "supplier": 2,
+      "supplier_sku": "HOME-QTP003",
+      "cost": "1100.00",
+      "lead_time_days": 8,
+      "is_preferred": true,
+      "created_at": "2024-02-10T09:20:00Z",
+      "updated_at": "2024-02-21T09:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 19,
+    "fields": {
+      "product": 7,
+      "supplier": 5,
+      "supplier_sku": "OFFTECH-WBLD004",
+      "cost": "130.00",
+      "lead_time_days": 10,
+      "is_preferred": false,
+      "created_at": "2024-02-15T09:50:00Z",
+      "updated_at": "2024-02-25T10:50:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 20,
+    "fields": {
+      "product": 8,
+      "supplier": 3,
+      "supplier_sku": "GADGET-EWMY005",
+      "cost": "150.00",
+      "lead_time_days": 14,
+      "is_preferred": true,
+      "created_at": "2024-02-20T10:20:00Z",
+      "updated_at": "2024-02-28T11:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 21,
+    "fields": {
+      "product": 2,
+      "supplier": 6,
+      "supplier_sku": "TECH-RSPX001",
+      "cost": "600.00",
+      "lead_time_days": 15,
+      "is_preferred": true,
+      "created_at": "2024-02-01T10:10:00Z",
+      "updated_at": "2024-02-11T10:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "inventory.productsupplier",
+    "pk": 22,
+    "fields": {
+      "product": 2,
+      "supplier": 7,
+      "supplier_sku": "HOME-TWMZ002",
+      "cost": "400.00",
+      "lead_time_days": 20,
+      "is_preferred": true,
+      "created_at": "2024-02-05T11:10:00Z",
+      "updated_at": "2024-02-16T11:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 1,
+    "fields": {
+      "name": "John Doe's Credit Card",
+      "is_default": true,
+      "customer": 1,
+      "last_4_digits": "1234",
+      "expiry_month": 12,
+      "expiry_year": 2025,
+      "card_type": "Visa",
+      "created_at": "2024-02-01T12:00:00Z",
+      "updated_at": "2024-02-15T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 2,
+    "fields": {
+      "name": "Jane Smith's Credit Card",
+      "is_default": false,
+      "customer": 2,
+      "last_4_digits": "5678",
+      "expiry_month": 6,
+      "expiry_year": 2026,
+      "card_type": "MasterCard",
+      "created_at": "2024-03-01T12:00:00Z",
+      "updated_at": "2024-03-10T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 3,
+    "fields": {
+      "name": "Jane Smith's Secondary Credit Card",
+      "is_default": false,
+      "customer": 2,
+      "last_4_digits": "4321",
+      "expiry_month": 9,
+      "expiry_year": 2027,
+      "card_type": "American Express",
+      "created_at": "2024-04-01T12:00:00Z",
+      "updated_at": "2024-04-10T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 4,
+    "fields": {
+      "name": "John Doe's Secondary Credit Card",
+      "is_default": false,
+      "customer": 1,
+      "last_4_digits": "6789",
+      "expiry_month": 11,
+      "expiry_year": 2028,
+      "card_type": "Visa",
+      "created_at": "2024-04-15T12:00:00Z",
+      "updated_at": "2024-04-20T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 5,
+    "fields": {
+      "name": "Smith Solutions Business Card",
+      "is_default": false,
+      "customer": 2,
+      "last_4_digits": "9876",
+      "expiry_month": 5,
+      "expiry_year": 2029,
+      "card_type": "MasterCard",
+      "created_at": "2024-04-20T12:00:00Z",
+      "updated_at": "2024-04-25T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 6,
+    "fields": {
+      "name": "John Doe's Credit Card",
+      "is_default": true,
+      "customer": 1,
+      "last_4_digits": "1234",
+      "expiry_month": 12,
+      "expiry_year": 2025,
+      "card_type": "Visa",
+      "created_at": "2024-02-01T12:00:00Z",
+      "updated_at": "2024-02-15T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 7,
+    "fields": {
+      "name": "Jane Smith's Credit Card",
+      "is_default": false,
+      "customer": 2,
+      "last_4_digits": "5678",
+      "expiry_month": 6,
+      "expiry_year": 2026,
+      "card_type": "MasterCard",
+      "created_at": "2024-03-01T12:00:00Z",
+      "updated_at": "2024-03-10T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 8,
+    "fields": {
+      "name": "Jane Smith's Secondary Credit Card",
+      "is_default": false,
+      "customer": 2,
+      "last_4_digits": "4321",
+      "expiry_month": 9,
+      "expiry_year": 2027,
+      "card_type": "American Express",
+      "created_at": "2024-04-01T12:00:00Z",
+      "updated_at": "2024-04-10T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 9,
+    "fields": {
+      "name": "John Doe's Secondary Credit Card",
+      "is_default": false,
+      "customer": 1,
+      "last_4_digits": "6789",
+      "expiry_month": 11,
+      "expiry_year": 2028,
+      "card_type": "Visa",
+      "created_at": "2024-04-15T12:00:00Z",
+      "updated_at": "2024-04-20T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.creditcard",
+    "pk": 10,
+    "fields": {
+      "name": "Smith Solutions Business Card",
+      "is_default": false,
+      "customer": 2,
+      "last_4_digits": "9876",
+      "expiry_month": 5,
+      "expiry_year": 2029,
+      "card_type": "MasterCard",
+      "created_at": "2024-04-20T12:00:00Z",
+      "updated_at": "2024-04-25T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 1,
+    "fields": {
+      "name": "John Doe's Bank Account",
+      "is_default": false,
+      "customer": 1,
+      "account_number": "123456789",
+      "routing_number": "987654321",
+      "account_type": "Checking",
+      "created_at": "2024-02-05T10:00:00Z",
+      "updated_at": "2024-02-15T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 2,
+    "fields": {
+      "name": "Smith Solutions Bank Account",
+      "is_default": true,
+      "customer": 2,
+      "account_number": "987654321",
+      "routing_number": "123456789",
+      "account_type": "Savings",
+      "created_at": "2024-03-05T11:00:00Z",
+      "updated_at": "2024-03-15T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 3,
+    "fields": {
+      "name": "Jane Smith's Business Account",
+      "is_default": false,
+      "customer": 7,
+      "account_number": "654321987",
+      "routing_number": "321987654",
+      "account_type": "Business",
+      "created_at": "2024-04-10T09:00:00Z",
+      "updated_at": "2024-04-20T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 4,
+    "fields": {
+      "name": "John Doe's Savings Account",
+      "is_default": false,
+      "customer": 7,
+      "account_number": "789456123",
+      "routing_number": "123789456",
+      "account_type": "Savings",
+      "created_at": "2024-04-20T10:00:00Z",
+      "updated_at": "2024-04-30T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 5,
+    "fields": {
+      "name": "Smith Solutions Payroll Account",
+      "is_default": false,
+      "customer": 7,
+      "account_number": "321654987",
+      "routing_number": "654123789",
+      "account_type": "Payroll",
+      "created_at": "2024-04-25T11:00:00Z",
+      "updated_at": "2024-05-05T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 6,
+    "fields": {
+      "name": "John Doe's Bank Account",
+      "is_default": false,
+      "customer": 5,
+      "account_number": "123456789",
+      "routing_number": "987654321",
+      "account_type": "Checking",
+      "created_at": "2024-02-05T10:00:00Z",
+      "updated_at": "2024-02-15T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 7,
+    "fields": {
+      "name": "Smith Solutions Bank Account",
+      "is_default": true,
+      "customer": 9,
+      "account_number": "987654321",
+      "routing_number": "123456789",
+      "account_type": "Savings",
+      "created_at": "2024-03-05T11:00:00Z",
+      "updated_at": "2024-03-15T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 8,
+    "fields": {
+      "name": "Jane Smith's Business Account",
+      "is_default": false,
+      "customer": 2,
+      "account_number": "654321987",
+      "routing_number": "321987654",
+      "account_type": "Business",
+      "created_at": "2024-04-10T09:00:00Z",
+      "updated_at": "2024-04-20T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 9,
+    "fields": {
+      "name": "John Doe's Savings Account",
+      "is_default": false,
+      "customer": 1,
+      "account_number": "789456123",
+      "routing_number": "123789456",
+      "account_type": "Savings",
+      "created_at": "2024-04-20T10:00:00Z",
+      "updated_at": "2024-04-30T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.bankaccount",
+    "pk": 10,
+    "fields": {
+      "name": "Smith Solutions Payroll Account",
+      "is_default": false,
+      "customer": 2,
+      "account_number": "321654987",
+      "routing_number": "654123789",
+      "account_type": "Payroll",
+      "created_at": "2024-04-25T11:00:00Z",
+      "updated_at": "2024-05-05T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 1,
+    "fields": {
+      "customer": 1,
+      "name": "John Doe Home",
+      "street_address1": "123 Main St",
+      "street_address2": "Apt 101",
+      "city": "New York",
+      "state": "NY",
+      "postal_code": "10001",
+      "country": "USA",
+      "is_default": true,
+      "phone": "123-456-7890",
+      "delivery_instructions": "Leave by the door.",
+      "created_at": "2024-04-01T10:00:00Z",
+      "updated_at": "2024-04-01T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 2,
+    "fields": {
+      "customer": 2,
+      "name": "Jane Smith Office",
+      "street_address1": "456 Business St",
+      "street_address2": "Suite 200",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postal_code": "90001",
+      "country": "USA",
+      "is_default": true,
+      "phone": "987-654-3210",
+      "delivery_instructions": "Deliver to reception.",
+      "created_at": "2024-04-05T11:00:00Z",
+      "updated_at": "2024-04-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 3,
+    "fields": {
+      "customer": 3,
+      "name": "John Doe Warehouse",
+      "street_address1": "789 Storage Rd",
+      "street_address2": "Unit 300",
+      "city": "Chicago",
+      "state": "IL",
+      "postal_code": "60601",
+      "country": "USA",
+      "is_default": false,
+      "phone": "456-789-0123",
+      "delivery_instructions": "Deliver to loading dock.",
+      "created_at": "2024-04-10T09:00:00Z",
+      "updated_at": "2024-04-11T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 4,
+    "fields": {
+      "customer": 4,
+      "name": "Jane Smith Warehouse",
+      "street_address1": "789 Warehouse Blvd",
+      "street_address2": "Building A",
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94110",
+      "country": "USA",
+      "is_default": false,
+      "phone": "987-111-2222",
+      "delivery_instructions": "Deliver to loading dock.",
+      "created_at": "2024-04-25T12:00:00Z",
+      "updated_at": "2024-04-30T15:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 5,
+    "fields": {
+      "customer": 5,
+      "name": "John Doe Vacation Home",
+      "street_address1": "101 Beach Rd",
+      "street_address2": "",
+      "city": "Miami",
+      "state": "FL",
+      "postal_code": "33101",
+      "country": "USA",
+      "is_default": false,
+      "phone": "123-000-4567",
+      "delivery_instructions": "Leave by the porch.",
+      "created_at": "2024-05-01T11:00:00Z",
+      "updated_at": "2024-05-05T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 6,
+    "fields": {
+      "customer": 6,
+      "name": "Jane Smith Vacation Home",
+      "street_address1": "202 Resort Blvd",
+      "street_address2": "Unit 100",
+      "city": "Orlando",
+      "state": "FL",
+      "postal_code": "32801",
+      "country": "USA",
+      "is_default": false,
+      "phone": "987-222-3333",
+      "delivery_instructions": "Deliver to front desk.",
+      "created_at": "2024-05-05T10:00:00Z",
+      "updated_at": "2024-05-10T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 7,
+    "fields": {
+      "customer": 7,
+      "name": "John Doe Home",
+      "street_address1": "123 Main St",
+      "street_address2": "Apt 101",
+      "city": "New York",
+      "state": "NY",
+      "postal_code": "10001",
+      "country": "USA",
+      "is_default": true,
+      "phone": "123-456-7890",
+      "delivery_instructions": "Leave by the door.",
+      "created_at": "2024-04-01T10:00:00Z",
+      "updated_at": "2024-04-01T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 8,
+    "fields": {
+      "customer": 8,
+      "name": "Jane Smith Office",
+      "street_address1": "456 Business St",
+      "street_address2": "Suite 200",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postal_code": "90001",
+      "country": "USA",
+      "is_default": true,
+      "phone": "987-654-3210",
+      "delivery_instructions": "Deliver to reception.",
+      "created_at": "2024-04-05T11:00:00Z",
+      "updated_at": "2024-04-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 9,
+    "fields": {
+      "customer": 9,
+      "name": "John Doe Warehouse",
+      "street_address1": "789 Storage Rd",
+      "street_address2": "Unit 300",
+      "city": "Chicago",
+      "state": "IL",
+      "postal_code": "60601",
+      "country": "USA",
+      "is_default": false,
+      "phone": "456-789-0123",
+      "delivery_instructions": "Deliver to loading dock.",
+      "created_at": "2024-04-10T09:00:00Z",
+      "updated_at": "2024-04-11T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 10,
+    "fields": {
+      "customer": 2,
+      "name": "Jane Smith Warehouse",
+      "street_address1": "789 Warehouse Blvd",
+      "street_address2": "Building A",
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94110",
+      "country": "USA",
+      "is_default": false,
+      "phone": "987-111-2222",
+      "delivery_instructions": "Deliver to loading dock.",
+      "created_at": "2024-04-25T12:00:00Z",
+      "updated_at": "2024-04-30T15:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 11,
+    "fields": {
+      "customer": 3,
+      "name": "John Doe Vacation Home",
+      "street_address1": "101 Beach Rd",
+      "street_address2": "",
+      "city": "Miami",
+      "state": "FL",
+      "postal_code": "33101",
+      "country": "USA",
+      "is_default": false,
+      "phone": "123-000-4567",
+      "delivery_instructions": "Leave by the porch.",
+      "created_at": "2024-05-01T11:00:00Z",
+      "updated_at": "2024-05-05T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 12,
+    "fields": {
+      "customer": 6,
+      "name": "Jane Smith Vacation Home",
+      "street_address1": "202 Resort Blvd",
+      "street_address2": "Unit 100",
+      "city": "Orlando",
+      "state": "FL",
+      "postal_code": "32801",
+      "country": "USA",
+      "is_default": false,
+      "phone": "987-222-3333",
+      "delivery_instructions": "Deliver to front desk.",
+      "created_at": "2024-05-05T10:00:00Z",
+      "updated_at": "2024-05-10T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.shippingaddress",
+    "pk": 13,
+    "fields": {
+      "customer": 7,
+      "name": "John Doe Home",
+      "street_address1": "123 Main St",
+      "street_address2": "Apt 101",
+      "city": "New York",
+      "state": "NY",
+      "postal_code": "10001",
+      "country": "USA",
+      "is_default": true,
+      "phone": "123-456-7890",
+      "delivery_instructions": "Leave by the door.",
+      "created_at": "2024-04-01T10:00:00Z",
+      "updated_at": "2024-04-01T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 1,
+    "fields": {
+      "customer": 1,
+      "order_number": "ORD001",
+      "status": "pending",
+      "order_date": "2024-04-01T10:00:00Z",
+      "shipping_address": 1,
+      "total_amount": "150.00",
+      "notes": "Urgent order",
+      "created_at": "2024-04-01T10:00:00Z",
+      "updated_at": "2024-04-01T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 2,
+    "fields": {
+      "customer": 3,
+      "order_number": "ORD002",
+      "status": "processing",
+      "order_date": "2024-04-05T14:00:00Z",
+      "shipping_address": 2,
+      "total_amount": "250.00",
+      "notes": "Deliver after 3 PM",
+      "created_at": "2024-04-05T14:00:00Z",
+      "updated_at": "2024-04-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 3,
+    "fields": {
+      "customer": 5,
+      "order_number": "ORD003",
+      "status": "shipped",
+      "order_date": "2024-04-10T15:00:00Z",
+      "shipping_address": 3,
+      "total_amount": "350.00",
+      "notes": "Handle with care",
+      "created_at": "2024-04-10T15:00:00Z",
+      "updated_at": "2024-04-11T09:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 4,
+    "fields": {
+      "customer": 7,
+      "order_number": "ORD004",
+      "status": "delivered",
+      "order_date": "2024-04-15T16:00:00Z",
+      "shipping_address": 2,
+      "total_amount": "400.00",
+      "notes": "Leave with neighbor if not available",
+      "created_at": "2024-04-15T16:00:00Z",
+      "updated_at": "2024-04-16T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 5,
+    "fields": {
+      "customer": 9,
+      "order_number": "ORD005",
+      "status": "cancelled",
+      "order_date": "2024-04-20T17:00:00Z",
+      "shipping_address": 1,
+      "total_amount": "0.00",
+      "notes": "Order cancelled by customer",
+      "created_at": "2024-04-20T17:00:00Z",
+      "updated_at": "2024-04-21T09:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 6,
+    "fields": {
+      "customer": 1,
+      "order_number": "ORD006",
+      "status": "pending",
+      "order_date": "2024-04-01T10:00:00Z",
+      "shipping_address": 1,
+      "total_amount": "150.00",
+      "notes": "Urgent order",
+      "created_at": "2024-04-01T10:00:00Z",
+      "updated_at": "2024-04-01T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 7,
+    "fields": {
+      "customer": 3,
+      "order_number": "ORD007",
+      "status": "processing",
+      "order_date": "2024-04-05T14:00:00Z",
+      "shipping_address": 2,
+      "total_amount": "250.00",
+      "notes": "Deliver after 3 PM",
+      "created_at": "2024-04-05T14:00:00Z",
+      "updated_at": "2024-04-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 8,
+    "fields": {
+      "customer": 5,
+      "order_number": "ORD008",
+      "status": "shipped",
+      "order_date": "2024-04-10T15:00:00Z",
+      "shipping_address": 3,
+      "total_amount": "350.00",
+      "notes": "Handle with care",
+      "created_at": "2024-04-10T15:00:00Z",
+      "updated_at": "2024-04-11T09:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 9,
+    "fields": {
+      "customer": 7,
+      "order_number": "ORD009",
+      "status": "delivered",
+      "order_date": "2024-04-15T16:00:00Z",
+      "shipping_address": 2,
+      "total_amount": "400.00",
+      "notes": "Leave with neighbor if not available",
+      "created_at": "2024-04-15T16:00:00Z",
+      "updated_at": "2024-04-16T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 10,
+    "fields": {
+      "customer": 9,
+      "order_number": "ORD010",
+      "status": "cancelled",
+      "order_date": "2024-04-20T17:00:00Z",
+      "shipping_address": 1,
+      "total_amount": "200.00",
+      "notes": "Order cancelled by customer",
+      "created_at": "2024-04-20T17:00:00Z",
+      "updated_at": "2024-04-21T09:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 11,
+    "fields": {
+      "customer": 1,
+      "order_number": "ORD011",
+      "status": "pending",
+      "order_date": "2024-04-01T10:00:00Z",
+      "shipping_address": 1,
+      "total_amount": "150.00",
+      "notes": "Urgent order",
+      "created_at": "2024-04-01T10:00:00Z",
+      "updated_at": "2024-04-01T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 12,
+    "fields": {
+      "customer": 2,
+      "order_number": "ORD012",
+      "status": "processing",
+      "order_date": "2024-04-05T14:00:00Z",
+      "shipping_address": 2,
+      "total_amount": "250.00",
+      "notes": "Deliver after 3 PM",
+      "created_at": "2024-04-05T14:00:00Z",
+      "updated_at": "2024-04-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 13,
+    "fields": {
+      "customer": 3,
+      "order_number": "ORD013",
+      "status": "shipped",
+      "order_date": "2024-04-10T15:00:00Z",
+      "shipping_address": 3,
+      "total_amount": "350.00",
+      "notes": "Handle with care",
+      "created_at": "2024-04-10T15:00:00Z",
+      "updated_at": "2024-04-11T09:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 14,
+    "fields": {
+      "customer": 4,
+      "order_number": "ORD014",
+      "status": "delivered",
+      "order_date": "2024-04-15T16:00:00Z",
+      "shipping_address": 2,
+      "total_amount": "400.00",
+      "notes": "Leave with neighbor if not available",
+      "created_at": "2024-04-15T16:00:00Z",
+      "updated_at": "2024-04-16T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 15,
+    "fields": {
+      "customer": 8,
+      "order_number": "ORD015",
+      "status": "cancelled",
+      "order_date": "2024-04-20T17:00:00Z",
+      "shipping_address": 1,
+      "total_amount": "928.00",
+      "notes": "Order cancelled by customer",
+      "created_at": "2024-04-20T17:00:00Z",
+      "updated_at": "2024-04-21T09:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 16,
+    "fields": {
+      "customer": 1,
+      "order_number": "ORD016",
+      "status": "pending",
+      "order_date": "2024-04-01T10:00:00Z",
+      "shipping_address": 1,
+      "total_amount": "150.00",
+      "notes": "Urgent order",
+      "created_at": "2024-04-01T10:00:00Z",
+      "updated_at": "2024-04-01T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.order",
+    "pk": 17,
+    "fields": {
+      "customer": 9,
+      "order_number": "ORD017",
+      "status": "processing",
+      "order_date": "2024-04-05T14:00:00Z",
+      "shipping_address": 2,
+      "total_amount": "250.00",
+      "notes": "Deliver after 3 PM",
+      "created_at": "2024-04-05T14:00:00Z",
+      "updated_at": "2024-04-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "product": 1,
+      "quantity": 2,
+      "unit_price": "50.00",
+      "created_at": "2024-04-01T10:10:00Z",
+      "updated_at": "2024-04-01T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 2,
+    "fields": {
+      "order": 1,
+      "product": 2,
+      "quantity": 1,
+      "unit_price": "25.00",
+      "created_at": "2024-04-01T10:20:00Z",
+      "updated_at": "2024-04-01T11:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 3,
+    "fields": {
+      "order": 1,
+      "product": 3,
+      "quantity": 3,
+      "unit_price": "75.00",
+      "created_at": "2024-04-01T10:30:00Z",
+      "updated_at": "2024-04-01T11:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 4,
+    "fields": {
+      "order": 1,
+      "product": 4,
+      "quantity": 1,
+      "unit_price": "50.00",
+      "created_at": "2024-04-01T10:40:00Z",
+      "updated_at": "2024-04-01T11:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 5,
+    "fields": {
+      "order": 12,
+      "product": 2,
+      "quantity": 1,
+      "unit_price": "250.00",
+      "created_at": "2024-04-05T14:10:00Z",
+      "updated_at": "2024-04-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 6,
+    "fields": {
+      "order": 17,
+      "product": 2,
+      "quantity": 1,
+      "unit_price": "25.00",
+      "created_at": "2024-04-01T10:20:00Z",
+      "updated_at": "2024-04-01T11:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 7,
+    "fields": {
+      "order": 17,
+      "product": 3,
+      "quantity": 3,
+      "unit_price": "75.00",
+      "created_at": "2024-04-01T10:30:00Z",
+      "updated_at": "2024-04-01T11:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 8,
+    "fields": {
+      "order": 17,
+      "product": 4,
+      "quantity": 1,
+      "unit_price": "50.00",
+      "created_at": "2024-04-01T10:40:00Z",
+      "updated_at": "2024-04-01T11:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 9,
+    "fields": {
+      "order": 16,
+      "product": 2,
+      "quantity": 1,
+      "unit_price": "250.00",
+      "created_at": "2024-04-05T14:10:00Z",
+      "updated_at": "2024-04-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 10,
+    "fields": {
+      "order": 16,
+      "product": 3,
+      "quantity": 2,
+      "unit_price": "100.00",
+      "created_at": "2024-04-05T14:20:00Z",
+      "updated_at": "2024-04-06T10:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 11,
+    "fields": {
+      "order": 16,
+      "product": 4,
+      "quantity": 1,
+      "unit_price": "50.00",
+      "created_at": "2024-04-05T14:30:00Z",
+      "updated_at": "2024-04-06T10:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 11,
+    "fields": {
+      "order": 16,
+      "product": 5,
+      "quantity": 3,
+      "unit_price": "75.00",
+      "created_at": "2024-04-05T14:40:00Z",
+      "updated_at": "2024-04-06T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 13,
+    "fields": {
+      "order": 15,
+      "product": 3,
+      "quantity": 3,
+      "unit_price": "100.00",
+      "created_at": "2024-04-10T15:10:00Z",
+      "updated_at": "2024-04-11T09:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 14,
+    "fields": {
+      "order": 15,
+      "product": 1,
+      "quantity": 2,
+      "unit_price": "150.00",
+      "created_at": "2024-04-10T15:20:00Z",
+      "updated_at": "2024-04-11T09:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 15,
+    "fields": {
+      "order": 15,
+      "product": 5,
+      "quantity": 1,
+      "unit_price": "200.00",
+      "created_at": "2024-04-10T15:30:00Z",
+      "updated_at": "2024-04-11T09:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 16,
+    "fields": {
+      "order": 15,
+      "product": 4,
+      "quantity": 2,
+      "unit_price": "50.00",
+      "created_at": "2024-04-10T15:40:00Z",
+      "updated_at": "2024-04-11T09:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 17,
+    "fields": {
+      "order": 4,
+      "product": 4,
+      "quantity": 5,
+      "unit_price": "80.00",
+      "created_at": "2024-04-15T16:10:00Z",
+      "updated_at": "2024-04-16T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 18,
+    "fields": {
+      "order": 4,
+      "product": 1,
+      "quantity": 3,
+      "unit_price": "100.00",
+      "created_at": "2024-04-15T16:20:00Z",
+      "updated_at": "2024-04-16T10:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 19,
+    "fields": {
+      "order": 4,
+      "product": 2,
+      "quantity": 2,
+      "unit_price": "150.00",
+      "created_at": "2024-04-15T16:30:00Z",
+      "updated_at": "2024-04-16T10:50:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 20,
+    "fields": {
+      "order": 4,
+      "product": 5,
+      "quantity": 1,
+      "unit_price": "75.00",
+      "created_at": "2024-04-15T16:40:00Z",
+      "updated_at": "2024-04-16T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 21,
+    "fields": {
+      "order": 14,
+      "product": 5,
+      "quantity": 1,
+      "unit_price": "10.00",
+      "created_at": "2024-04-20T17:10:00Z",
+      "updated_at": "2024-04-21T09:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 22,
+    "fields": {
+      "order": 14,
+      "product": 4,
+      "quantity": 2,
+      "unit_price": "1.22",
+      "created_at": "2024-04-20T17:20:00Z",
+      "updated_at": "2024-04-21T09:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 23,
+    "fields": {
+      "order": 12,
+      "product": 4,
+      "quantity": 20,
+      "unit_price": "90.00",
+      "created_at": "2024-04-20T17:30:00Z",
+      "updated_at": "2024-04-21T09:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 24,
+    "fields": {
+      "order": 12,
+      "product": 5,
+      "quantity": 10,
+      "unit_price": "70.00",
+      "created_at": "2024-04-20T17:40:00Z",
+      "updated_at": "2024-04-21T09:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 25,
+    "fields": {
+      "order": 16,
+      "product": 1,
+      "quantity": 2,
+      "unit_price": "50.00",
+      "created_at": "2024-04-01T10:10:00Z",
+      "updated_at": "2024-04-01T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 26,
+    "fields": {
+      "order": 11,
+      "product": 2,
+      "quantity": 1,
+      "unit_price": "25.00",
+      "created_at": "2024-04-01T10:20:00Z",
+      "updated_at": "2024-04-01T11:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 27,
+    "fields": {
+      "order": 11,
+      "product": 3,
+      "quantity": 3,
+      "unit_price": "75.00",
+      "created_at": "2024-04-01T10:30:00Z",
+      "updated_at": "2024-04-01T11:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 28,
+    "fields": {
+      "order": 16,
+      "product": 4,
+      "quantity": 1,
+      "unit_price": "50.00",
+      "created_at": "2024-04-01T10:40:00Z",
+      "updated_at": "2024-04-01T11:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 29,
+    "fields": {
+      "order": 10,
+      "product": 2,
+      "quantity": 1,
+      "unit_price": "250.00",
+      "created_at": "2024-04-05T14:10:00Z",
+      "updated_at": "2024-04-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 30,
+    "fields": {
+      "order": 10,
+      "product": 3,
+      "quantity": 2,
+      "unit_price": "100.00",
+      "created_at": "2024-04-05T14:20:00Z",
+      "updated_at": "2024-04-06T10:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 31,
+    "fields": {
+      "order": 10,
+      "product": 4,
+      "quantity": 1,
+      "unit_price": "50.00",
+      "created_at": "2024-04-05T14:30:00Z",
+      "updated_at": "2024-04-06T10:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 32,
+    "fields": {
+      "order": 10,
+      "product": 5,
+      "quantity": 3,
+      "unit_price": "75.00",
+      "created_at": "2024-04-05T14:40:00Z",
+      "updated_at": "2024-04-06T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 33,
+    "fields": {
+      "order": 8,
+      "product": 5,
+      "quantity": 30,
+      "unit_price": "10.00",
+      "created_at": "2024-04-10T15:10:00Z",
+      "updated_at": "2024-04-11T09:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 34,
+    "fields": {
+      "order": 8,
+      "product": 1,
+      "quantity": 20,
+      "unit_price": "20.00",
+      "created_at": "2024-04-10T15:20:00Z",
+      "updated_at": "2024-04-11T09:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 35,
+    "fields": {
+      "order": 8,
+      "product": 2,
+      "quantity": 10,
+      "unit_price": "30.00",
+      "created_at": "2024-04-10T15:30:00Z",
+      "updated_at": "2024-04-11T09:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 36,
+    "fields": {
+      "order": 8,
+      "product": 3,
+      "quantity": 5,
+      "unit_price": "40.00",
+      "created_at": "2024-04-10T15:40:00Z",
+      "updated_at": "2024-04-11T09:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 37,
+    "fields": {
+      "order": 9,
+      "product": 4,
+      "quantity": 5,
+      "unit_price": "80.00",
+      "created_at": "2024-04-15T16:10:00Z",
+      "updated_at": "2024-04-16T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 38,
+    "fields": {
+      "order": 9,
+      "product": 1,
+      "quantity": 3,
+      "unit_price": "100.00",
+      "created_at": "2024-04-15T16:20:00Z",
+      "updated_at": "2024-04-16T10:40:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 39,
+    "fields": {
+      "order": 9,
+      "product": 2,
+      "quantity": 2,
+      "unit_price": "150.00",
+      "created_at": "2024-04-15T16:30:00Z",
+      "updated_at": "2024-04-16T10:50:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 40,
+    "fields": {
+      "order": 9,
+      "product": 5,
+      "quantity": 1,
+      "unit_price": "75.00",
+      "created_at": "2024-04-15T16:40:00Z",
+      "updated_at": "2024-04-16T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 41,
+    "fields": {
+      "order": 10,
+      "product": 9,
+      "quantity": 1,
+      "unit_price": "90.00",
+      "created_at": "2024-04-20T17:10:00Z",
+      "updated_at": "2024-04-21T09:10:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "sales.orderitem",
+    "pk": 42,
+    "fields": {
+      "order": 10,
+      "product": 8,
+      "quantity": 2,
+      "unit_price": "3.22",
+      "created_at": "2024-04-20T17:20:00Z",
+      "updated_at": "2024-04-21T09:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.salesmetrics",
+    "pk": 6,
+    "fields": {
+      "date": "2024-04-01",
+      "value": "25000.00",
+      "total_orders": 60,
+      "average_order_value": "416.67",
+      "conversion_rate": "3.0",
+      "notes": "Sales spike due to new customer orders",
+      "created_at": "2024-04-01T10:00:00Z",
+      "updated_at": "2024-04-01T15:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.salesmetrics",
+    "pk": 7,
+    "fields": {
+      "date": "2024-04-05",
+      "value": "30000.00",
+      "total_orders": 70,
+      "average_order_value": "428.57",
+      "conversion_rate": "3.2",
+      "notes": "Promotional discounts drive sales",
+      "created_at": "2024-04-05T14:00:00Z",
+      "updated_at": "2024-04-05T16:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.salesmetrics",
+    "pk": 8,
+    "fields": {
+      "date": "2024-04-10",
+      "value": "35000.00",
+      "total_orders": 80,
+      "average_order_value": "437.50",
+      "conversion_rate": "3.5",
+      "notes": "New product category launched",
+      "created_at": "2024-04-10T15:00:00Z",
+      "updated_at": "2024-04-10T18:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.salesmetrics",
+    "pk": 9,
+    "fields": {
+      "date": "2024-04-15",
+      "value": "40000.00",
+      "total_orders": 100,
+      "average_order_value": "400.00",
+      "conversion_rate": "3.8",
+      "notes": "Special promotion for loyalty customers",
+      "created_at": "2024-04-15T16:00:00Z",
+      "updated_at": "2024-04-15T19:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.salesmetrics",
+    "pk": 10,
+    "fields": {
+      "date": "2024-04-20",
+      "value": "10000.00",
+      "total_orders": 20,
+      "average_order_value": "500.00",
+      "conversion_rate": "2.0",
+      "notes": "Sales dip due to cancelled orders",
+      "created_at": "2024-04-20T17:00:00Z",
+      "updated_at": "2024-04-20T20:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.productperformance",
+    "pk": 6,
+    "fields": {
+      "date": "2024-04-01",
+      "product": 1,
+      "units_sold": 25,
+      "revenue": "19999.75",
+      "value": "19999.75",
+      "profit_margin": "28.00",
+      "notes": "High demand for smartphone due to new feature release",
+      "created_at": "2024-04-01T10:00:00Z",
+      "updated_at": "2024-04-01T15:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.productperformance",
+    "pk": 7,
+    "fields": {
+      "date": "2024-04-05",
+      "product": 2,
+      "units_sold": 30,
+      "revenue": "14999.70",
+      "value": "14999.70",
+      "profit_margin": "22.00",
+      "notes": "Washing machine sales boosted by special promotion",
+      "created_at": "2024-04-05T14:00:00Z",
+      "updated_at": "2024-04-05T16:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.productperformance",
+    "pk": 8,
+    "fields": {
+      "date": "2024-04-10",
+      "product": 3,
+      "units_sold": 20,
+      "revenue": "23999.80",
+      "value": "23999.80",
+      "profit_margin": "30.00",
+      "notes": "Laptop Pro sales increased due to online marketing campaign",
+      "created_at": "2024-04-10T15:00:00Z",
+      "updated_at": "2024-04-10T18:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.productperformance",
+    "pk": 9,
+    "fields": {
+      "date": "2024-04-15",
+      "product": 4,
+      "units_sold": 40,
+      "revenue": "5999.60",
+      "value": "5999.60",
+      "profit_margin": "24.00",
+      "notes": "Blender Max sales increased due to in-store demos",
+      "created_at": "2024-04-15T16:00:00Z",
+      "updated_at": "2024-04-15T19:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.productperformance",
+    "pk": 10,
+    "fields": {
+      "date": "2024-04-20",
+      "product": 5,
+      "units_sold": 35,
+      "revenue": "6999.65",
+      "value": "6999.65",
+      "profit_margin": "20.00",
+      "notes": "Microwave Oven Y sales steady, affected by minor discount",
+      "created_at": "2024-04-20T17:00:00Z",
+      "updated_at": "2024-04-20T20:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "analytics.customersegment",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "user_id": 1,
+      "created_at": "2024-01-20T09:00:00Z",
+      "updated_at": "2024-04-01T15:00:00Z",
+      "is_active": true,
+      "notes": "Customer has purchased multiple electronic products"
+    }
+  },
+  {
+    "model": "analytics.customersegment",
+    "pk": 2,
+    "fields": {
+      "id": 2,
+      "user_id": 2,
+      "created_at": "2024-02-25T11:00:00Z",
+      "updated_at": "2024-04-10T16:00:00Z",
+      "is_active": true,
+      "notes": "Customer has consistently purchased home appliances"
+    }
+  },
+  {
+    "model": "analytics.customersegment",
+    "pk": 3,
+    "fields": {
+      "id": 1,
+      "user_id": 1,
+      "created_at": "2024-03-15T12:00:00Z",
+      "updated_at": "2024-04-15T18:00:00Z",
+      "is_active": true,
+      "notes": "Customer recently purchased multiple kitchen appliances"
+    }
+  },
+  {
+    "model": "analytics.customersegment",
+    "pk": 4,
+    "fields": {
+      "id": 2,
+      "user_id": 2,
+      "created_at": "2024-04-25T12:00:00Z",
+      "updated_at": "2024-04-30T18:00:00Z",
+      "is_active": true,
+      "notes": "New customer who purchased office tech supplies"
+    }
+  },
+  {
+    "model": "analytics.customersegment",
+    "pk": 5,
+    "fields": {
+      "id": 3,
+      "user_id": 3,
+      "created_at": "2024-05-01T11:00:00Z",
+      "updated_at": "2024-05-05T14:00:00Z",
+      "is_active": true,
+      "notes": "Customer recently purchased a vacation home appliance set"
+    }
+  }
+]
