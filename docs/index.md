@@ -11,7 +11,7 @@
 maxdepth: 2
 ---
 
-usage
+getting_started
 model_info
 model_filters
 model_graph

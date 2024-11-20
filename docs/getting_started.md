@@ -1,4 +1,4 @@
-# Usage Guide for model_info
+# Getting Started
 
 This guide will help you install and begin using django-model-info to explore your Django models.
 
