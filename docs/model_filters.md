@@ -491,6 +491,21 @@ Product.objects.annotate(
     'suppliers',
     'performance_metrics'
 ).order_by('-total_revenue')
+
+for x in xx:
+    print(f"{x}\n")
+    print(f"\t  Total Orders: {x.total_orders}")
+    print(f"\t  Total Revenue: {x.total_revenue}")
+    print(f"\t  Average Monthly Units: {x.avg_monthly_units}")
+    print(f"\t  Average Profit Margin: {x.avg_profit_margin}")
+    print()
+    print(f"\t  Suppliers: {x.supplier_count}")
+    print(f"\t  Average Lead Time: {x.avg_lead_time}")
+    print(f"\t  Minimum Cost: {x.min_cost}")
+    print()
+    print(f"\t  Unique Customers: {x.unique_customers}")
+    print(f"\t  Corporate Customers: {x.corporate_orders}")
+    print("\n\n")
 ```
 
 This query provides a complete view of:
