@@ -14,7 +14,6 @@ from django_model_info import models
 
 
 class TestDjango_model_info(TestCase):
-
     def setUp(self):
         pass
 
