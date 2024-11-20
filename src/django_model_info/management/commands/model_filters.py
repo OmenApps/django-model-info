@@ -7,58 +7,43 @@ from pathlib import Path
 from typing import Any, Optional
 
 from django.apps import apps
-from django.core.cache import caches
-from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand, CommandParser
 from rich.console import Console
 from rich.table import Table
 
+from .common_utils._cache import cache, get_cache_version, increment_cache_version
+from .common_utils._settings import (
+    CACHE_ALWAYS,
+    CACHE_ENABLED,
+    CACHE_KEY_PREFIX,
+    CACHE_TIMEOUT,
+)
 from .model_filters_utils._field_utils import get_model_from_input, get_ordered_fields
 
 logger = logging.getLogger(__name__)
 
-try:
-    from django.conf import settings
-except ImproperlyConfigured as e:
-    logger.error("Settings could not be imported: %s", e)
-    settings = None  # pylint: disable=C0103
-except ImportError as e:
-    logger.error("Django could not be imported. Settings cannot be loaded: %s", e)
-    settings = None  # pylint: disable=C0103
-
-
 console = Console(record=True)
 
 
-_DJANGO_MODEL_INFO = getattr(settings, "DJANGO_MODEL_INFO", {})
-"""dict: The settings for the django-model-info app."""
+def get_cache_key(model: Any, options: dict[str, Any]) -> str:
+    """Generate a cache key based on model and options."""
+    # Create a dictionary of relevant options for the cache key
+    key_data = {
+        "model": model._meta.label,
+        "max_depth": options.get("max_depth"),
+        "max_paths": options.get("max_paths"),
+        "exclude": options.get("exclude"),
+        "field_type": options.get("field_type"),
+        "target_model": options.get("target_model"),
+        "target_field": options.get("target_field"),
+        "version": get_cache_version(),  # Include cache version in key
+    }
 
-CACHE_ENABLED = _DJANGO_MODEL_INFO.get("CACHE_ENABLED", False)
-"""bool: Enable caching of results."""
+    # Convert to a stable string representation and hash it
+    key_str = json.dumps(key_data, sort_keys=True)
+    key_hash = hashlib.md5(key_str.encode()).hexdigest()
 
-CACHE_ALWAYS = _DJANGO_MODEL_INFO.get("CACHE_ALWAYS", False)
-"""bool: Always cache results, even if the --use-cache flag is not used."""
-
-CACHE_ALIAS = _DJANGO_MODEL_INFO.get("CACHE_ALIAS", "default")
-"""str: The cache alias to use for caching results."""
-
-CACHE_TIMEOUT = _DJANGO_MODEL_INFO.get("CACHE_TIMEOUT", 3600)
-"""int: The cache timeout in seconds."""
-
-CACHE_KEY_PREFIX = _DJANGO_MODEL_INFO.get("CACHE_KEY_PREFIX", "model_filters:")
-"""str: The prefix to use for cache keys."""
-
-CACHE_VERSION_KEY = f"{CACHE_KEY_PREFIX}version"
-"""str: The cache key for the cache version."""
-
-if CACHE_ENABLED:
-    try:
-        cache = caches[CACHE_ALIAS]
-    except KeyError as e:
-        raise ValueError(f"Cache alias '{CACHE_ALIAS}' not found in settings.CACHES") from e
-else:
-    cache = {}
-
+    return f"{CACHE_KEY_PREFIX}{key_hash}"
 
 class Command(BaseCommand):
     """Display model field relationships in tabular format."""
@@ -163,6 +148,40 @@ class Command(BaseCommand):
             help="Invalidate all cached results before running",
         )
 
+    def handle(self, *args: Any, **options: Any) -> None:
+        """Execute command."""
+        # Clear cache if requested using version invalidation
+        if options["clear_cache"]:
+            increment_cache_version(self)
+            if not options.get("filter"):  # If only clearing cache
+                return
+
+        self.export_option = self.get_options(options)
+
+        models = self.get_filtered_models(options["filter"])
+
+        if not models:
+            self.stderr.write("No models found matching filters")
+            return
+
+        for model in sorted(models, key=lambda x: x._meta.label):
+            data = self.get_table_data(model, options)
+
+            if options["markdown"]:
+                self.print_markdown(model, data)
+            else:
+                self.print_table(model, data)
+
+        total = sum(len(self.get_table_data(m, options)) for m in models)
+
+        if options["markdown"]:
+            print(f"\n**Total Fields: {total}**")
+        else:
+            console.print(f"\nTotal Fields: {total}", style="bold green")
+
+        if self.export_option:
+            self.export_results(models, options)
+
     def get_filtered_models(self, filters: Optional[list[str]], prefix: Optional[str] = None) -> list[Any]:
         """Get models based on filter arguments."""
         models = []
@@ -222,51 +241,11 @@ class Command(BaseCommand):
 
         return list(set(processed_excludes))
 
-    def get_cache_version(self) -> int:
-        """Get the current cache version."""
-        return cache.get(CACHE_VERSION_KEY, 0)
-
-    def increment_cache_version(self) -> None:
-        """Increment the cache version to invalidate all cached results."""
-        current_version = self.get_cache_version()
-        cache.set(CACHE_VERSION_KEY, current_version + 1)
-        self.stdout.write(self.style.SUCCESS("Cleared all cached results"))
-
-    def clear_model_filters_cache(self):
-        """Clear all cached results for model_filters."""
-        # Get all keys that start with our prefix
-        keys = cache.keys(f"{CACHE_KEY_PREFIX}*")
-        if keys:
-            cache.delete_many(keys)
-            self.stdout.write(self.style.SUCCESS(f"Cleared {len(keys)} cached results"))
-        else:
-            self.stdout.write("No cached results found")
-
-    def get_cache_key(self, model: Any, options: dict[str, Any]) -> str:
-        """Generate a cache key based on model and options."""
-        # Create a dictionary of relevant options for the cache key
-        key_data = {
-            "model": model._meta.label,
-            "max_depth": options.get("max_depth"),
-            "max_paths": options.get("max_paths"),
-            "exclude": options.get("exclude"),
-            "field_type": options.get("field_type"),
-            "target_model": options.get("target_model"),
-            "target_field": options.get("target_field"),
-            "version": self.get_cache_version(),  # Include cache version in key
-        }
-
-        # Convert to a stable string representation and hash it
-        key_str = json.dumps(key_data, sort_keys=True)
-        key_hash = hashlib.md5(key_str.encode()).hexdigest()
-
-        return f"{CACHE_KEY_PREFIX}{key_hash}"
-
     def get_table_data(self, model: Any, options: dict[str, Any]) -> list[list[str]]:
         """Get field data for a model."""
         if CACHE_ENABLED:
             if options.get("use_cache") or CACHE_ALWAYS:
-                cache_key = self.get_cache_key(model, options)
+                cache_key = get_cache_key(model, options)
                 cached_data = cache.get(cache_key)
                 if cached_data is not None:
                     return cached_data
@@ -368,40 +347,6 @@ class Command(BaseCommand):
 
         console.print(table)
         console.print("")
-
-    def handle(self, *args: Any, **options: Any) -> None:
-        """Execute command."""
-        # Clear cache if requested using version invalidation
-        if options["clear_cache"]:
-            self.increment_cache_version()
-            if not options.get("filter"):  # If only clearing cache
-                return
-
-        self.export_option = self.get_options(options)
-
-        models = self.get_filtered_models(options["filter"])
-
-        if not models:
-            self.stderr.write("No models found matching filters")
-            return
-
-        for model in sorted(models, key=lambda x: x._meta.label):
-            data = self.get_table_data(model, options)
-
-            if options["markdown"]:
-                self.print_markdown(model, data)
-            else:
-                self.print_table(model, data)
-
-        total = sum(len(self.get_table_data(m, options)) for m in models)
-
-        if options["markdown"]:
-            print(f"\n**Total Fields: {total}**")
-        else:
-            console.print(f"\nTotal Fields: {total}", style="bold green")
-
-        if self.export_option:
-            self.export_results(models, options)
 
     def export_results(self, models=None, options=None):
         """Handle export functionality."""
