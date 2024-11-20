@@ -2,7 +2,8 @@
 
 import inspect
 from pathlib import Path
-from typing import List, Optional
+from typing import Any, Optional
+
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandParser, DjangoHelpFormatter
@@ -13,7 +14,8 @@ from rich.padding import Padding
 from rich.style import Style
 from rich.table import Table
 
-from ._field_attr_utils import (
+from .model_info_utils._common_utils import clean_docstring
+from .model_info_utils._field_attr_utils import (
     get_field_column,
     get_field_db_type,
     get_field_name,
@@ -24,9 +26,22 @@ from ._field_attr_utils import (
     get_related_model,
     get_related_name,
 )
-from ._info_classes import FieldOther, FieldRelation, FieldReverseRelation, Method, ModelInfo
-from ._method_attr_utils import get_method_docstring, get_method_file, get_method_line_number, get_method_signature
-from ._model_attr_utils import (
+from .model_info_utils._info_classes import (
+    FieldOther,
+    FieldRelation,
+    FieldReverseRelation,
+    Method,
+    ModelInfo,
+)
+from .model_info_utils._manager_utils import format_manager_output, get_model_managers
+from .model_info_utils._markdown_utils import MarkdownExporter, MarkdownSection
+from .model_info_utils._method_attr_utils import (
+    get_method_docstring,
+    get_method_file,
+    get_method_line_number,
+    get_method_signature,
+)
+from .model_info_utils._model_attr_utils import (
     get_model_base_manager,
     get_model_constraints,
     get_model_database_table,
@@ -126,24 +141,6 @@ DEFAULT_DJANGO_METHODS = (
 console = Console(record=True)
 
 
-def clean_docstring(text: str) -> str:
-    """Clean docstring by preserving code blocks and handling line breaks."""
-    if not text:
-        return ""
-
-    # Escape code blocks
-    text = text.replace("```", "\\```")
-    # Replace line breaks with HTML tags
-    text = text.replace("\n\n", "</p><p>").replace("\n", "<br>")
-    # Escape markdown characters
-    text = text.replace("_", "\\_").replace("*", "\\*")
-    text = text.replace("|", "\\|")
-    # Wrap non-code content in p tags if not already wrapped
-    if not text.startswith("<p>"):
-        text = f"<p>{text}</p>"
-    return text
-
-
 class ModelProcessor:
     """Process a model to extract model information, fields, and methods."""
 
@@ -178,12 +175,15 @@ class ModelProcessor:
         new_model.file.value = get_model_file(self.model)
         new_model.line_number.value = get_model_line_number(self.model)
         new_model.mro.value = get_model_mro(self.model)
+        new_model.managers_info = self.build_manager_info()
 
         return new_model
 
     def build_relation_field_info(self):
         """Process and categorize fields into relations."""
         field_list = self.model._meta.get_fields(include_hidden=True)  # pylint: disable=W0212
+        if not field_list:
+            return []
         fields_relation = []
 
         for field in field_list:
@@ -196,6 +196,8 @@ class ModelProcessor:
     def build_reverse_relation_field_info(self):
         """Process and categorize fields into reverse relations."""
         field_list = self.model._meta.get_fields(include_hidden=True)  # pylint: disable=W0212
+        if not field_list:
+            return []
         fields_reverse_relation = []
 
         for field in field_list:
@@ -208,6 +210,8 @@ class ModelProcessor:
     def build_other_field_info(self):
         """Process and categorize fields into others."""
         field_list = self.model._meta.get_fields(include_hidden=True)  # pylint: disable=W0212
+        if not field_list:
+            return []
         fields_other = []
 
         for field in field_list:
@@ -253,9 +257,9 @@ class ModelProcessor:
             field_verbose_name=get_field_verbose_name(field),
         )
 
-    def build_method_info(self, method_list: List):
+    def build_method_info(self, method_list: list):
         """Categorize methods into dunder, common Django, private, and other."""
-        method_dunder, method_common_django, method_other_private, method_other = [], [], [], []
+        method_other, method_other_private, method_dunder, method_common_django = [], [], [], []
 
         for method_name in method_list:
             new_method = self.build_method(method_name)
@@ -268,8 +272,8 @@ class ModelProcessor:
             else:
                 method_other.append(new_method)
         if not self.exclude_defaults:
-            return method_dunder, method_common_django, method_other_private, method_other
-        return method_other_private, method_other
+            return method_other, method_other_private, method_dunder, method_common_django
+        return method_other, method_other_private
 
     def build_method(self, method_name: str):
         """Build a method's information."""
@@ -282,6 +286,10 @@ class ModelProcessor:
             method.line_number = get_method_line_number(method_name, self.model)
         return method
 
+    def build_manager_info(self):
+        """Process manager information for the model."""
+        return get_model_managers(self.model)
+
 
 class Command(BaseCommand):
     """A Django management command to list out the fields and methods for each model."""
@@ -293,6 +301,8 @@ class Command(BaseCommand):
         self.verbosity = 2
         self.filter_option = None
         self.export_option = None
+        self.exclude_defaults = False
+        self.markdown = False
         self.model_list = []
 
     def create_parser(self, prog_name: str, subcommand: str, **kwargs):
@@ -420,7 +430,7 @@ class Command(BaseCommand):
 
         if self.markdown:
             # Print markdown directly to console
-            print(self.export_markdown())
+            print(self.export_markdown(self.model_list))
             return
 
         for model in self.model_list:
@@ -448,6 +458,10 @@ class Command(BaseCommand):
                 method_list = self.get_clean_method_list(model)
                 method_info = processor.build_method_info(method_list)
                 self.render_methods(method_info)
+
+                if self.verbosity > 1:
+                    # Add manager rendering here
+                    self.render_manager_table(model)
 
         console.print(f"\nTotal Models Listed: {len(self.model_list)}\n", style=SECTION_STYLE)
         console.print(Align(Bar(size=0.1, begin=0.0, end=0.0, width=100), align="center"), style="red")
@@ -497,6 +511,18 @@ class Command(BaseCommand):
             model_list.extend(abstract_models)
         return model_list
 
+    def get_clean_method_list(self, model):
+        """Clean method list by removing uppercase and non-callable methods."""
+        return [
+            method_name
+            for method_name in dir(model)
+            if method_name is not None
+            and not method_name == ""
+            and not method_name[0].isupper()
+            and hasattr(model, method_name)
+            and callable(getattr(model, method_name))
+        ]
+
     def render_model_info(self, model_info):
         """Render model information."""
         table = Table(title="Model Info")
@@ -522,6 +548,8 @@ class Command(BaseCommand):
 
     def render_field_relations_table(self, title, data_list):
         """Render table for field relations."""
+        if not data_list:
+            return
 
         table = Table(title=title)
         column_count = 1
@@ -540,6 +568,9 @@ class Command(BaseCommand):
 
     def render_field_reverse_relations_table(self, title, data_list):
         """Render table for field reverse relations."""
+        if not data_list:
+            return
+
         table = Table(title=title)
         column_count = 1
 
@@ -557,6 +588,9 @@ class Command(BaseCommand):
 
     def render_field_other_table(self, title, data_list):
         """Render table for other fields."""
+        if not data_list:
+            return
+
         table = Table(title=title)
         column_count = 1
 
@@ -610,19 +644,39 @@ class Command(BaseCommand):
         else:
             console.print(Padding("Methods (non-private/internal):", (1, 0, 0, 4), style=SUBSECTION_STYLE))
 
-        if self.exclude_defaults:
-            method_other_private, method_other = method_info
-        else:
-            method_dunder, method_common_django, method_other_private, method_other = method_info
-
         if not self.exclude_defaults:
+            method_other, method_other_private, method_dunder, method_common_django = method_info
+            if method_other:
+                self.render_method_table("Other Methods", method_other)
+            if method_other_private:
+                self.render_method_table("Private Methods", method_other_private)
             if self.verbosity > 1:
-                self.render_method_table("Dunder Methods", method_dunder)
-                self.render_method_table("Common Django Methods", method_common_django)
-        self.render_method_table("Private Methods", method_other_private)
-        self.render_method_table("Other Methods", method_other)
+                if method_dunder:
+                    self.render_method_table("Dunder Methods", method_dunder)
+                if method_common_django:
+                    self.render_method_table("Common Django Methods", method_common_django)
+        else:
+            method_other, method_other_private = method_info
+            if method_other:
+                self.render_method_table("Other Methods", method_other)
+            if method_other_private:
+                self.render_method_table("Private Methods", method_other_private)
 
-    def _fill_table(self, table: Table, info_object_list: Optional[List], info_type: type, column_count: int):
+    def render_manager_table(self, model):
+        """Render manager information."""
+        if self.verbosity < 2:
+            return
+
+        processor = ModelProcessor(model, self.verbosity, self.exclude_defaults, markdown=False)
+        managers_info = processor.build_manager_info()
+
+        if managers_info:
+            console.print(Padding("Custom Managers:", (1, 0, 0, 4), style=SUBSECTION_STYLE))
+            console.print(
+                Padding(format_manager_output(managers_info, indent=8, verbosity=self.verbosity), (1, 0, 0, 0))
+            )
+
+    def _fill_table(self, table: Table, info_object_list: Optional[list], info_type: type, column_count: int):
         """Given a rich table, a list of info objects, and the type of info object, fill the table."""
         if isinstance(info_object_list, list) and all(isinstance(row, info_type) for row in info_object_list):
             sorted_field_object_list = sorted(info_object_list, key=lambda x: x.name)
@@ -640,138 +694,60 @@ class Command(BaseCommand):
         """Helper method to print table based on data."""
         console.print(Padding(table, (1, 0, 0, 8)))
 
-    def export_markdown(self) -> str:
-        """Generate markdown output with tables."""
-        md_output = []
+    def export_markdown(self, models: list[Any]) -> str:
+        """Generate markdown documentation for Django models."""
+        exporter = MarkdownExporter(self.verbosity, self.exclude_defaults)
+        document_sections = []
 
-        for model in self.model_list:
-            md_output.append(f"# {model._meta.label}\n")
+        for model in models:
+            model_section = MarkdownSection(title=model._meta.label, content=[], level=1)
+
             processor = ModelProcessor(model, self.verbosity, self.exclude_defaults, markdown=True)
-
-            # Model Info section
-            md_output.append("## Model Info\n")
-            info_table = ["| Key | Value |", "|-----|-------|"]
             model_info = processor.build_model_info()
-            for row in model_info.render_rows(19):
-                if row[1]:
-                    info_table.append(f"| {row[0]} | {row[1]} |")
-            md_output.extend(info_table)
-            md_output.append("\n")
+
+            # Add Model Info section
+            info_table = exporter.format_model_info_table(model_info)
+            model_section.content.extend(["## Model Info\n", info_table.render(), ""])
 
             if self.verbosity > 0:
-                # Other Fields section
+                # Add Fields sections
                 fields_other = processor.build_other_field_info()
                 if fields_other:
-                    md_output.append("## Fields\n")
-                    headers = ["| Field Name | Field Type | Database Column | Database Type | Verbose Name |"]
-                    separator = ["|------------|------------|----------------|---------------|--------------|"]
-                    if self.verbosity < 2:
-                        headers = ["| Field Name |"]
-                        separator = ["|------------|"]
-                    md_output.append("".join(headers))
-                    md_output.append("".join(separator))
+                    fields_table = exporter.format_fields_table(fields_other, "other")
+                    if fields_table:
+                        model_section.content.extend(["## Fields\n", fields_table.render(), ""])
 
-                    for field in sorted(fields_other, key=lambda x: x.name):
-                        if self.verbosity >= 2:
-                            row = [
-                                f"| `{field.name}`",
-                                field.field_type,
-                                field.field_column,
-                                field.field_db_type,
-                                f"{field.field_verbose_name} |",
-                            ]
-                        else:
-                            row = [f"| `{field.name}` |"]
-                        md_output.append(" | ".join(row))
-                    md_output.append("\n")
-
-                # Relations section
+                # Add Relations section
                 fields_relation = processor.build_relation_field_info()
                 if fields_relation:
-                    md_output.append("## Relations\n")
-                    headers = [
-                        "| Field Name | Field Type | Database Column | Database Type | Related Model | Related Name |"
-                    ]
-                    separator = [
-                        "|------------|------------|----------------|---------------|---------------|--------------|"
-                    ]
-                    if self.verbosity < 2:
-                        headers = ["| Field Name |"]
-                        separator = ["|------------|"]
-                    md_output.append("".join(headers))
-                    md_output.append("".join(separator))
+                    relations_table = exporter.format_fields_table(fields_relation, "relation")
+                    if relations_table:
+                        model_section.content.extend(["## Relations\n", relations_table.render(), ""])
 
-                    for field in sorted(fields_relation, key=lambda x: x.name):
-                        if self.verbosity >= 2:
-                            row = [
-                                f"| `{field.name}`",
-                                field.field_type,
-                                field.field_column,
-                                field.field_db_type,
-                                field.related_model,
-                                f"{field.related_name} |",
-                            ]
-                        else:
-                            row = [f"| `{field.name}` |"]
-                        md_output.append(" | ".join(row))
-                    md_output.append("\n")
-
-                # Methods section
+                # Add Methods section
                 method_list = self.get_clean_method_list(model)
                 methods = processor.build_method_info(method_list)
-
                 if any(methods):
-                    md_output.append("## Methods\n")
-                    if self.exclude_defaults:
-                        method_types = ["Private", "Other"]
-                    else:
-                        method_types = ["Dunder", "Common Django", "Private", "Other"]
-                    for method_type, method_list in zip(method_types, methods):
-                        if method_list:
-                            md_output.append(f"### {method_type} Methods\n")
-                            headers = ["| Method Name |"]
-                            separator = ["|-------------|"]
-                            if self.verbosity >= 2:
-                                headers.extend(["Signature |"])
-                                separator.extend(["----------|"])
-                            if self.verbosity >= 3:
-                                headers.extend(["Docstring", "File", "Line Number |"])
-                                separator.extend(["---------", "----", "------------|"])
-                            md_output.append("".join(headers))
-                            md_output.append("".join(separator))
+                    method_types = (
+                        ["Other", "Private"]
+                        if self.exclude_defaults
+                        else ["Other", "Private", "Dunder", "Common Django"]
+                    )
+                    method_sections = exporter.format_methods_section(methods, method_types)
+                    if method_sections:
+                        model_section.content.append("## Methods\n")
+                        for section in method_sections:
+                            model_section.content.extend([section.render(), ""])
 
-                            for method in sorted(method_list, key=lambda x: x.name):
-                                row = [f"| `{method.name}`"]
-                                if self.verbosity >= 2:
-                                    row.append(f"`{method.signature}`" if method.signature else "")
-                                if self.verbosity >= 3:
-                                    row.extend(
-                                        [
-                                            clean_docstring(method.docstring) if method.docstring else "",
-                                            method.file if method.file else "",
-                                            f"{method.line_number} |" if method.line_number else " |",
-                                        ]
-                                    )
-                                else:
-                                    row[-1] += " |"
-                                md_output.append(" | ".join(row))
-                            md_output.append("\n")
+                # Add Managers section
+                managers_section = exporter.format_managers_section(model_info.managers_info)
+                if managers_section:
+                    model_section.content.append(managers_section.render())
 
-            md_output.append("---\n")
+            model_section.content.append("---")
+            document_sections.append(model_section)
 
-        return "\n".join(md_output)
-
-    def get_clean_method_list(self, model):
-        """Clean method list by removing uppercase and non-callable methods."""
-        return [
-            method_name
-            for method_name in dir(model)
-            if method_name is not None
-            and not method_name == ""
-            and not method_name[0].isupper()
-            and hasattr(model, method_name)
-            and callable(getattr(model, method_name))
-        ]
+        return "\n".join(section.render() for section in document_sections)
 
     def export_results(self):
         """Handle export functionality."""
@@ -781,6 +757,6 @@ class Command(BaseCommand):
         elif extension == ".txt":
             console.save_text(path=self.export_option)
         elif extension == ".md":
-            md_content = self.export_markdown()
+            md_content = self.export_markdown(self.model_list)
             with open(self.export_option, "w", encoding="utf-8") as f:
                 f.write(md_content)

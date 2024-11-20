@@ -22,9 +22,9 @@ def get_method_signature(method: str, model: type, verbosity: int) -> str:
             return "No signature found"
         except TypeError:
             pass
-        except Exception:  # pylint: disable=W0718
-            pass
         except OSError:
+            pass
+        except Exception:  # pylint: disable=W0718
             pass
 
     return ""

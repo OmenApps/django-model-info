@@ -35,6 +35,9 @@ class ModelInfo:
     file: Annotated = field(default_factory=lambda: Annotated(title="File"))
     line_number: Annotated = field(default_factory=lambda: Annotated(title="Starting Line Number"))
     mro: Annotated = field(default_factory=lambda: Annotated(title="Method Resolution Order"))
+    base_manager: Annotated = field(default_factory=lambda: Annotated(title="Base Manager"))
+    default_manager: Annotated = field(default_factory=lambda: Annotated(title="Default Manager"))
+    managers_info: dict = field(default_factory=dict)  # Add this line
 
     def render_rows(self, row_count: int) -> list:
         """Renders multiple rows."""
