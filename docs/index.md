@@ -12,6 +12,9 @@ maxdepth: 2
 ---
 
 usage
+model_info
+model_filters
+model_graph
 terminology
 reference
 contributing
