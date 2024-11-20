@@ -100,13 +100,9 @@ Now that you've installed and tried basic commands, you can:
 
 See the [Configuration & Options](usage_configuration.md) section for more detailed information about customizing django-model-info for your needs.
 
-# Configuration & Options
+## Configuration & Options
 
 django-model-info can be configured through both Django settings and command-line options. This section covers all available configuration options and when to use them.
-
-## Django Settings
-
-You can configure default behavior by adding settings to your Django project's settings file.
 
 ### MODEL_INFO_VERBOSITY
 
