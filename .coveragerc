@@ -4,7 +4,7 @@ branch = true
 [report]
 omit =
     *site-packages*
-    *tests*
+    *example_project*
     *.tox*
 show_missing = True
 exclude_lines =

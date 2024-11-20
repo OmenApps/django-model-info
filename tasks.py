@@ -37,7 +37,7 @@ def coverage(c):
     """
     check code coverage quickly with the default Python
     """
-    c.run("coverage run --source django-model-info runtests.py tests")
+    c.run("coverage run --source django-model-info runtests.py example_project")
     c.run("coverage report -m")
     c.run("coverage html")
     c.run("open htmlcov/index.html")
@@ -53,7 +53,7 @@ def docs(c):
     c.run("sphinx-apidoc -o docs/ django_model_info")
 
     c.run("sphinx-build -E -b html docs docs/_build")
-    open_browser(path='docs/_build/html/index.html')
+    open_browser(path="docs/_build/html/index.html")
 
 
 @task
@@ -86,21 +86,22 @@ def lint(c):
     """
     Check style with flake8
     """
-    c.run("flake8 django-model-info tests")
+    c.run("flake8 django-model-info example_project")
 
 
-@task(help={'bumpsize': 'Bump either for a "feature" or "breaking" change'})
-def release(c, bumpsize=''):
+@task(help={"bumpsize": 'Bump either for a "feature" or "breaking" change'})
+def release(c, bumpsize=""):
     """
     Package and upload a release
     """
     clean(c)
     if bumpsize:
-        bumpsize = '--' + bumpsize
+        bumpsize = "--" + bumpsize
 
     c.run("bumpversion {bump} --no-input".format(bump=bumpsize))
 
     import django_model_info
+
     c.run("python setup.py sdist bdist_wheel")
     c.run("twine upload dist/*")
 

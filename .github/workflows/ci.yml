@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/actions.yml"
+      - "**.py"
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: test-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lint-command:
+          - black --check --diff .
+          - flake8 .
+          - isort --check-only --diff .
+          - pydocstyle .
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: 'pip'
+          cache-dependency-path: 'linter-requirements.txt'
+      - run: python -m pip install -r linter-requirements.txt
+      - run: ${{ matrix.lint-command }}
+
+  test:
+    runs-on: ubuntu-latest
+    name: Tests with Python
+    needs: [lint]
+
+    strategy:
+      matrix:
+        django-version:
+        - "3.2"
+        - "4.1"
+        - "4.2"
+        python-version:
+        - "3.8"
+        - "3.9"
+        - "3.10"
+        - "3.11"
+        - "3.12"
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        cache: 'pip'
+        python-version: ${{ matrix.python-version }}
+
+    - name: Upgrade django version
+      run: |
+        python -m pip install "Django~=${{ matrix.django-version }}.0"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install -e ".[test]"
+
+    - name: Run django-friendship tests
+      run: |
+        python runtests.py

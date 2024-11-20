@@ -76,7 +76,7 @@ class="title-ref">django-model-info</span> for local development.
 5.  When you're done making changes, check that your changes pass flake8
     and the tests, including testing other Python versions with tox:
 
-        $ flake8 django_model_info tests
+        $ flake8 django_model_info example_project
         $ python setup.py test
         $ tox
 
@@ -102,9 +102,3 @@ Before you submit a pull request, check that it meets these guidelines:
     PyPy. Check
     <https://travis-ci.org/jacklinke/django-model-info/pull_requests>
     and make sure that the tests pass for all supported Python versions.
-
-# Tips
-
-To run a subset of tests:
-
-    $ python -m unittest tests.test_django_model_info

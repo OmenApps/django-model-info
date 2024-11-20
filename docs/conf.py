@@ -10,7 +10,7 @@ from django.core.management import call_command
 from django.utils.html import strip_tags
 
 sys.path.insert(0, os.path.abspath(".."))
-os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "example_project.settings"
 django.setup()
 
 # Make and run migrations for the example project
