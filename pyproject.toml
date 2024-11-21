@@ -3,8 +3,8 @@ requires = ["setuptools>=75.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "django_model_info"
-version = "2024.11.2"
+name = "django-model-info"
+version = "2024.11.3"
 description = "A Django app to provide information about models"
 authors = [{ name = "Jack Linke", email = "jacklinke@gmail.com" }]
 license = { text = "MIT" }
@@ -22,10 +22,10 @@ requires-python = ">=3.10,<4.0"
 dependencies = ["django", "networkx>=3.4.2", "pydot>=3.0.2", "rich>=13"]
 
 [project.urls]
-Homepage = "https://github.com/jacklinke/django-model-info"
-Repository = "https://github.com/jacklinke/django-model-info"
+Homepage = "https://github.com/OmenApps/django-model-info"
+Repository = "https://github.com/OmenApps/django-model-info"
 Documentation = "https://django-model-info.readthedocs.io/en/latest/"
-Changelog = "https://github.com/jacklinke/django-model-info/blob/main/CHANGELOG.md"
+Changelog = "https://github.com/OmenApps/django-model-info/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
