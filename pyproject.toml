@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-model-info"
-version = "2024.11.3"
+version = "2024.11.4"
 description = "A Django app to provide information about models"
 authors = [{ name = "Jack Linke", email = "jacklinke@gmail.com" }]
 license = { text = "MIT" }
