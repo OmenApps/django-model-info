@@ -34,15 +34,21 @@ INSTALLED_APPS = (
 )
 ```
 
+This will install four new management commands:
+- `modelinfo`
+- `modelfilters`
+- `modelgraph`
+- `migrationgraph`
+
 ### Verifying Installation
 
 To verify the installation was successful, run:
 
 ```bash
-python manage.py help model_info
+python manage.py help modelinfo
 ```
 
-You should see the help text for the `model_info` command. If you receive an error, ensure that:
+You should see the help text for the `modelinfo` command. If you receive an error, ensure that:
 1. The package is installed (`pip list | grep django-model-info`)
 2. The app is properly added to `INSTALLED_APPS`
 3. Your virtual environment is activated (if using one)
@@ -51,6 +57,7 @@ You should see the help text for the `model_info` command. If you receive an err
 
 For usage information specific to each command, please see that command's usage page:
 
-- [model_info]
-- [model_filters]
-- [model_graph]
+- [modelinfo](https://django-model-info.readthedocs.io/en/latest/modelinfo.html)
+- [modelfilters](https://django-model-info.readthedocs.io/en/latest/modelfilters.html)
+- [modelgraph](https://django-model-info.readthedocs.io/en/latest/modelgraph.html)
+- [migrationgraph](https://django-model-info.readthedocs.io/en/latest/migrationgraph.html)

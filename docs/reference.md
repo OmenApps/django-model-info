@@ -10,20 +10,26 @@
 
 ## Commands
 
-### `model_info`
+### `modelinfo`
 
 ```{eval-rst}
-.. autoclass:: django_model_info.management.commands.model_filters.Command
+.. autoclass:: django_model_info.management.commands.modelinfo.Command
 ```
 
-### `model_info`
+### `modelfilters`
 
 ```{eval-rst}
-.. autoclass:: django_model_info.management.commands.model_graph.Command
+.. autoclass:: django_model_info.management.commands.modelfilters.Command
 ```
 
-### `model_info`
+### `modelgraph`
 
 ```{eval-rst}
-.. autoclass:: django_model_info.management.commands.model_info.Command
+.. autoclass:: django_model_info.management.commands.modelgraph.Command
+```
+
+### `migrationgraph`
+
+```{eval-rst}
+.. autoclass:: django_model_info.management.commands.migrationgraph.Command
 ```

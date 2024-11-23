@@ -12,9 +12,10 @@ maxdepth: 2
 ---
 
 getting_started
-model_info
-model_filters
-model_graph
+modelinfo
+modelfilters
+modelgraph
+migrationgraph
 terminology
 reference
 contributing
