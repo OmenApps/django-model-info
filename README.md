@@ -168,46 +168,7 @@ graph LR
 ```
 `````
 
-```mermaid
-graph LR
-    common_customer-. "ManyToOneRel<br>reverse: sales_creditcards" .->sales_creditcard
-    common_customer["common.customer"]
-    sales_creditcard["sales.creditcard"]
-    common_customer-. "ManyToOneRel<br>reverse: sales_bankaccounts" .->sales_bankaccount
-    common_customer["common.customer"]
-    sales_bankaccount["sales.bankaccount"]
-    common_customer-. "ManyToOneRel<br>reverse: shipping_addresses" .->sales_shippingaddress
-    common_customer["common.customer"]
-    sales_shippingaddress["sales.shippingaddress"]
-    common_customer-. "ManyToOneRel<br>reverse: orders" .->sales_order
-    common_customer["common.customer"]
-    sales_order["sales.order"]
-    sales_bankaccount== "ForeignKey<br>customer" ===common_customer
-    sales_bankaccount["sales.bankaccount"]
-    common_customer["common.customer"]
-    sales_creditcard== "ForeignKey<br>customer" ===common_customer
-    sales_creditcard["sales.creditcard"]
-    common_customer["common.customer"]
-    sales_order-. "ManyToOneRel<br>reverse: items" .->sales_orderitem
-    sales_order["sales.order"]
-    sales_orderitem["sales.orderitem"]
-    sales_order== "ForeignKey<br>customer" ===common_customer
-    sales_order["sales.order"]
-    common_customer["common.customer"]
-    sales_order== "ForeignKey<br>shipping_address" ===sales_shippingaddress
-    sales_order["sales.order"]
-    sales_shippingaddress["sales.shippingaddress"]
-    sales_orderitem== "ForeignKey<br>order" ===sales_order
-    sales_orderitem["sales.orderitem"]
-    sales_order["sales.order"]
-    sales_shippingaddress-. "ManyToOneRel<br>reverse: order" .->sales_order
-    sales_shippingaddress["sales.shippingaddress"]
-    sales_order["sales.order"]
-    sales_shippingaddress== "ForeignKey<br>customer" ===common_customer
-    sales_shippingaddress["sales.shippingaddress"]
-    common_customer["common.customer"]
-```
-
+[![](https://mermaid.ink/img/pako:eNqtlVFvgjAQx78KuWckyiYyMnxa9rItS9yeNhZT6Slk0JICy5zxu6-iKDI0UsZTud79-8td77oCn1MEBxaCJIH2OPGYJj-fxzFnUz9PMx6j6BmaB0-ELV_5M8MJRrczMRb4hSJFR0tJhOnUF0jDzCeCph5oRm9cNzcqv3uwtRilxYOPrWc9XroWJqMiWfoq8M4I-yS-z3OWHQFX7GrEFYE9clVUjTkIkyRkiymhVGCa4hFzubvbVOOuiezZ6-JK_FxQuagyFxY10iJ0z7cVOlkD15Vc91xguGAPuNxQHWQ113Vrp_9DKVtc6i50Sq1xWXLPFzPMMP5by421XZX2YcdehVCDZ5dcnYNRylADTL1Ht1BnOvTSPLXtzFp2G1B3pxz4Kt2oVJs2_BdMihODonM62mB2uW4dZ2njFQQd5CImIZXP9WoT50EWYIweOHJJcU7ySM4kj62lK8kz_rJkPjiZyFGHPKEkw7uQyIc-BmdOolRaE8LeOI9LJ_kLzgq-wRnYpjEwLWs0tGx7eGMOTB2W4JijkWFb9tX1wO4PLbm91uGnEOgbQx0EzxfBTnz9C6zF_mg?type=png)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNqtlVFvgjAQx78KuWckyiYyMnxa9rItS9yeNhZT6Slk0JICy5zxu6-iKDI0UsZTud79-8td77oCn1MEBxaCJIH2OPGYJj-fxzFnUz9PMx6j6BmaB0-ELV_5M8MJRrczMRb4hSJFR0tJhOnUF0jDzCeCph5oRm9cNzcqv3uwtRilxYOPrWc9XroWJqMiWfoq8M4I-yS-z3OWHQFX7GrEFYE9clVUjTkIkyRkiymhVGCa4hFzubvbVOOuiezZ6-JK_FxQuagyFxY10iJ0z7cVOlkD15Vc91xguGAPuNxQHWQ113Vrp_9DKVtc6i50Sq1xWXLPFzPMMP5by421XZX2YcdehVCDZ5dcnYNRylADTL1Ht1BnOvTSPLXtzFp2G1B3pxz4Kt2oVJs2_BdMihODonM62mB2uW4dZ2njFQQd5CImIZXP9WoT50EWYIweOHJJcU7ySM4kj62lK8kz_rJkPjiZyFGHPKEkw7uQyIc-BmdOolRaE8LeOI9LJ_kLzgq-wRnYpjEwLWs0tGx7eGMOTB2W4JijkWFb9tX1wO4PLbm91uGnEOgbQx0EzxfBTnz9C6zF_mg)
 
 #### Dot Output
 
@@ -281,26 +242,7 @@ graph TD
 ```
 `````
 
-
-```mermaid
-graph TD
-    sales_0001_initial["sales/0001"]
-    inventory_0001_initial["inventory/0001"]
-    auth_0001_initial["auth/0001"]
-    contenttypes_0001_initial["contenttypes/0001"]
-    common_0001_initial["common/0001"]
-    admin_0001_initial["admin/0001"]
-    admin_0002_logentry_remove_auto_add["admin/0002"]
-    admin_0003_logentry_add_action_flag_choices["admin/0003"]
-    admin_0001_initial --> admin_0002_logentry_remove_auto_add
-    admin_0002_logentry_remove_auto_add --> admin_0003_logentry_add_action_flag_choices
-    inventory_0001_initial --> sales_0001_initial
-    auth_0001_initial --> admin_0001_initial
-    common_0001_initial --> sales_0001_initial
-    contenttypes_0001_initial --> admin_0001_initial
-    auth_0001_initial --> common_0001_initial
-```
-
+[![](https://mermaid.ink/img/pako:eNqNk01ugzAQha8SzZqk4BRCvegqN2hXrSvLAgcsYRuBiUqj3L0D_QsQaFjBm2_ePGP7BIlNJVDIKlHmq-c9Myt8alHImvu-H3BllFOieGXQi3edyODti1PmKI2zVTtmfwtDXjQuH6OdNqQSaxx2u7achrisjbu0tmbKd-ooRarVBOzFGY7wwmY4FddZSW2PkmNoy0WaXjaSaeP2rxFhLhKnMOKhEBlPcqsSWV8abBcSrtbrx1sC3Zx8aPh_0KUN772mZ2Zmz4eTR_SVXVx0nz0ri1OuZ7oyGzzQstJCpXhHTl0zA5dLLRlQfE3lQTSFY8DMGdHu3z61JgHqqkZ60JSpcHKvBN4uDfQgihrVUpgXa_UPhJ9AT_AONIjJJiBRtAujOA4fSEA8aIGS3W4TR_H2Poj9MMLy2YOP3sDfhB5Utsnyb_PzJ2LSQSE?type=png)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNqNk01ugzAQha8SzZqk4BRCvegqN2hXrSvLAgcsYRuBiUqj3L0D_QsQaFjBm2_ePGP7BIlNJVDIKlHmq-c9Myt8alHImvu-H3BllFOieGXQi3edyODti1PmKI2zVTtmfwtDXjQuH6OdNqQSaxx2u7achrisjbu0tmbKd-ooRarVBOzFGY7wwmY4FddZSW2PkmNoy0WaXjaSaeP2rxFhLhKnMOKhEBlPcqsSWV8abBcSrtbrx1sC3Zx8aPh_0KUN772mZ2Zmz4eTR_SVXVx0nz0ri1OuZ7oyGzzQstJCpXhHTl0zA5dLLRlQfE3lQTSFY8DMGdHu3z61JgHqqkZ60JSpcHKvBN4uDfQgihrVUpgXa_UPhJ9AT_AONIjJJiBRtAujOA4fSEA8aIGS3W4TR_H2Poj9MMLy2YOP3sDfhB5Utsnyb_PzJ2LSQSE)
 
 ## Documentation
 
