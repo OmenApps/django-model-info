@@ -18,7 +18,7 @@ BoolOrStr = bool | str
 FExpressionOrStr = F | str
 FieldValue = TimeDeltaOrStr | BoolOrStr | FExpressionOrStr
 FieldType = Field | ForeignKey | OneToOneField | RelatedObject | ManyToManyField
-ModelInput = type[models.Model]|str
+ModelInput = type[models.Model] | str
 basestring = (str, bytes)
 
 
@@ -32,7 +32,7 @@ class FieldInfo(NamedTuple):
     full_field: str
     model_name: str
     field_name: str
-    field_type: str
+    target_field_type: str
     model_path: str
 
 
@@ -43,7 +43,7 @@ class FilterConfig:
     excludes: list[str]
     max_depth: Optional[int]
     max_paths: Optional[int]
-    field_type: Optional[str]
+    target_field_type: Optional[str]
     target_model: Optional[type[models.Model]]
     target_field: Optional[str]
 
@@ -122,7 +122,10 @@ def get_model_from_input(model_input: ModelInput) -> type[models.Model]:
     if isinstance(model_input, basestring):
         if "." in model_input:
             app_label, model_name = model_input.split(".")
-            return apps.get_model(app_label, model_name)
+            try:
+                return apps.get_model(app_label, model_name)
+            except LookupError:
+                return None
         return next(
             (model for model in apps.get_models() if model.__name__ == model_input),
             None,
@@ -237,9 +240,9 @@ def should_skip_field(full_field: str, model_name: str, model_path: str, exclude
     return False
 
 
-def matches_field_type(field: FieldType, field_type: Optional[str]) -> bool:
+def matches_target_field_type(field: FieldType, target_field_type: Optional[str]) -> bool:
     """Check if field matches the specified field type."""
-    return field_type is None or field.__class__.__name__ == field_type
+    return target_field_type is None or field.__class__.__name__ == target_field_type
 
 
 def matches_target_filters(
@@ -271,7 +274,7 @@ def create_field_info(
         full_field=full_field,
         model_name=model.__name__,
         field_name=field_name,
-        field_type=field.__class__.__name__,
+        target_field_type=field.__class__.__name__,
         model_path=model_path_str,
     )
 
@@ -297,7 +300,7 @@ def process_field(
 
     # Check if field matches all filters
     if not (
-        matches_field_type(field, filter_config.field_type)
+        matches_target_field_type(field, filter_config.target_field_type)
         and matches_target_filters(model, field_info.field_name, filter_config.target_model, filter_config.target_field)
     ):
         return []
@@ -330,7 +333,7 @@ def get_fields(
         excludes=["permissions", "comment", "content_type"],
         max_depth=None,
         max_paths=None,
-        field_type=None,
+        target_field_type=None,
         target_model=None,
         target_field=None,
     )
@@ -392,7 +395,7 @@ def get_ordered_fields(
     max_depth: int = None,
     max_paths: int = None,
     excludes: list[str] = None,
-    field_type: str = None,
+    target_field_type: str = None,
     **kwargs,
 ) -> list:
     """Get a list of fields from a model object, ordered by field name."""
@@ -410,7 +413,7 @@ def get_ordered_fields(
         excludes=excludes or ["permissions", "comment", "content_type"],
         max_depth=max_depth,
         max_paths=max_paths,
-        field_type=field_type,
+        target_field_type=target_field_type,
         target_model=target_model,
         target_field=target_field,
     )

@@ -18,7 +18,7 @@ from .common_utils._settings import (
     CACHE_KEY_PREFIX,
     CACHE_TIMEOUT,
 )
-from .model_filters_utils._field_utils import get_model_from_input, get_ordered_fields
+from .modelfilters_utils._field_utils import get_model_from_input, get_ordered_fields
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ def get_cache_key(model: Any, options: dict[str, Any]) -> str:
         "max_depth": options.get("max_depth"),
         "max_paths": options.get("max_paths"),
         "exclude": options.get("exclude"),
-        "field_type": options.get("field_type"),
+        "target_field_type": options.get("target_field_type"),
         "target_model": options.get("target_model"),
         "target_field": options.get("target_field"),
         "version": get_cache_version(),  # Include cache version in key
@@ -44,6 +44,7 @@ def get_cache_key(model: Any, options: dict[str, Any]) -> str:
     key_hash = hashlib.md5(key_str.encode()).hexdigest()
 
     return f"{CACHE_KEY_PREFIX}{key_hash}"
+
 
 class Command(BaseCommand):
     """Display model field relationships in tabular format."""
@@ -66,9 +67,11 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: CommandParser) -> None:
         """Add command arguments."""
+
+        # Filter options
         parser.add_argument(
             "filter",
-            nargs="+",
+            nargs="*",
             type=str,
             help="App, model or app.Model to analyze",
         )
@@ -85,40 +88,9 @@ class Command(BaseCommand):
             help="Filter to specific field names",
         )
         parser.add_argument(
-            "--by-depth",
-            action="store_true",
-            help="Sort by number of relationship traversals",
-        )
-        parser.add_argument(
-            "--by-model",
-            action="store_true",
-            help="Sort by related model name",
-        )
-        parser.add_argument(
-            "-o",
-            "--output",
-            nargs="?",
+            "--target-field-type",
             type=str,
-            default=None,
-            help="Filename to export. Extension must be .txt, .html, .htm, or .md",
-        )
-        parser.add_argument(
-            "-m",
-            "--markdown",
-            action="store_true",
-            help="Output in markdown format",
-        )
-        # New arguments
-        parser.add_argument(
-            "--max-depth",
-            type=int,
-            default=4,
-            help="Maximum number of relationship traversals",
-        )
-        parser.add_argument(
-            "--max-paths",
-            type=int,
-            help="Maximum number of paths to return",
+            help="Filter by field type (e.g., IntegerField, CharField)",
         )
         parser.add_argument(
             "-e",
@@ -133,10 +105,46 @@ class Command(BaseCommand):
             help="Include only models/fields with this prefix",
         )
         parser.add_argument(
-            "--field-type",
-            type=str,
-            help="Filter by field type (e.g., IntegerField, CharField)",
+            "--max-depth",
+            type=int,
+            default=4,
+            help="Maximum number of relationship traversals",
         )
+        parser.add_argument(
+            "--max-paths",
+            type=int,
+            help="Maximum number of paths to return",
+        )
+
+        # Sort options
+        parser.add_argument(
+            "--by-depth",
+            action="store_true",
+            help="Sort by number of relationship traversals",
+        )
+        parser.add_argument(
+            "--by-model",
+            action="store_true",
+            help="Sort by related model name",
+        )
+
+        # Export options
+        parser.add_argument(
+            "-o",
+            "--output",
+            nargs="?",
+            type=str,
+            default=None,
+            help="Filename to export. Extension must be .txt, .html, .htm, or .md",
+        )
+        parser.add_argument(
+            "-m",
+            "--markdown",
+            action="store_true",
+            help="Output in markdown format",
+        )
+
+        # Cache options
         parser.add_argument(
             "--use-cache",
             action="store_true",
@@ -275,7 +283,7 @@ class Command(BaseCommand):
                     max_depth=options["max_depth"],
                     max_paths=options["max_paths"],
                     excludes=processed_excludes,
-                    field_type=options.get("field_type"),
+                    target_field_type=options.get("target_field_type"),
                 )
                 all_data.extend(data)
         else:
@@ -288,7 +296,7 @@ class Command(BaseCommand):
                 max_depth=options["max_depth"],
                 max_paths=options["max_paths"],
                 excludes=processed_excludes,
-                field_type=options.get("field_type"),
+                target_field_type=options.get("target_field_type"),
             )
 
         # Apply prefix filter if specified

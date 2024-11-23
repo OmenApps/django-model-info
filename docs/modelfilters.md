@@ -1,12 +1,12 @@
-# Usage Guide for model_filters
+# Usage Guide for modelfilters
 
 ## Overview
 
-The `model_filters` management command helps developers understand and navigate complex Django model relationships by displaying all possible field paths between models. 
+The `modelfilters` management command helps developers understand and navigate complex Django model relationships by displaying all possible field paths between models. 
 
 For example, using models from the example project, running:
 ```bash
-python manage.py model_filters sales.ShippingAddress
+python manage.py modelfilters sales.ShippingAddress
 ```
 
 Would show all possible filtering paths starting from the ShippingAddress model in the sales app (178 in total):
@@ -35,63 +35,64 @@ This tool is particularly useful when:
 ## Command Syntax
 
 ```bash
-python manage.py model_filters [options]
+python manage.py modelfilters [options]
 ```
 
 ## Options
 
-### Core Options
+### Filtering Options
 
 - **positional arg**: One or more app name(s), model name(s), or `app.Model` syntax to evaluate. Here we are evaluating all models in the `auth` app, the `sales.Order` model and the `Customer` model (e.g.: `common.Customer`).
   ```bash
-  python manage.py model_filters auth sales.Order Customer
+  python manage.py modelfilters auth sales.Order Customer
   ```
 
 - **`--target-model`**: Filter paths leading to a specific model
   ```bash
-  python manage.py model_filters sales --target-model User
-  python manage.py model_filters sales --target-model auth.User
+  python manage.py modelfilters sales --target-model User
+  python manage.py modelfilters sales --target-model auth.User
   ```
 
 - **`--target-field`**: Filter paths leading to a specific model field
   ```bash
-  python manage.py model_filters sales --target-field email
+  python manage.py modelfilters sales --target-field email
+  ```
+
+- **`--target-field-type`**: Filter by field type
+  ```bash
+  python manage.py modelfilters sales --field-type DateTimeField
+  ```
+
+- **`-e, --exclude`**: Exclude specific apps, models, or fields
+  ```bash
+  python manage.py modelfilters sales -e auth Permission
+  python manage.py modelfilters sales -e customer__sales_creditcards customer__user
+  ```
+
+- **`--prefix`**: Include only models/fields in a path with a specific prefix
+  ```bash
+  python manage.py modelfilters sales --prefix Customer
   ```
 
 ### Path Limiting Options
 
 - **`--max-depth`**: Limit the number of relationship traversals (default: 4)
   ```bash
-  python manage.py model_filters sales --max-depth 3
+  python manage.py modelfilters sales --max-depth 3
   ```
 
 - **`--max-paths`**: Limit the maximum number of paths returned for *each* model of interest
   ```bash
-  python manage.py model_filters sales --max-paths 10
+  python manage.py modelfilters sales --max-paths 10
   ```
 
-### Additional Filters
-
-- **`-e, --exclude`**: Exclude specific apps, models, or fields
-  ```bash
-  python manage.py model_filters sales -e auth Permission
-  python manage.py model_filters sales -e customer__sales_creditcards customer__user
-  ```
-
-- **`--prefix`**: Include only models/fields in a path with a specific prefix
-  ```bash
-  python manage.py model_filters sales --prefix Customer
-  ```
-
-- **`--field-type`**: Filter by field type
-  ```bash
-  python manage.py model_filters sales --field-type DateTimeField
-  ```
-
-### Output Options
+### Sorting Options
 
 - **`--by-depth`**: Sort results by number of relationship traversals
 - **`--by-model`**: Sort results by related model name
+
+### Output Options
+
 - **`-m, --markdown`**: Output in markdown format
 - **`-o, --output`**: Export results to a file (supports .txt, .html, .htm, .md)
 
@@ -101,13 +102,13 @@ python manage.py model_filters [options]
 - **`--clear-cache`**: Clear cached results before running
 
 ## Settings
-All settings are optional, and should be added as dictionary key-value entries in the **`DJANGO_MODEL_INFO`** setting.
+All settings are optional, and should be added as dictionary key-value entries in the **`DJANGO_MODELINFO`** setting.
 
 - **`CACHE_ENABLED`**: *bool* Enable caching of results (default: False)
 - **`CACHE_ALWAYS`**: *bool* Always cache results, even if the --use-cache flag is not used (default: False)
 - **`CACHE_ALIAS`**: *str* The cache alias to use for caching results (default: "default")
 - **`CACHE_TIMEOUT`**: *int* The cache timeout in seconds (default: 3600)
-- **`CACHE_KEY_PREFIX`**: *str* The prefix to use for cache keys (default: "model_filters:")
+- **`CACHE_KEY_PREFIX`**: *str* The prefix to use for cache keys (default: "modelfilters:")
 
 ## Understanding Output
 
@@ -123,7 +124,7 @@ Example outputs for different filtering scenarios:
 
 ### Basic Model Fields
 ```bash
-python manage.py model_filters auth.User --by-depth
+python manage.py modelfilters auth.User --by-depth
 ```
 
 | Field Path | Model | Field Name | Field Type | Models in Path |
@@ -140,7 +141,7 @@ python manage.py model_filters auth.User --by-depth
 
 ### Filtering by Field Type
 ```bash
-python manage.py model_filters sales.ShippingAddress --field-type DateTimeField
+python manage.py modelfilters sales.ShippingAddress --field-type DateTimeField
 ```
 
 | Field Path | Model | Field Name | Field Type | Models in Path |
@@ -156,9 +157,9 @@ python manage.py model_filters sales.ShippingAddress --field-type DateTimeField
 
 ### Finding Related Models
 ```bash
-python manage.py model_filters sales.ShippingAddress --target-model User
+python manage.py modelfilters sales.ShippingAddress --target-model User
 # or
-python manage.py model_filters sales.ShippingAddress --target-model auth.User
+python manage.py modelfilters sales.ShippingAddress --target-model auth.User
 ```
 
 | Field Path | Model | Field Name | Field Type | Models in Path |
@@ -173,7 +174,7 @@ python manage.py model_filters sales.ShippingAddress --target-model auth.User
 
 
 ```bash
-python manage.py model_filters sales.ShippingAddress --target-field country
+python manage.py modelfilters sales.ShippingAddress --target-field country
 ```
 In this case there is only a single resulting path:
 
@@ -189,7 +190,7 @@ In this case there is only a single resulting path:
 You can combine multiple filters for precise results:
 
 ```bash
-python manage.py model_filters \
+python manage.py modelfilters \
     sales \
     --target-model User \
     --field-type EmailField \
@@ -205,9 +206,9 @@ Different export formats serve different purposes:
 - `.txt`: Simple text processing
 
 
-## Using model_filters: A Practical Guide
+## Using modelfilters: A Practical Guide
 
-In this section, we'll explore how to use the model_filters command to help build efficient queries across related models in our application that handles customer orders, inventory, and analytics.
+In this section, we'll explore how to use the modelfilters command to help build efficient queries across related models in our application that handles customer orders, inventory, and analytics.
 
 ### Example Models Overview
 
@@ -255,10 +256,10 @@ class Product(BaseModel):
 ### Example Use Cases
 
 #### 1. Find All Customer-Related Fields
-When building a customer analytics dashboard, we need to understand all ways to access customer data. Let's use model_filters to discover these relationships:
+When building a customer analytics dashboard, we need to understand all ways to access customer data. Let's use modelfilters to discover these relationships:
 
 ```bash
-python manage.py model_filters common.Customer
+python manage.py modelfilters common.Customer
 ```
 
 The output shows the rich customer data structure:
@@ -303,7 +304,7 @@ Customer.objects.annotate(
 For inventory management, we need to understand product relationships with suppliers and categories:
 
 ```bash
-python manage.py model_filters inventory.Product --by-depth
+python manage.py modelfilters inventory.Product --by-depth
 ```
 
 The output reveals the product relationship hierarchy:
@@ -347,7 +348,7 @@ Product.objects.annotate(
 To analyze sales performance, let's explore all available metrics fields:
 
 ```bash
-python manage.py model_filters analytics.SalesMetrics
+python manage.py modelfilters analytics.SalesMetrics
 ```
 
 Output shows available metrics:
@@ -386,21 +387,25 @@ SalesMetrics.objects.annotate(
 
 ## Complex Model Relationship Example
 
-Let's build a complex query that analyzes product performance across our entire system, including sales, inventory, and customer data.
+Let's build a complex query that analyzes product performance across our entire system, including sales, inventory, and customer data. This example makes use of the data provided in the included fixtures. Run the following command to load the fixtures:
 
-### Challenge
-We want to create a comprehensive product analysis that includes:
+```bash
+python manage.py loaddata data
+```
+
+### The Challenge
+Based in the models in our example project, we want to create a comprehensive product analysis that includes:
 - Sales performance metrics
 - Inventory status
 - Supplier relationships
 - Customer purchasing patterns
 
-### Using model_filters to Discover Paths
+### Using modelfilters to Discover Paths
 
 First, let's find all paths from Product to our analytics:
 
 ```bash
-python manage.py model_filters inventory.Product --target-model ProductPerformance
+python manage.py modelfilters inventory.Product --target-model ProductPerformance
 ```
 
 This reveals the connections:
@@ -420,7 +425,7 @@ This reveals the connections:
 
 Now let's find order and customer related paths:
 ```bash
-python manage.py model_filters inventory.Product --target-model Order OrderItem Customer
+python manage.py modelfilters inventory.Product --target-model Order OrderItem Customer
 ```
 
 Output shows order connections:
@@ -448,6 +453,7 @@ Output shows order connections:
 Using the discovered paths, we can build a comprehensive analysis:
 
 ```python
+import textwrap
 from example_project.inventory.models import Product
 from django.db.models import Avg, Count, Min, Sum, F, Q, Window
 from django.db.models.functions import TruncMonth
@@ -455,7 +461,7 @@ from django.utils import timezone
 
 # Comprehensive product analysis
 current_year = timezone.now().year
-Product.objects.annotate(
+report_rows = Product.objects.annotate(
     # Sales metrics
     total_orders=Count('orderitem__order', distinct=True),
     total_revenue=Sum(F('orderitem__unit_price') * F('orderitem__quantity')),
@@ -492,20 +498,75 @@ Product.objects.annotate(
     'performance_metrics'
 ).order_by('-total_revenue')
 
-for x in xx:
-    print(f"{x}\n")
-    print(f"\t  Total Orders: {x.total_orders}")
-    print(f"\t  Total Revenue: {x.total_revenue}")
-    print(f"\t  Average Monthly Units: {x.avg_monthly_units}")
-    print(f"\t  Average Profit Margin: {x.avg_profit_margin}")
-    print()
-    print(f"\t  Suppliers: {x.supplier_count}")
-    print(f"\t  Average Lead Time: {x.avg_lead_time}")
-    print(f"\t  Minimum Cost: {x.min_cost}")
-    print()
-    print(f"\t  Unique Customers: {x.unique_customers}")
-    print(f"\t  Corporate Customers: {x.corporate_orders}")
-    print("\n\n")
+# Format and print the report using the standard library
+for row in report_rows:
+    # Handle None values explicitly before formatting
+    total_revenue = f"{row.total_revenue:.2f}" if row.total_revenue is not None else "0"
+    avg_monthly_units = f"{row.avg_monthly_units:.2f}" if row.avg_monthly_units is not None else "N/A"
+    avg_profit_margin = f"{row.avg_profit_margin:.2%}" if row.avg_profit_margin is not None else "N/A"
+    avg_lead_time = f"{row.avg_lead_time:.1f}" if row.avg_lead_time is not None else "N/A"
+    min_cost = f"{row.min_cost:,.2f}" if row.min_cost is not None else "N/A"
+    output = textwrap.dedent(f"""
+        Product: {row.name}
+        ────────────────────────────────────────────
+          Sales Metrics:
+            • Total Orders          :  {row.total_orders:,}
+            • Total Revenue         : ${total_revenue}
+            • Average Monthly Units :  {avg_monthly_units}
+            • Average Profit Margin : ${avg_profit_margin}
+
+          Supplier Metrics:
+            • Supplier Count        :  {row.supplier_count}
+            • Average Lead Time     :  {avg_lead_time} days
+            • Minimum Cost          : ${min_cost}
+
+          Customer Insights:
+            • Unique Customers      :  {row.unique_customers:,}
+            • Corporate Orders      :  {row.corporate_orders:,}
+        ────────────────────────────────────────────
+    """)
+    print(output)
+```
+
+Here is the output for the first couple items in the report:
+
+```
+Product: Blender Max
+────────────────────────────────────────────
+  Sales Metrics:
+    • Total Orders          :  9
+    • Total Revenue         : $8707.32
+    • Average Monthly Units :  40.00
+    • Average Profit Margin : $2400.00%
+
+  Supplier Metrics:
+    • Supplier Count        :  3
+    • Average Lead Time     :  13.3 days
+    • Minimum Cost          : $120.00
+
+  Customer Insights:
+    • Unique Customers      :  6
+    • Corporate Orders      :  9
+────────────────────────────────────────────
+
+
+Product: Washing Machine Z
+────────────────────────────────────────────
+  Sales Metrics:
+    • Total Orders          :  9
+    • Total Revenue         : $6900.00
+    • Average Monthly Units :  30.00
+    • Average Profit Margin : $2200.00%
+
+  Supplier Metrics:
+    • Supplier Count        :  4
+    • Average Lead Time     :  17.8 days
+    • Minimum Cost          : $400.00
+
+  Customer Insights:
+    • Unique Customers      :  5
+    • Corporate Orders      :  9
+────────────────────────────────────────────
 ```
 
 This query provides a complete view of:
@@ -529,17 +590,7 @@ This query provides a complete view of:
    - Apply `--exclude` for known irrelevant paths or models
    - Use `--prefix` to focus on specific model sets
 
-## Best Practices
-
-1. I smaller projects, start with broad queries and gradually add filters. In larger projects where there may be a huge number of paths, start with a narrow scope and broaden as needed
-2. Use `--max-depth` to prevent deep recursion in complex relationships
-3. Export results to markdown for documentation with `-m`
-4. Use caching when running repeated queries during development
-5. Clear cache when model relationships change
-
-## Troubleshooting
-
-### Common Issues
+## Troubleshooting Common Issues
 
 1. **Too Many Results**
    - Use `--max-paths` to limit output
@@ -548,5 +599,5 @@ This query provides a complete view of:
 
 2. **Missing Paths**
    - Check `--max-depth` isn't too low
-   - Verify excluded paths with `-e`
+   - Verify excluded paths with `-e/--exclude`
    - Ensure target model/field names are correct
