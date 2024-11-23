@@ -87,10 +87,9 @@ class ShippingAddress(BaseModel):
             )
         super().save(*args, **kwargs)
 
-    @property
-    def full_address(self):
-        """Return complete formatted address."""
-        address_parts = [
+    def _get_address_parts(self):
+        """Return address parts as a list."""
+        return [
             self.street_address1,
             self.street_address2,
             self.city,
@@ -98,6 +97,11 @@ class ShippingAddress(BaseModel):
             self.postal_code,
             self.country,
         ]
+
+    @property
+    def full_address(self):
+        """Return complete formatted address."""
+        address_parts = self._get_address_parts()
         return ", ".join(filter(None, address_parts))
 
 
