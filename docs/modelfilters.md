@@ -60,7 +60,7 @@ python manage.py modelfilters [options]
 
 - **`--target-field-type`**: Filter by field type
   ```bash
-  python manage.py modelfilters sales --field-type DateTimeField
+  python manage.py modelfilters sales --target-field-type DateTimeField
   ```
 
 - **`-e, --exclude`**: Exclude specific apps, models, or fields
@@ -112,7 +112,7 @@ All settings are optional, and should be added as dictionary key-value entries i
 
 ## Understanding Output
 
-The command outputs a table with four columns:
+The command outputs a table with five columns:
 
 1. **Field Path**: The full path to the field using Django's double-underscore notation
 2. **Model**: The model containing the field
@@ -141,7 +141,7 @@ python manage.py modelfilters auth.User --by-depth
 
 ### Filtering by Field Type
 ```bash
-python manage.py modelfilters sales.ShippingAddress --field-type DateTimeField
+python manage.py modelfilters sales.ShippingAddress --target-field-type DateTimeField
 ```
 
 | Field Path | Model | Field Name | Field Type | Models in Path |
@@ -193,7 +193,7 @@ You can combine multiple filters for precise results:
 python manage.py modelfilters \
     sales \
     --target-model User \
-    --field-type EmailField \
+    --target-field-type EmailField \
     --max-depth 3 \
     --exclude auth
 ```

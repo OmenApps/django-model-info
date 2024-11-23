@@ -39,8 +39,8 @@ python manage.py modelgraph [options]
 - **`-p, --proxy`**: Include proxy models
 
 ### Output Options
-- **`-f, --format`**: Output format (choices: dot, mermaid, analysis; default: analysis)
-- **`-o, --output`**: Output file path (required for dot format, optional for mermaid
+- **`-f, --format`**: Output format (choices: `dot`, `mermaid`, `analysis`; default: `analysis`)
+- **`-o, --output`**: Output file path (required for `dot` format, optional for `mermaid`)
 
 ### Cache Control
 - **`--use-cache`**: Use cached results if available
