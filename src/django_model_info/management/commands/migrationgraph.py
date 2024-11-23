@@ -74,8 +74,7 @@ class Command(BaseCommand):
         self._print_label(f"{app_label}/{migration_name}")
 
         # Print dependencies
-        dependencies = [(dep_app, dep_name) for dep_app, dep_name in node.dependencies
-                       if dep_app != app_label]
+        dependencies = [(dep_app, dep_name) for dep_app, dep_name in node.dependencies if dep_app != app_label]
         if dependencies:
             self._print_title("\tDepends on:")
             for dep_app, dep_name in dependencies:
@@ -90,8 +89,9 @@ class Command(BaseCommand):
         # Print reverse dependencies
         migration_key = (app_label, migration_name)
         reverse_deps = self.reverse_dependencies.get(migration_key, set())
-        reverse_deps = [(rev_app, rev_name) for rev_app, rev_name in reverse_deps
-                       if rev_app in self.app_labels]  # Filter to requested apps
+        reverse_deps = [
+            (rev_app, rev_name) for rev_app, rev_name in reverse_deps if rev_app in self.app_labels
+        ]  # Filter to requested apps
         if reverse_deps:
             self._print_title("\tDepended upon by:")
             for rev_app, rev_name in sorted(reverse_deps):
@@ -100,7 +100,7 @@ class Command(BaseCommand):
     def _get_node_key(self, node):
         """Get the app_label and migration_name for a node."""
         # Handle both Node objects and tuples
-        if hasattr(node, 'key'):
+        if hasattr(node, "key"):
             return node.key
         return node
 

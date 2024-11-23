@@ -1,4 +1,3 @@
-
 import logging
 
 from django.core.cache import caches
@@ -22,11 +21,13 @@ def get_cache_version() -> int:
     """Get the current cache version."""
     return cache.get(CACHE_VERSION_KEY, 0)
 
+
 def increment_cache_version(command: BaseCommand) -> None:
     """Increment the cache version to invalidate all cached results."""
     current_version = command.get_cache_version()
     cache.set(CACHE_VERSION_KEY, current_version + 1)
     command.stdout.write(command.style.SUCCESS("Cleared all cached results"))
+
 
 def clear_modelfilters_cache(command: BaseCommand):
     """Clear all cached results for modelfilters."""
