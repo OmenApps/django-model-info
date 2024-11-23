@@ -14,8 +14,8 @@ from rich.padding import Padding
 from rich.style import Style
 from rich.table import Table
 
-from .model_info_utils._common_utils import clean_docstring
-from .model_info_utils._field_attr_utils import (
+from .modelinfo_utils._common_utils import clean_docstring
+from .modelinfo_utils._field_attr_utils import (
     get_field_column,
     get_field_db_type,
     get_field_name,
@@ -26,22 +26,22 @@ from .model_info_utils._field_attr_utils import (
     get_related_model,
     get_related_name,
 )
-from .model_info_utils._info_classes import (
+from .modelinfo_utils._info_classes import (
     FieldOther,
     FieldRelation,
     FieldReverseRelation,
     Method,
     ModelInfo,
 )
-from .model_info_utils._manager_utils import format_manager_output, get_model_managers
-from .model_info_utils._markdown_utils import MarkdownExporter, MarkdownSection
-from .model_info_utils._method_attr_utils import (
+from .modelinfo_utils._manager_utils import format_manager_output, get_model_managers
+from .modelinfo_utils._markdown_utils import MarkdownExporter, MarkdownSection
+from .modelinfo_utils._method_attr_utils import (
     get_method_docstring,
     get_method_file,
     get_method_line_number,
     get_method_signature,
 )
-from .model_info_utils._model_attr_utils import (
+from .modelinfo_utils._model_attr_utils import (
     get_model_base_manager,
     get_model_constraints,
     get_model_database_table,
@@ -150,7 +150,7 @@ class ModelProcessor:
         self.exclude_defaults = exclude_defaults
         self.markdown = markdown
 
-    def build_model_info(self):
+    def build_modelinfo(self):
         """Return the essential details of the model."""
         new_model = ModelInfo()
         new_model.model_name.value = get_model_name(self.model)
@@ -367,13 +367,21 @@ class Command(BaseCommand):
             "3 Model names + field names & details + all method names & details.",
         )
         parser.add_argument(
+            "filter",
+            nargs="*",
+            type=str,
+            default=None,
+            help="Provide one or more apps or models, to which the results will be limited. "
+            "Input should be in the form `appname` or `appname.Modelname`.",
+        )
+        parser.add_argument(
             "--exclude-defaults",
             action="store_true",
             help="Show only user-defined fields and methods, skipping Django's default fields and methods.",
         )
         parser.add_argument(
-            "-e",
-            "--export",
+            "-o",
+            "--output",
             nargs="?",
             type=str,
             default=None,
@@ -385,36 +393,27 @@ class Command(BaseCommand):
             action="store_true",
             help="Output in markdown format to the console",
         )
-        parser.add_argument(
-            "-f",
-            "--filter",
-            nargs="+",
-            type=str,
-            default=None,
-            help="Provide one or more apps or models, to which the results will be limited. "
-            "Input should be in the form `appname` or `appname.Modelname`.",
-        )
 
     def get_options(self, options) -> tuple:
         """Get verbosity, filter, and export options."""
         verbosity = options.get("verbosity", None)
         if verbosity is None:
             verbosity = (
-                getattr(settings, "MODEL_INFO_VERBOSITY", 2)
-                if isinstance(getattr(settings, "MODEL_INFO_VERBOSITY", 2), int)
+                getattr(settings, "MODELINFO_VERBOSITY", 2)
+                if isinstance(getattr(settings, "MODELINFO_VERBOSITY", 2), int)
                 else 2
             )
 
         filter_option = options.get("filter", None)
         if filter_option is None:
             filter_option = (
-                getattr(settings, "MODEL_INFO_FILTER", None)
-                if isinstance(getattr(settings, "MODEL_INFO_FILTER", None), list)
+                getattr(settings, "MODELINFO_FILTER", None)
+                if isinstance(getattr(settings, "MODELINFO_FILTER", None), list)
                 else None
             )
         export_option = (
-            options.get("export")
-            if options.get("export", None) is not None and isinstance(options.get("export"), str)
+            options.get("output")
+            if options.get("output", None) is not None and isinstance(options.get("output"), str)
             else None
         )
         exclude_defaults = options.get("exclude_defaults", False)
@@ -442,8 +441,8 @@ class Command(BaseCommand):
 
             if self.verbosity > 0:
                 processor = ModelProcessor(model, self.verbosity, self.exclude_defaults, markdown=False)
-                model_info = processor.build_model_info()
-                self.render_model_info(model_info)
+                modelinfo = processor.build_modelinfo()
+                self.render_modelinfo(modelinfo)
 
                 fields_other = processor.build_other_field_info()
                 self.render_other_fields(fields_other)
@@ -523,7 +522,7 @@ class Command(BaseCommand):
             and callable(getattr(model, method_name))
         ]
 
-    def render_model_info(self, model_info):
+    def render_modelinfo(self, modelinfo):
         """Render model information."""
         table = Table(title="Model Info")
 
@@ -536,8 +535,8 @@ class Command(BaseCommand):
         table.add_column("Key", justify="left", style="blue")
         table.add_column("Value", justify="left", style="magenta")
 
-        if isinstance(model_info, ModelInfo):
-            for row in model_info.render_rows(row_count):
+        if isinstance(modelinfo, ModelInfo):
+            for row in modelinfo.render_rows(row_count):
                 new_row = tuple(row)
                 table.add_row(new_row[0], new_row[1])
 
@@ -703,10 +702,10 @@ class Command(BaseCommand):
             model_section = MarkdownSection(title=model._meta.label, content=[], level=1)
 
             processor = ModelProcessor(model, self.verbosity, self.exclude_defaults, markdown=True)
-            model_info = processor.build_model_info()
+            modelinfo = processor.build_modelinfo()
 
             # Add Model Info section
-            info_table = exporter.format_model_info_table(model_info)
+            info_table = exporter.format_modelinfo_table(modelinfo)
             model_section.content.extend(["## Model Info\n", info_table.render(), ""])
 
             if self.verbosity > 0:
@@ -740,7 +739,7 @@ class Command(BaseCommand):
                             model_section.content.extend([section.render(), ""])
 
                 # Add Managers section
-                managers_section = exporter.format_managers_section(model_info.managers_info)
+                managers_section = exporter.format_managers_section(modelinfo.managers_info)
                 if managers_section:
                     model_section.content.append(managers_section.render())
 

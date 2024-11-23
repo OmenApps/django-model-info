@@ -1,4 +1,4 @@
-"""Common utility functions for the model_info management command."""
+"""Common utility functions for the modelinfo management command."""
 
 
 def clean_docstring(text: str) -> str:

@@ -14,22 +14,22 @@ except ImportError as e:
     logger.error("Django could not be imported. Settings cannot be loaded: %s", e)
     settings = None  # pylint: disable=C0103
 
-_DJANGO_MODEL_INFO = getattr(settings, "DJANGO_MODEL_INFO", {})
+_DJANGO_MODELINFO = getattr(settings, "DJANGO_MODELINFO", {})
 """dict: The settings for the django-model-info app."""
 
-CACHE_ENABLED = _DJANGO_MODEL_INFO.get("CACHE_ENABLED", False)
+CACHE_ENABLED = _DJANGO_MODELINFO.get("CACHE_ENABLED", False)
 """bool: Enable caching of results."""
 
-CACHE_ALWAYS = _DJANGO_MODEL_INFO.get("CACHE_ALWAYS", False)
+CACHE_ALWAYS = _DJANGO_MODELINFO.get("CACHE_ALWAYS", False)
 """bool: Always cache results, even if the --use-cache flag is not used."""
 
-CACHE_ALIAS = _DJANGO_MODEL_INFO.get("CACHE_ALIAS", "default")
+CACHE_ALIAS = _DJANGO_MODELINFO.get("CACHE_ALIAS", "default")
 """str: The cache alias to use for caching results."""
 
-CACHE_TIMEOUT = _DJANGO_MODEL_INFO.get("CACHE_TIMEOUT", 3600)
+CACHE_TIMEOUT = _DJANGO_MODELINFO.get("CACHE_TIMEOUT", 3600)
 """int: The cache timeout in seconds."""
 
-CACHE_KEY_PREFIX = _DJANGO_MODEL_INFO.get("CACHE_KEY_PREFIX", "model_filters:")
+CACHE_KEY_PREFIX = _DJANGO_MODELINFO.get("CACHE_KEY_PREFIX", "modelfilters:")
 """str: The prefix to use for cache keys."""
 
 CACHE_VERSION_KEY = f"{CACHE_KEY_PREFIX}version"

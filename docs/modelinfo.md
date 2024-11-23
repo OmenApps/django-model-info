@@ -1,4 +1,4 @@
-# Usage Guide for model_info
+# Usage Guide for modelinfo
 
 This guide will help you begin using django-model-info to explore your Django models.
 
@@ -9,15 +9,16 @@ This guide will help you begin using django-model-info to explore your Django mo
 The simplest way to use django-model-info is:
 
 ```bash
-python manage.py model_info
+python manage.py modelinfo
 ```
 
 This will display information about all models in your project using the default verbosity level (2).
 
-For a specific app or model:
+For specific apps, models, or a combination, add them to the command. Any of the following formats are valid:
 ```bash
-python manage.py model_info -f myapp
-python manage.py model_info -f myapp.MyModel
+python manage.py modelinfo sales
+python manage.py modelinfo sales.Order
+python manage.py modelinfo sales.Order sales.OrderItem auth
 ```
 
 ### Understanding Default Output
@@ -26,22 +27,31 @@ The default output (verbosity level 2) includes:
 
 1. **Model Information**
    ```
-   myapp.MyModel
+   sales.Order
    ├── Model Info
-   │   ├── Database Table: myapp_mymodel
-   │   ├── Verbose Name: My Model
+   │   ├── Model Name: Order
+   │   ├── Verbose Name: order
+   |   ├── Verbose Name Plural: orders
    │   └── ...
    ├── Fields
-   │   ├── Regular Fields
-   │   ├── Relations
-   │   └── Reverse Relations
-   └── Methods
+   │   ├── Regular Fields (Field Name | Field Type | Database Column | Database Type | Verbose Name)
+   │   ├── Relations (Field Name | Field Type | Database Column | Database Type | Related Model | Related Name)
+   │   └── Reverse Relations (Field Name | Field Type Database Type | Related Model | Field Name on Related Model | Field Type on Related Model)
+   ├── Methods
+   │   ├── Other Methods (Method Name | Signature)
+   │   ├── Private Methods (Method Name | Signature)
+   │   ├── Dunder Methods (Method Name | Signature)
+   │   └── Common Django Methods (Method Name | Signature)
+   └── Custom Managers
+       ├── Custom Managers
+       └── Custom QuerySets
    ```
 
 Each section provides:
 - **Model Info**: Basic model configuration and metadata
 - **Fields**: All model fields with their types and properties
 - **Methods**: Available model methods with signatures
+- **Custom Managers**: Custom managers and querysets
 
 ### Common Use Cases
 
@@ -49,10 +59,10 @@ Each section provides:
 When joining a project or returning after time away:
 ```bash
 # Get a high-level overview of all models
-python manage.py model_info -v 1
+python manage.py modelinfo -v 1
 
 # Deep dive into a specific app
-python manage.py model_info -f myapp -v 3
+python manage.py modelinfo sales -v 3
 ```
 
 This helps you:
@@ -64,10 +74,10 @@ This helps you:
 Generate documentation for your models:
 ```bash
 # Generate HTML documentation
-python manage.py model_info -e models.html
+python manage.py modelinfo -o models.html
 
 # Generate Markdown for your repo
-python manage.py model_info -e models.md
+python manage.py modelinfo -o models.md
 ```
 
 Tips for documentation:
@@ -79,7 +89,7 @@ Tips for documentation:
 When working with model relationships:
 ```bash
 # Focus on a specific model with full details
-python manage.py model_info -f myapp.MyModel -v 3
+python manage.py modelinfo sales.Order -v 3
 ```
 
 This helps you:
@@ -90,27 +100,19 @@ This helps you:
 
 Pro tip: When debugging relationships, pay special attention to the "Relations" and "Reverse Relations" sections in the output. These show how your model connects to others and what field names to use in queries.
 
-### Next Steps
-
-Now that you've installed and tried basic commands, you can:
-1. Explore different verbosity levels to control output detail
-2. Use filters to focus on specific parts of your project
-3. Export model information in various formats
-4. Configure default settings for your project
-
-See the [Configuration & Options](usage_configuration.md) section for more detailed information about customizing django-model-info for your needs.
-
 ## Configuration & Options
 
-django-model-info can be configured through both Django settings and command-line options. This section covers all available configuration options and when to use them.
+The `modelinfo` command can be configured through both Django settings and command-line options. All settings are optional, and should be added as dictionary key-value entries in the **`DJANGO_MODELINFO`** setting.
 
-### MODEL_INFO_VERBOSITY
+### MODELINFO_VERBOSITY
 
 Controls the default level of detail in the output.
 
 ```python
 # settings.py
-MODEL_INFO_VERBOSITY = 2  # Default value
+DJANGO_MODELINFO = {
+    "MODELINFO_VERBOSITY": 2  # Default value
+}
 ```
 
 #### Valid Options
@@ -119,9 +121,9 @@ MODEL_INFO_VERBOSITY = 2  # Default value
   - Use when: You need a simple list of models
   ```python
   # Output Example:
-  myapp.UserProfile
-  myapp.Order
-  myapp.Product
+  sales.BankAccount
+  sales.Order
+  sales.OrderItem
   ```
 
 - **1**: Basic information
@@ -158,33 +160,32 @@ MODEL_INFO_VERBOSITY = 2  # Default value
   - Line numbers
   ```
 
-### MODEL_INFO_FILTER
+### MODELINFO_FILTER
 
 Specifies which models or apps to display by default.
 
 ```python
 # settings.py
-MODEL_INFO_FILTER = [
-    "myapp",                    # Entire app
-    "otherapp.SpecificModel",   # Specific model
-]
+DJANGO_MODELINFO = {
+    "MODELINFO_FILTER": ["sales", "auth.User"]
+}
 ```
 
 #### Format Specifications
-- **App Filter**: Just the app name (e.g., `"myapp"`)
-- **Model Filter**: App and model name separated by dot (e.g., `"myapp.Model"`)
+- **App Filter**: Just the app name (e.g., `"sales"`)
+- **Model Filter**: App and model name separated by dot (e.g., `"sales.Order"`)
 - **Multiple Items**: List of strings with any combination
 
 #### Example Patterns
 ```python
 # Show multiple apps
-MODEL_INFO_FILTER = ["users", "orders", "products"]
+MODELINFO_FILTER = ["auth", "sales", "inventory"]
 
 # Show specific models
-MODEL_INFO_FILTER = ["users.User", "orders.Order"]
+MODELINFO_FILTER = ["auth.User", "sales.Order"]
 
 # Mix of apps and models
-MODEL_INFO_FILTER = ["users", "orders.Order", "products.Product"]
+MODELINFO_FILTER = ["auth", "sales.Order", "inventory.Product"]
 ```
 
 ## Command Line Options
@@ -195,60 +196,60 @@ Override the default verbosity level:
 
 ```bash
 # Model names only
-python manage.py model_info -v 0
+python manage.py modelinfo -v 0
 
 # Basic information
-python manage.py model_info -v 1
+python manage.py modelinfo -v 1
 
 # Detailed information (default)
-python manage.py model_info -v 2
+python manage.py modelinfo -v 2
 
 # Complete information
-python manage.py model_info -v 3
+python manage.py modelinfo -v 3
 ```
 
-### Filtering (`-f`, `--filter`)
+### Filtering (positional arg)
 
 Filter which models to display:
 
 ```bash
 # Single app
-python manage.py model_info -f myapp
+python manage.py modelinfo sales
 
 # Single model
-python manage.py model_info -f myapp.MyModel
+python manage.py modelinfo sales.Order
 
 # Multiple filters
-python manage.py model_info -f myapp otherapp.Model
+python manage.py modelinfo sales auth.User
 ```
 
 #### By App
 Shows all models in specified app(s):
 ```bash
-python manage.py model_info -f users
-python manage.py model_info -f users orders
+python manage.py modelinfo auth
+python manage.py modelinfo auth orders
 ```
 
 #### By Model
 Shows specific model(s):
 ```bash
-python manage.py model_info -f users.User
-python manage.py model_info -f users.User orders.Order
+python manage.py modelinfo auth.User
+python manage.py modelinfo auth.User sales.Order
 ```
 
 #### Multiple Filters
 Combine app and model filters:
 ```bash
-python manage.py model_info -f users orders.Order products
+python manage.py modelinfo auth sales.Order inventory
 ```
 
-### Export Options (`-e`, `--export`)
+### Output Options (`-o`, `--output`)
 
 Export the output in different formats:
 
 #### HTML Format
 ```bash
-python manage.py model_info -e output.html
+python manage.py modelinfo -o output.html
 ```
 - Includes rich formatting and styling
 - Interactive navigation (if supported by the template)
@@ -256,7 +257,7 @@ python manage.py model_info -e output.html
 
 #### Markdown Format
 ```bash
-python manage.py model_info -e output.md
+python manage.py modelinfo - output.md
 ```
 - Perfect for GitHub documentation
 - Easy to read in plain text
@@ -264,7 +265,7 @@ python manage.py model_info -e output.md
 
 #### Text Format
 ```bash
-python manage.py model_info -e output.txt
+python manage.py modelinfo -o output.txt
 ```
 - Plain text output
 - No formatting
@@ -275,7 +276,7 @@ python manage.py model_info -e output.txt
 #### `--exclude-defaults`
 Excludes Django's default fields and methods:
 ```bash
-python manage.py model_info --exclude-defaults
+python manage.py modelinfo --exclude-defaults
 ```
 - Hides common Django fields (e.g., id, created_at)
 - Excludes standard model methods
@@ -284,7 +285,7 @@ python manage.py model_info --exclude-defaults
 #### `--markdown`
 Outputs in markdown format directly to console:
 ```bash
-python manage.py model_info --markdown
+python manage.py modelinfo --markdown
 ```
 - Useful for copying into documentation
 - No file creation needed

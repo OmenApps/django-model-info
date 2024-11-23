@@ -55,10 +55,10 @@ class MarkdownExporter:
         self.verbosity = verbosity
         self.exclude_defaults = exclude_defaults
 
-    def format_model_info_table(self, model_info: Any) -> MarkdownTable:
+    def format_modelinfo_table(self, modelinfo: Any) -> MarkdownTable:
         """Format model information into a markdown table."""
         table = MarkdownTable(["Key", "Value"])
-        for row in model_info.render_rows(19):
+        for row in modelinfo.render_rows(19):
             if row[1]:  # Only add rows with values
                 table.add_row([row[0], row[1]])
         return table

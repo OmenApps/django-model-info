@@ -28,8 +28,8 @@ def increment_cache_version(command: BaseCommand) -> None:
     cache.set(CACHE_VERSION_KEY, current_version + 1)
     command.stdout.write(command.style.SUCCESS("Cleared all cached results"))
 
-def clear_model_filters_cache(command: BaseCommand):
-    """Clear all cached results for model_filters."""
+def clear_modelfilters_cache(command: BaseCommand):
+    """Clear all cached results for modelfilters."""
     # Get all keys that start with our prefix
     keys = cache.keys(f"{CACHE_KEY_PREFIX}*")
     if keys:

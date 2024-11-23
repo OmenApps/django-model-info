@@ -85,8 +85,7 @@ def analyze_queryset(queryset_class):
 
 
 def get_model_managers(model):
-    """
-    Get all managers for a model, including custom managers.
+    """Get all managers for a model, including custom managers.
 
     Args:
         model: Django model class
@@ -132,8 +131,8 @@ def get_model_managers(model):
 
 
 def merge_method_info(methods1, methods2):
-    """
-    Merge two method dictionaries, combining any duplicate method names.
+    """Merge two method dictionaries, combining any duplicate method names.
+
     In case of duplicates, keeps the first occurrence's information.
     """
     merged = methods1.copy()
@@ -144,9 +143,7 @@ def merge_method_info(methods1, methods2):
 
 
 def merge_manager_info(info1, info2):
-    """
-    Merge two manager info dictionaries, combining their methods and querysets.
-    """
+    """Merge two manager info dictionaries, combining their methods and querysets."""
     merged = {
         "name": info1["name"],
         "module": info1.get("module", ""),
@@ -174,9 +171,7 @@ def merge_manager_info(info1, info2):
 
 
 def group_managers_by_name(managers_info):
-    """
-    Group managers by their class name and merge their information.
-    """
+    """Group managers by their class name and merge their information."""
     grouped = {}
     for manager_name, manager_info in managers_info.items():
         class_name = manager_info["name"]
@@ -193,8 +188,8 @@ def group_managers_by_name(managers_info):
 
 
 def format_manager_output(managers_info, indent=0, verbosity=0):
-    """
-    Format manager information for display, combining managers with the same class name.
+    """Format manager information for display, combining managers with the same class name.
+
     Args:
         managers_info: Dict containing manager information
         indent: Number of spaces to indent
