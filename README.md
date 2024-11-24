@@ -261,6 +261,14 @@ We welcome contributions! This project uses:
 - [Cookiecutter](https://github.com/audreyr/cookiecutter)
 - [cookiecutter-djangopackage](https://github.com/pydanny/cookiecutter-djangopackage)
 - [rich](https://github.com/willmcgugan/rich/)
+- [graphviz](https://graphviz.org/)
+- [MermaidJS](https://mermaid-js.github.io/mermaid/)
+- [networkx](https://networkx.org/)
+- [pydot](https://pypi.org/project/pydot/)
+
+## Background and Credits
+
+The `modelinfo` command has been something I have slowly been working on and improving for several years. The original idea behind `modelfilters` came from observing the underlying functionality in the `django-drip-campaigns` package and realizing that having a way to list potential filter paths could help developers with building complex queries, though my implementation of those ideas is quite different.  The `modelgraph` command was loosely inspired by existing tools like the `graph_models` command in `django-extensions`, but I wanted to provide a more detailed, filterable, and customizable output. The `migrationgraph` command was inspired by recent discussions I read online about migration graphs and dependencies, but I cannot recall the specific thread/post that sparked the idea.
 
 ## License
 
