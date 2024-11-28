@@ -80,6 +80,15 @@ class MarkdownExporter:
                     "Related Model",
                     "Related Name",
                 ]
+            elif field_type == "reverse relation":
+                headers = [
+                    "Field Name",
+                    "Field Type",
+                    "Database Type",
+                    "Related Model",
+                    "Field Name on Related Model",
+                    "Field Type on Related Model",
+                ]
             else:
                 return None
         else:
@@ -97,8 +106,7 @@ class MarkdownExporter:
                         field.field_db_type,
                         field.field_verbose_name,
                     ]
-                # elif field_type == "relation":
-                else:
+                elif field_type == "relation":
                     row = [
                         f"`{field.name}`",
                         field.field_type,
@@ -106,6 +114,15 @@ class MarkdownExporter:
                         field.field_db_type,
                         field.related_model,
                         field.related_name,
+                    ]
+                elif field_type == "reverse relation":
+                    row = [
+                        f"`{field.name}`",
+                        field.field_type,
+                        field.field_db_type,
+                        field.related_model,
+                        field.field_name_on_related_model,
+                        field.field_type_on_related_model,
                     ]
             else:
                 row = [f"`{field.name}`"]

@@ -723,6 +723,15 @@ class Command(BaseCommand):
                     if relations_table:
                         model_section.content.extend(["## Relations\n", relations_table.render(), ""])
 
+                # Add Reverse Relations section
+                if not model._meta.abstract:
+                    fields_reverse_relation = processor.build_reverse_relation_field_info()
+                    model_section.content.extend([f"{fields_reverse_relation=}\n"])
+                    if fields_reverse_relation:
+                        reverse_relations_table = exporter.format_fields_table(fields_reverse_relation, "reverse relation")
+                        if reverse_relations_table:
+                            model_section.content.extend(["## Reverse Relations\n", reverse_relations_table.render(), ""])
+
                 # Add Methods section
                 method_list = self.get_clean_method_list(model)
                 methods = processor.build_method_info(method_list)
