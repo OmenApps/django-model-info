@@ -316,7 +316,7 @@ wheels = [
 
 [[package]]
 name = "django-model-info"
-version = "2024.11.4"
+version = "2024.11.5"
 source = { editable = "." }
 dependencies = [
     { name = "django" },

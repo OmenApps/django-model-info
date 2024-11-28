@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-model-info"
-version = "2024.11.4"
+version = "2024.11.5"
 description = "A set of Django Management Commands to help you understand and visualize your project's models."
 authors = [{ name = "Jack Linke", email = "jacklinke@gmail.com" }]
 license = { text = "MIT" }
