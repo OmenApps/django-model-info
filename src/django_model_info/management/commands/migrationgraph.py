@@ -166,6 +166,29 @@ class Command(BaseCommand):
         label = f"{app_label}/{prefix}"
         return label
 
+    def _get_node_sort_key(self, node_key):
+        """Get the sort key for a node to ensure deterministic order.
+
+        Args:
+            node_key: The node key tuple (app_label, migration_name).
+
+        Returns:
+            str: The node ID used for sorting.
+        """
+        return self._get_node_id(node_key)
+
+    def _get_edge_sort_key(self, edge):
+        """Get the sort key for an edge to ensure deterministic order.
+
+        Args:
+            edge: The edge tuple (from_key, to_key).
+
+        Returns:
+            tuple: A tuple of (from_node_id, to_node_id) used for sorting.
+        """
+        from_key, to_key = edge
+        return (self._get_node_id(from_key), self._get_node_id(to_key))
+
     def _print_app_migrationgraph(self, app):
         """Print the migrations graph for the specified app."""
         try:
@@ -203,13 +226,13 @@ class Command(BaseCommand):
         self.stdout.write("graph TD\n")
         # First, define nodes
         # Sort nodes to ensure deterministic output
-        for node_key in sorted(self.nodes, key=lambda x: self._get_node_id(x)):
+        for node_key in sorted(self.nodes, key=self._get_node_sort_key):
             node_id = self._get_node_id(node_key)
             node_label = self._get_node_label(node_key)
             self.stdout.write(f'    {node_id}["{node_label}"]\n')
         # Then, define edges
         # Sort edges to ensure deterministic output
-        for from_key, to_key in sorted(self.edges, key=lambda x: (self._get_node_id(x[0]), self._get_node_id(x[1]))):
+        for from_key, to_key in sorted(self.edges, key=self._get_edge_sort_key):
             from_id = self._get_node_id(from_key)
             to_id = self._get_node_id(to_key)
             self.stdout.write(f"    {from_id} --> {to_id}\n")
