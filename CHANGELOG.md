@@ -1,5 +1,10 @@
 # History
 
+## 0.2.2 (Unreleased)
+
+-   Ensure deterministic output for `migrationgraph` and `modelgraph` commands by sorting nodes and edges.
+-   Update example project for Django 5.1 compatibility.
+
 ## 0.2.1 (2021-12-13)
 
 - Fix incorrct type checking placement.

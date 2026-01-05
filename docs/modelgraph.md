@@ -89,6 +89,8 @@ Generates a visual representation of model relationships using the DOT graph des
 ### Mermaid Format
 Generates a visual representation of model relationships using [MermaidJS](https://mermaid.js.org/syntax/flowchart.html).
 
+> The edges in the MermaidJS output are sorted to ensure deterministic output across runs.
+
 #### Features:
 1. Relationship styles:
    - Forward relationships: thick solid lines

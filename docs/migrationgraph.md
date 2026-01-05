@@ -51,6 +51,8 @@ inventory/0001_initial
 
 The command also generates a **MermaidJS flowchart** to help visualize the migration graph. This flowchart is represented in the MermaidJS syntax, which can be used to generate diagrams.
 
+> The nodes and edges in the MermaidJS output are sorted to ensure deterministic output across runs.
+
 Example output:
 
 `````
