@@ -1,6 +1,6 @@
 # History
 
-## 0.2.2 (Unreleased)
+## Unreleased
 
 -   Ensure deterministic output for `migrationgraph` and `modelgraph` commands by sorting nodes and edges.
 -   Update example project for Django 5.1 compatibility.
