@@ -21,7 +21,7 @@ class Category(BaseModel):
 
         verbose_name_plural = "categories"
         indexes = [models.Index(fields=["name", "slug"]), models.Index(fields=["parent", "name"])]
-        constraints = [models.CheckConstraint(check=~Q(parent=F("id")), name="prevent_self_parent")]
+        constraints = [models.CheckConstraint(condition=~Q(parent=F("id")), name="prevent_self_parent")]
 
     def __str__(self):
         return self.name
@@ -106,7 +106,7 @@ class Product(BaseModel):
         """Meta options for the model."""
 
         indexes = [models.Index(fields=["sku", "name"]), models.Index(fields=["category", "-created_at"])]
-        constraints = [models.CheckConstraint(check=Q(price__gt=0), name="price_positive")]
+        constraints = [models.CheckConstraint(condition=Q(price__gt=0), name="price_positive")]
 
     def __str__(self):
         return f"{self.sku} - {self.name}"

@@ -28,7 +28,8 @@ class MermaidOutputFormat(GraphOutputFormat):
         processed_relationships = set()
 
         # Add relationships with styling
-        for u, v, key, data in G.edges(data=True, keys=True):
+        # Sort edges to ensure deterministic output
+        for u, v, key, data in sorted(G.edges(data=True, keys=True), key=self._get_edge_sort_key):
             # Create unique identifier for this relationship
             rel_id = (u, v, data["field_name"])
             if rel_id in processed_relationships:
@@ -56,6 +57,18 @@ class MermaidOutputFormat(GraphOutputFormat):
             lines.append(f'    {target}["{v}"]')
 
         return "\n".join(lines)
+
+    def _get_edge_sort_key(self, edge):
+        """Get the sort key for an edge to ensure deterministic order.
+
+        Args:
+            edge: The edge tuple (u, v, key, data).
+
+        Returns:
+            tuple: A tuple of (source, target, field_name) used for sorting.
+        """
+        u, v, key, data = edge
+        return (u, v, data["field_name"])
 
     def _get_relationship_style(self, relationship_type: str, direction: str) -> tuple[str, str]:
         """Get Mermaid arrow style for relationship type.

@@ -38,7 +38,7 @@ class SalesMetrics(MetricsBase):
         """Meta options for the model."""
 
         verbose_name_plural = "sales metrics"
-        constraints = [models.CheckConstraint(check=Q(conversion_rate__lte=100), name="conversion_rate_percentage")]
+        constraints = [models.CheckConstraint(condition=Q(conversion_rate__lte=100), name="conversion_rate_percentage")]
 
 
 class ProductPerformance(MetricsBase):
