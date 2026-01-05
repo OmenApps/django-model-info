@@ -28,7 +28,8 @@ class MermaidOutputFormat(GraphOutputFormat):
         processed_relationships = set()
 
         # Add relationships with styling
-        for u, v, key, data in G.edges(data=True, keys=True):
+        # Sort edges to ensure deterministic output
+        for u, v, key, data in sorted(G.edges(data=True, keys=True), key=lambda x: (x[0], x[1], x[3]["field_name"])):
             # Create unique identifier for this relationship
             rel_id = (u, v, data["field_name"])
             if rel_id in processed_relationships:
