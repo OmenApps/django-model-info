@@ -202,12 +202,14 @@ class Command(BaseCommand):
         self.stdout.write("\n```mermaid\n")
         self.stdout.write("graph TD\n")
         # First, define nodes
-        for node_key in self.nodes:
+        # Sort nodes to ensure deterministic output
+        for node_key in sorted(self.nodes, key=lambda x: self._get_node_id(x)):
             node_id = self._get_node_id(node_key)
             node_label = self._get_node_label(node_key)
             self.stdout.write(f'    {node_id}["{node_label}"]\n')
         # Then, define edges
-        for from_key, to_key in self.edges:
+        # Sort edges to ensure deterministic output
+        for from_key, to_key in sorted(self.edges, key=lambda x: (self._get_node_id(x[0]), self._get_node_id(x[1]))):
             from_id = self._get_node_id(from_key)
             to_id = self._get_node_id(to_key)
             self.stdout.write(f"    {from_id} --> {to_id}\n")
