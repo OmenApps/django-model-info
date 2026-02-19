@@ -1,8 +1,10 @@
 # django-model-info
 
-[![PyPI version](https://badge.fury.io/py/django-model-info.svg)](https://badge.fury.io/py/django-model-info)
-[![Build Status](https://travis-ci.org/jacklinke/django-model-info.svg?branch=master)](https://travis-ci.org/jacklinke/django-model-info)
-[![codecov](https://codecov.io/gh/jacklinke/django-model-info/branch/master/graph/badge.svg)](https://codecov.io/gh/jacklinke/django-model-info)
+[![PyPI](https://img.shields.io/pypi/v/django-model-info)](https://pypi.org/project/django-model-info/)
+[![Python versions](https://img.shields.io/pypi/pyversions/django-model-info)](https://pypi.org/project/django-model-info/)
+[![Django versions](https://img.shields.io/pypi/djversions/django-model-info)](https://pypi.org/project/django-model-info/)
+[![Documentation](https://readthedocs.org/projects/django-model-info/badge/?version=latest)](https://django-model-info.readthedocs.io/en/latest/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 **Instantly understand your Django models' structure and relationships with beautiful, intuitive output.**
 
