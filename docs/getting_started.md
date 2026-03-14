@@ -10,10 +10,12 @@ Before installing django-model-info, ensure your environment meets the following
 
 - **Python**: Version 3.10 or higher
 - **Django**: Version 4.2 or higher
-- **Dependencies**: 
+- **Dependencies**:
   - `rich`: Automatically installed with the package for console output
   - `networkx`: Required if using `modelgraph` command
   - `pydot`: Required if using `modelgraph` command
+- **System packages** (optional):
+  - `graphviz`: Required for `modelgraph` DOT format output (install via `apt install graphviz`, `brew install graphviz`, etc.)
 
 ### Installation Methods
 

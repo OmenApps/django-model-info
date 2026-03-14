@@ -14,7 +14,6 @@ parts
 bin
 var
 sdist
-develop-eggs
 .installed.cfg
 lib
 lib64
@@ -24,17 +23,13 @@ pip-log.txt
 
 # Unit test / coverage reports
 .coverage
-.tox
-nosetests.xml
+.coverage.*
+.nox/
+.pytest_cache/
 htmlcov
 
 # Translations
 *.mo
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
 
 # Pycharm/Intellij
 .idea
@@ -49,3 +44,8 @@ docs/_build
 # SQLite
 db.sqlite3
 
+# Virtual environments
+.venv/
+
+# Ruff
+.ruff_cache/

@@ -7,19 +7,27 @@ name = "django-model-info"
 version = "2024.11.5"
 description = "A set of Django Management Commands to help you understand and visualize your project's models."
 authors = [{ name = "Jack Linke", email = "jacklinke@gmail.com" }]
-license = { text = "MIT" }
+license = "MIT"
 readme = "README.md"
 classifiers = [
     "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Topic :: Documentation",
     "Topic :: Utilities",
 ]
-requires-python = ">=3.10,<4.0"
-dependencies = ["django", "networkx>=3.4.2", "pydot>=3.0.2", "rich>=13"]
+requires-python = ">=3.11"
+dependencies = ["django>=4.2", "networkx>=3.4.2", "pydot>=3.0.2", "rich>=13"]
 
 [project.urls]
 Homepage = "https://github.com/OmenApps/django-model-info"
@@ -27,35 +35,63 @@ Repository = "https://github.com/OmenApps/django-model-info"
 Documentation = "https://django-model-info.readthedocs.io/en/latest/"
 Changelog = "https://github.com/OmenApps/django-model-info/blob/main/CHANGELOG.md"
 
-[project.optional-dependencies]
-dev = [
-    "invoke>=2",
-    "twine>=4",
-    "wheel>=0.38.1",
-    "coverage>=7",
-    "flake8>=5",
-    "tox>=4",
-    "coverage>=7",
-    "black==23.3.0",
-    "flake8==6.0.0",
-    "isort==5.11.4",
-    "pydocstyle[toml]==6.2.3",
-]
-
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.black]
-target-version = ["py310"]
+[tool.ruff]
+src = ["src"]
+target-version = "py311"
+line-length = 120
 
-[tool.flake8]
-max-line-length = 88
+[tool.ruff.lint]
+select = ["E", "W", "F", "I"]
+ignore = ["E501"]
 
-[tool.isort]
-atomic = true
-line_length = 88
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-combine_as_imports = true
+[tool.ruff.lint.isort]
+known-first-party = ["django_model_info"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "example_project.settings"
+pythonpath = ["."]
+python_files = ["test_*.py"]
+log_cli = true
+filterwarnings = [
+    "ignore::pytest.PytestUnraisableExceptionWarning",
+]
+
+[tool.coverage.run]
+branch = true
+source_pkgs = ["django_model_info"]
+
+[tool.coverage.report]
+show_missing = true
+omit = [
+    ".nox/*",
+    "*/migrations/*",
+    "*/__init__.py",
+]
+exclude_lines = [
+    "raise NotImplementedError",
+]
+
+[tool.coverage.paths]
+source = [
+    "src",
+    "*/site-packages",
+]
+
+[dependency-groups]
+dev = [
+    "bandit",
+    "coverage[toml]",
+    "nox",
+    "pip-audit",
+    "pre-commit",
+    "pre-commit-hooks",
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "pytest-timeout",
+    "pyupgrade",
+    "ruff",
+]

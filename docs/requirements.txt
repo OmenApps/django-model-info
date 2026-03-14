@@ -7,6 +7,6 @@ furo==2024.8.6
 linkify-it-py==2.0.3
 
 # Django and related packages (for autodoc)
-Django==5.1.2
+Django>=5.2
 django-crispy-forms==2.3
 crispy-bootstrap5==2024.10

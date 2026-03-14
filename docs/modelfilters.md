@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `modelfilters` management command helps developers understand and navigate complex Django model relationships by displaying all possible field paths between models. 
+The `modelfilters` management command helps developers understand and navigate complex Django model relationships by displaying all possible field paths between models.
 
 For example, using models from the example project, running:
 ```bash
@@ -101,6 +101,7 @@ python manage.py modelfilters [options]
 - **`--use-cache`**: Use cached results if available (see also [settings](#settings))
 - **`--clear-cache`**: Clear cached results before running
 
+(settings)=
 ## Settings
 All settings are optional, and should be added as dictionary key-value entries in the **`DJANGO_MODELINFO`** setting.
 
@@ -465,7 +466,7 @@ report_rows = Product.objects.annotate(
     # Sales metrics
     total_orders=Count('orderitem__order', distinct=True),
     total_revenue=Sum(F('orderitem__unit_price') * F('orderitem__quantity')),
-    
+
     # Performance metrics
     avg_monthly_units=Avg(
         'performance_metrics__units_sold',
@@ -475,12 +476,12 @@ report_rows = Product.objects.annotate(
         'performance_metrics__profit_margin',
         filter=Q(performance_metrics__date__year=current_year)
     ),
-    
+
     # Supplier metrics
     supplier_count=Count('suppliers', distinct=True),
     avg_lead_time=Avg('productsupplier__lead_time_days'),  # See previous section
     min_cost=Min('productsupplier__cost'),
-    
+
     # Customer insights
     unique_customers=Count(
         'orderitem__order__customer',

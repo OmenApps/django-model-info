@@ -5,7 +5,6 @@
 ```{eval-rst}
 .. automodule:: django_model_info
     :members:
-   :members:
 ```
 
 ## Commands

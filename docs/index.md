@@ -20,5 +20,5 @@ terminology
 reference
 contributing
 License <license>
-Changelog <https://github.com/jacklinke/django-model-info/releases>
+Changelog <https://github.com/omenapps/django-model-info/releases>
 ```

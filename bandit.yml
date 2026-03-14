@@ -1,0 +1,5 @@
+skips:
+  - B101  # assert_used - common in tests and Django
+  - B105  # hardcoded_password_string - test credentials
+  - B106  # hardcoded_password_funcarg
+  - B311  # random - not used for crypto
