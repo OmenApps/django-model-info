@@ -15,7 +15,6 @@ def shorten_path(file_path, length):
 def get_method_signature(method: str, model: type, verbosity: int) -> str:
     """Get the method signature."""
     if verbosity > 1:
-
         try:
             return str(inspect.signature(getattr(model, method)))
         except ValueError:
@@ -24,7 +23,7 @@ def get_method_signature(method: str, model: type, verbosity: int) -> str:
             pass
         except OSError:
             pass
-        except Exception:  # pylint: disable=W0718
+        except Exception:  # nosec B110 — inspect.signature raises unpredictable errors on some model attributes
             pass
 
     return ""

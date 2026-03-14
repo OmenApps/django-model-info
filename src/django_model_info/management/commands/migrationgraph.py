@@ -1,4 +1,5 @@
 """Management command to visualize migrations and dependencies for apps in the project."""
+
 import re
 
 from django.apps import apps as django_apps

@@ -1,6 +1,7 @@
 """Django management command for generating model relationship graphs."""
+
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from django.core.management.base import BaseCommand, CommandParser
 
@@ -10,8 +11,8 @@ from .modelgraph_utils._graph import build_modelgraph, get_model_list
 from .modelgraph_utils._mermaidjs import MermaidOutputFormat
 
 try:
-    import networkx as nx
-    import pydot
+    import networkx as nx  # noqa: F401
+    import pydot  # noqa: F401
 except ImportError as e:
     raise ImportError("The networkx and pydot packages are required for this command.") from e
 
@@ -23,8 +24,8 @@ class Command(BaseCommand):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.output_path: Optional[Path] = None
-        self.output_format: Optional[str] = None
+        self.output_path: Path | None = None
+        self.output_format: str | None = None
 
     def add_arguments(self, parser: CommandParser) -> None:
         """Add command arguments."""

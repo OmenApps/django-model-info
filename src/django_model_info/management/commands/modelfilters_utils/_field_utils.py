@@ -2,10 +2,11 @@
 
 Modified from utils.py in django-drip-campaigns.
 """
+
 import re
 from dataclasses import dataclass
 from datetime import timedelta
-from typing import NamedTuple, Optional, TypeVar
+from typing import NamedTuple, TypeVar
 
 from django.apps import apps
 from django.db import models
@@ -41,11 +42,11 @@ class FilterConfig:
     """Configuration for field filtering."""
 
     excludes: list[str]
-    max_depth: Optional[int]
-    max_paths: Optional[int]
-    target_field_type: Optional[str]
-    target_model: Optional[type[models.Model]]
-    target_field: Optional[str]
+    max_depth: int | None
+    max_paths: int | None
+    target_field_type: str | None
+    target_model: type[models.Model] | None
+    target_field: str | None
 
 
 @dataclass
@@ -103,7 +104,7 @@ def normalize_model_name(name: str) -> str:
     return camel_to_snake(name)
 
 
-def normalize_app_model(pattern: str) -> tuple[Optional[str], Optional[str]]:
+def normalize_app_model(pattern: str) -> tuple[str | None, str | None]:
     """Split and normalize an app.Model pattern.
 
     Examples:
@@ -240,7 +241,7 @@ def should_skip_field(full_field: str, model_name: str, model_path: str, exclude
     return False
 
 
-def matches_target_field_type(field: FieldType, target_field_type: Optional[str]) -> bool:
+def matches_target_field_type(field: FieldType, target_field_type: str | None) -> bool:
     """Check if field matches the specified field type."""
     return target_field_type is None or field.__class__.__name__ == target_field_type
 
@@ -248,8 +249,8 @@ def matches_target_field_type(field: FieldType, target_field_type: Optional[str]
 def matches_target_filters(
     model: type[models.Model],
     field_name: str,
-    target_model: Optional[type[models.Model]],
-    target_field: Optional[str | list[str]],
+    target_model: type[models.Model] | None,
+    target_field: str | list[str] | None,
 ) -> bool:
     """Check if field matches target model and field filters."""
     if target_model and model.__name__ != target_model.__name__:
@@ -317,9 +318,9 @@ def process_field(
 def get_fields(
     Model: type[models.Model],
     parent_field: str = "",
-    path_tracker: Optional[PathTracker] = None,
-    filter_config: Optional[FilterConfig] = None,
-    model_path: Optional[list[str]] = None,
+    path_tracker: PathTracker | None = None,
+    filter_config: FilterConfig | None = None,
+    model_path: list[str] | None = None,
 ) -> list[list[str]]:
     """Given a Model, return a list of lists with field info."""
     # Initialize configuration
@@ -360,7 +361,6 @@ def get_fields(
         if is_valid_instance(field) and (
             not filter_config.max_paths or path_tracker.result_count[0] < filter_config.max_paths
         ):
-
             RelModel = get_rel_model(field)
             full_field = get_full_field(parent_field, get_field_name(field))
 

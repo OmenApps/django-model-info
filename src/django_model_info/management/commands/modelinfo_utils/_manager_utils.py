@@ -1,4 +1,5 @@
 """Utility functions for analyzing model managers and querysets."""
+
 import inspect
 
 from django.db import models

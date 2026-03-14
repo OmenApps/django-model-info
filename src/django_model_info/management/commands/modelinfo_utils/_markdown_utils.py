@@ -1,7 +1,7 @@
 """Markdown export functionality for Django model documentation."""
 
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any
 
 from ._common_utils import clean_docstring
 
@@ -63,7 +63,7 @@ class MarkdownExporter:
                 table.add_row([row[0], row[1]])
         return table
 
-    def format_fields_table(self, fields: list[Any], field_type: str) -> Optional[MarkdownTable]:
+    def format_fields_table(self, fields: list[Any], field_type: str) -> MarkdownTable | None:
         """Format field information into a markdown table."""
         if not fields:
             return None
@@ -165,7 +165,7 @@ class MarkdownExporter:
 
         return sections
 
-    def format_managers_section(self, managers_info: dict) -> Optional[MarkdownSection]:
+    def format_managers_section(self, managers_info: dict) -> MarkdownSection | None:
         """Format manager information into a markdown section."""
         if not managers_info or self.verbosity <= 1:
             return None

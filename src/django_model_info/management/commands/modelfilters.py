@@ -1,10 +1,11 @@
 """Django management command to display model field relationships."""
+
 import hashlib
 import json
 import logging
 from io import StringIO
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from django.apps import apps
 from django.core.management.base import BaseCommand, CommandParser
@@ -190,7 +191,7 @@ class Command(BaseCommand):
         if self.export_option:
             self.export_results(models, options)
 
-    def get_filtered_models(self, filters: Optional[list[str]], prefix: Optional[str] = None) -> list[Any]:
+    def get_filtered_models(self, filters: list[str] | None, prefix: str | None = None) -> list[Any]:
         """Get models based on filter arguments."""
         models = []
 
@@ -237,7 +238,7 @@ class Command(BaseCommand):
             if "." in pattern and not pattern.endswith("."):
                 processed_excludes.append(pattern)
             # Case 2: app only - expand to all models in app
-            elif not "." in pattern:
+            elif "." not in pattern:
                 # First check if it's an app name
                 try:
                     app_config = apps.get_app_config(pattern)

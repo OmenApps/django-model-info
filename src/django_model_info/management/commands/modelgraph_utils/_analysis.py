@@ -1,6 +1,6 @@
 """Analysis format output for model graphs."""
+
 from pathlib import Path
-from typing import Optional
 
 import networkx as nx
 
@@ -10,7 +10,7 @@ from ._base import GraphOutputFormat
 class TextAnalysisOutputFormat(GraphOutputFormat):
     """Output graph analysis in text format."""
 
-    def output(self, graph: nx.MultiDiGraph, output_path: Optional[Path] = None) -> None:
+    def output(self, graph: nx.MultiDiGraph, output_path: Path | None = None) -> None:
         """Output graph analysis to console or file."""
         analysis = self._analyze_graph(graph)
         formatted_output = self._format_analysis(analysis)

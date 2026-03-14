@@ -1,4 +1,5 @@
 """Django management command to display model field relationships."""
+
 import logging
 
 from django.core.exceptions import ImproperlyConfigured

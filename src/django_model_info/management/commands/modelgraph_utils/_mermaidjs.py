@@ -1,6 +1,6 @@
 """Mermaid format output for model graphs."""
+
 from pathlib import Path
-from typing import Optional
 
 import networkx as nx
 
@@ -10,7 +10,7 @@ from ._base import GraphOutputFormat
 class MermaidOutputFormat(GraphOutputFormat):
     """Output graph in Mermaid format."""
 
-    def output(self, graph: nx.MultiDiGraph, output_path: Optional[Path] = None) -> None:
+    def output(self, graph: nx.MultiDiGraph, output_path: Path | None = None) -> None:
         """Export the graph to Mermaid format."""
         mermaid_content = self._generate_mermaid(graph)
 

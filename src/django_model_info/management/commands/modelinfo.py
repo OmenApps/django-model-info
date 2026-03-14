@@ -2,7 +2,7 @@
 
 import inspect
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from django.apps import apps as django_apps
 from django.conf import settings
@@ -86,37 +86,50 @@ DEFAULT_DJANGO_METHODS = (
     "_check_long_column_names",
     "_check_m2m_through_same_relationship",
     "_check_managers",
-    "_check_model",
     "_check_model_name_db_lookup_clashes",
+    "_check_model",
     "_check_ordering",
     "_check_property_name_related_field_accessor_clashes",
     "_check_single_primary_key",
     "_check_swappable",
     "_check_unique_together",
+    "_clear_watched_fk_model_cache",
+    "_current_value",
     "_do_insert",
     "_do_update",
     "_get_expr_references",
     "_get_FIELD_display",
     "_get_field_expression_map",
+    "_get_field_names",
+    "_get_hooked_methods",
+    "_get_model_descriptor_names",
+    "_get_model_property_names",
     "_get_next_or_previous_by_FIELD",
     "_get_next_or_previous_in_order",
     "_get_pk_val",
+    "_get_unhookable_attribute_names",
     "_get_unique_checks",
     "_meta",
     "_parse_params",
     "_perform_date_checks",
     "_perform_unique_checks",
+    "_potentially_hooked_methods",
     "_prepare_related_fields_for_save",
+    "_reset_initial_state",
+    "_run_hooked_methods",
+    "_sanitize_field_name",
     "_save_parents",
     "_save_table",
     "_set_pk_val",
     "_validate_force_insert",
+    "_watched_fk_model_fields",
+    "_watched_fk_models",
     "adelete",
     "arefresh_from_db",
     "asave",
     "check",
-    "clean",
     "clean_fields",
+    "clean",
     "date_error_message",
     "delete",
     "from_db",
@@ -130,8 +143,8 @@ DEFAULT_DJANGO_METHODS = (
     "get_session_store_class",
     "prepare_database_save",
     "refresh_from_db",
-    "save",
     "save_base",
+    "save",
     "serializable_value",
     "unique_error_message",
     "validate_constraints",
@@ -473,7 +486,8 @@ class Command(BaseCommand):
         if self.filter_option:
             return self.filter_models()
         return sorted(
-            django_apps.get_models(), key=lambda x: (x._meta.app_label, x._meta.object_name)  # pylint: disable=W0212
+            django_apps.get_models(),
+            key=lambda x: (x._meta.app_label, x._meta.object_name),  # pylint: disable=W0212
         )
 
     def append_abstract_models(self):
@@ -675,7 +689,7 @@ class Command(BaseCommand):
                 Padding(format_manager_output(managers_info, indent=8, verbosity=self.verbosity), (1, 0, 0, 0))
             )
 
-    def _fill_table(self, table: Table, info_object_list: Optional[list], info_type: type, column_count: int):
+    def _fill_table(self, table: Table, info_object_list: list | None, info_type: type, column_count: int):
         """Given a rich table, a list of info objects, and the type of info object, fill the table."""
         if isinstance(info_object_list, list) and all(isinstance(row, info_type) for row in info_object_list):
             sorted_field_object_list = sorted(info_object_list, key=lambda x: x.name)
@@ -728,9 +742,13 @@ class Command(BaseCommand):
                     fields_reverse_relation = processor.build_reverse_relation_field_info()
                     model_section.content.extend([f"{fields_reverse_relation=}\n"])
                     if fields_reverse_relation:
-                        reverse_relations_table = exporter.format_fields_table(fields_reverse_relation, "reverse relation")
+                        reverse_relations_table = exporter.format_fields_table(
+                            fields_reverse_relation, "reverse relation"
+                        )
                         if reverse_relations_table:
-                            model_section.content.extend(["## Reverse Relations\n", reverse_relations_table.render(), ""])
+                            model_section.content.extend(
+                                ["## Reverse Relations\n", reverse_relations_table.render(), ""]
+                            )
 
                 # Add Methods section
                 method_list = self.get_clean_method_list(model)

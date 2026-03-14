@@ -1,4 +1,5 @@
 """Graph building utilities for model relationships."""
+
 from datetime import timedelta
 from typing import TypeVar
 
@@ -125,7 +126,7 @@ def build_modelgraph(model_list: list) -> nx.MultiDiGraph:
 
         for field in fields:
             if hasattr(field, "related_model") and field.related_model:
-                related_label = f"{field.related_model._meta.app_label}." f"{field.related_model._meta.model_name}"
+                related_label = f"{field.related_model._meta.app_label}.{field.related_model._meta.model_name}"
 
                 if related_label in model_labels:
                     relationship_type = get_relationship_type(field)

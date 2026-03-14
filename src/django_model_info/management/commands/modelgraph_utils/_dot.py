@@ -1,6 +1,6 @@
 """DOT format output for model graphs."""
+
 from pathlib import Path
-from typing import Optional
 
 import networkx as nx
 import pydot
@@ -11,7 +11,7 @@ from ._base import GraphOutputFormat
 class DotOutputFormat(GraphOutputFormat):
     """Output graph in DOT format."""
 
-    def output(self, graph: nx.MultiDiGraph, output_path: Optional[Path] = None) -> None:
+    def output(self, graph: nx.MultiDiGraph, output_path: Path | None = None) -> None:
         """Export the graph to DOT format."""
         if not output_path:
             raise ValueError("Output path is required for DOT format")
