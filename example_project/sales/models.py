@@ -37,7 +37,7 @@ class CreditCard(PaymentMethod):
         """Meta options for the model."""
 
         constraints = [
-            models.CheckConstraint(check=Q(expiry_month__gte=1) & Q(expiry_month__lte=12), name="valid_expiry_month")
+            models.CheckConstraint(condition=Q(expiry_month__gte=1) & Q(expiry_month__lte=12), name="valid_expiry_month")
         ]
 
 
@@ -72,7 +72,7 @@ class ShippingAddress(BaseModel):
         indexes = [models.Index(fields=["customer", "is_default"]), models.Index(fields=["postal_code", "city"])]
         constraints = [
             models.CheckConstraint(
-                check=Q(street_address1__isnull=False) & ~Q(street_address1=""), name="required_street_address"
+                condition=Q(street_address1__isnull=False) & ~Q(street_address1=""), name="required_street_address"
             )
         ]
 
