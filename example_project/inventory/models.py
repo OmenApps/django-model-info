@@ -1,11 +1,11 @@
 """Inventory models for testing."""
+
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import F, Q
-from django.utils.translation import gettext_lazy as _
 
-from example_project.common.models import BaseModel
+from example_project.common.models import BaseModel, check_constraint
 
 
 class Category(BaseModel):
@@ -21,7 +21,7 @@ class Category(BaseModel):
 
         verbose_name_plural = "categories"
         indexes = [models.Index(fields=["name", "slug"]), models.Index(fields=["parent", "name"])]
-        constraints = [models.CheckConstraint(condition=~Q(parent=F("id")), name="prevent_self_parent")]
+        constraints = [check_constraint(condition=~Q(parent=F("id")), name="prevent_self_parent")]
 
     def __str__(self):
         return self.name
@@ -106,7 +106,7 @@ class Product(BaseModel):
         """Meta options for the model."""
 
         indexes = [models.Index(fields=["sku", "name"]), models.Index(fields=["category", "-created_at"])]
-        constraints = [models.CheckConstraint(condition=Q(price__gt=0), name="price_positive")]
+        constraints = [check_constraint(condition=Q(price__gt=0), name="price_positive")]
 
     def __str__(self):
         return f"{self.sku} - {self.name}"

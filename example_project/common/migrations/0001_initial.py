@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,21 +14,24 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Customer',
+            name="Customer",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('phone', models.CharField(blank=True, max_length=20)),
-                ('company_name', models.CharField(blank=True, max_length=200)),
-                ('tax_id', models.CharField(blank=True, max_length=50)),
-                ('notes', models.TextField(blank=True)),
-                ('credit_limit', models.DecimalField(decimal_places=2, default=0, max_digits=10)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("phone", models.CharField(blank=True, max_length=20)),
+                ("company_name", models.CharField(blank=True, max_length=200)),
+                ("tax_id", models.CharField(blank=True, max_length=50)),
+                ("notes", models.TextField(blank=True)),
+                ("credit_limit", models.DecimalField(decimal_places=2, default=0, max_digits=10)),
+                (
+                    "user",
+                    models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+                ),
             ],
             options={
-                'indexes': [models.Index(fields=['user', 'company_name'], name='common_cust_user_id_35ebb2_idx')],
+                "indexes": [models.Index(fields=["user", "company_name"], name="common_cust_user_id_35ebb2_idx")],
             },
         ),
     ]

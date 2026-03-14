@@ -4,80 +4,96 @@ import django.core.validators
 import django.db.models.deletion
 from django.db import migrations, models
 
+from example_project.common.models import check_constraint
+
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('common', '0001_initial'),
-        ('inventory', '0001_initial'),
+        ("common", "0001_initial"),
+        ("inventory", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='DailyRevenue',
+            name="DailyRevenue",
             fields=[
-                ('date', models.DateField(primary_key=True, serialize=False)),
-                ('revenue', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('order_count', models.IntegerField()),
+                ("date", models.DateField(primary_key=True, serialize=False)),
+                ("revenue", models.DecimalField(decimal_places=2, max_digits=12)),
+                ("order_count", models.IntegerField()),
             ],
             options={
-                'db_table': 'daily_revenue_view',
-                'managed': False,
+                "db_table": "daily_revenue_view",
+                "managed": False,
             },
         ),
         migrations.CreateModel(
-            name='CustomerSegment',
-            fields=[
-            ],
+            name="CustomerSegment",
+            fields=[],
             options={
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
             },
-            bases=('common.customer',),
+            bases=("common.customer",),
         ),
         migrations.CreateModel(
-            name='SalesMetrics',
+            name="SalesMetrics",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('date', models.DateField()),
-                ('value', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('notes', models.TextField(blank=True)),
-                ('total_orders', models.IntegerField()),
-                ('average_order_value', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('conversion_rate', models.DecimalField(decimal_places=2, max_digits=5, validators=[django.core.validators.MinValueValidator(0)])),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("date", models.DateField()),
+                ("value", models.DecimalField(decimal_places=2, max_digits=12)),
+                ("notes", models.TextField(blank=True)),
+                ("total_orders", models.IntegerField()),
+                ("average_order_value", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "conversion_rate",
+                    models.DecimalField(
+                        decimal_places=2, max_digits=5, validators=[django.core.validators.MinValueValidator(0)]
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'sales metrics',
-                'ordering': ['-date'],
-                'abstract': False,
-                'constraints': [models.CheckConstraint(condition=models.Q(('conversion_rate__lte', 100)), name='conversion_rate_percentage')],
+                "verbose_name_plural": "sales metrics",
+                "ordering": ["-date"],
+                "abstract": False,
+                "constraints": [
+                    check_constraint(
+                        condition=models.Q(("conversion_rate__lte", 100)), name="conversion_rate_percentage"
+                    )
+                ],
             },
         ),
         migrations.CreateModel(
-            name='ProductPerformance',
+            name="ProductPerformance",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('date', models.DateField()),
-                ('value', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('notes', models.TextField(blank=True)),
-                ('units_sold', models.PositiveIntegerField()),
-                ('revenue', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('profit_margin', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='performance_metrics', to='inventory.product')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("date", models.DateField()),
+                ("value", models.DecimalField(decimal_places=2, max_digits=12)),
+                ("notes", models.TextField(blank=True)),
+                ("units_sold", models.PositiveIntegerField()),
+                ("revenue", models.DecimalField(decimal_places=2, max_digits=12)),
+                ("profit_margin", models.DecimalField(decimal_places=2, max_digits=5)),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="performance_metrics",
+                        to="inventory.product",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-date'],
-                'abstract': False,
-                'unique_together': {('date', 'product')},
+                "ordering": ["-date"],
+                "abstract": False,
+                "unique_together": {("date", "product")},
             },
         ),
     ]

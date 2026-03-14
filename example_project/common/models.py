@@ -1,6 +1,14 @@
 """Common models for Testing."""
+
+import django
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+
+
+def check_constraint(condition, name):
+    """Create a CheckConstraint compatible with both Django 4.2 and 5.0+."""
+    if django.VERSION >= (5, 0):
+        return models.CheckConstraint(condition=condition, name=name)
+    return models.CheckConstraint(check=condition, name=name)
 
 
 class BaseModel(models.Model):

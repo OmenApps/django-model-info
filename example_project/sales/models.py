@@ -1,10 +1,10 @@
 """Sales models for testing."""
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
-from django.utils.translation import gettext_lazy as _
 
-from example_project.common.models import BaseModel, Customer
+from example_project.common.models import BaseModel, Customer, check_constraint
 
 
 class PaymentMethod(BaseModel):
@@ -37,7 +37,9 @@ class CreditCard(PaymentMethod):
         """Meta options for the model."""
 
         constraints = [
-            models.CheckConstraint(condition=Q(expiry_month__gte=1) & Q(expiry_month__lte=12), name="valid_expiry_month")
+            check_constraint(
+                condition=Q(expiry_month__gte=1) & Q(expiry_month__lte=12), name="valid_expiry_month"
+            )
         ]
 
 
@@ -71,7 +73,7 @@ class ShippingAddress(BaseModel):
         verbose_name_plural = "shipping addresses"
         indexes = [models.Index(fields=["customer", "is_default"]), models.Index(fields=["postal_code", "city"])]
         constraints = [
-            models.CheckConstraint(
+            check_constraint(
                 condition=Q(street_address1__isnull=False) & ~Q(street_address1=""), name="required_street_address"
             )
         ]

@@ -3,130 +3,190 @@
 import django.db.models.deletion
 from django.db import migrations, models
 
+from example_project.common.models import check_constraint
+
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('common', '0001_initial'),
-        ('inventory', '0001_initial'),
+        ("common", "0001_initial"),
+        ("inventory", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='BankAccount',
+            name="BankAccount",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('name', models.CharField(max_length=100)),
-                ('is_default', models.BooleanField(default=False)),
-                ('account_number', models.CharField(max_length=50)),
-                ('routing_number', models.CharField(max_length=20)),
-                ('account_type', models.CharField(max_length=20)),
-                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='%(app_label)s_%(class)s_related', related_query_name='%(app_label)s_%(class)ss', to='common.customer')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("name", models.CharField(max_length=100)),
+                ("is_default", models.BooleanField(default=False)),
+                ("account_number", models.CharField(max_length=50)),
+                ("routing_number", models.CharField(max_length=20)),
+                ("account_type", models.CharField(max_length=20)),
+                (
+                    "customer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="%(app_label)s_%(class)s_related",
+                        related_query_name="%(app_label)s_%(class)ss",
+                        to="common.customer",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='ShippingAddress',
+            name="ShippingAddress",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('name', models.CharField(max_length=200)),
-                ('street_address1', models.CharField(max_length=200)),
-                ('street_address2', models.CharField(blank=True, max_length=200)),
-                ('city', models.CharField(max_length=100)),
-                ('state', models.CharField(max_length=100)),
-                ('postal_code', models.CharField(max_length=20)),
-                ('country', models.CharField(max_length=100)),
-                ('is_default', models.BooleanField(default=False)),
-                ('phone', models.CharField(max_length=20)),
-                ('delivery_instructions', models.TextField(blank=True)),
-                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='shipping_addresses', to='common.customer')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("name", models.CharField(max_length=200)),
+                ("street_address1", models.CharField(max_length=200)),
+                ("street_address2", models.CharField(blank=True, max_length=200)),
+                ("city", models.CharField(max_length=100)),
+                ("state", models.CharField(max_length=100)),
+                ("postal_code", models.CharField(max_length=20)),
+                ("country", models.CharField(max_length=100)),
+                ("is_default", models.BooleanField(default=False)),
+                ("phone", models.CharField(max_length=20)),
+                ("delivery_instructions", models.TextField(blank=True)),
+                (
+                    "customer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="shipping_addresses",
+                        to="common.customer",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'shipping addresses',
+                "verbose_name_plural": "shipping addresses",
             },
         ),
         migrations.CreateModel(
-            name='Order',
+            name="Order",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('order_number', models.CharField(max_length=50, unique=True)),
-                ('status', models.CharField(choices=[('pending', 'Pending'), ('processing', 'Processing'), ('shipped', 'Shipped'), ('delivered', 'Delivered'), ('cancelled', 'Cancelled')], default='pending', max_length=20)),
-                ('order_date', models.DateTimeField(auto_now_add=True)),
-                ('total_amount', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('notes', models.TextField(blank=True)),
-                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='orders', to='common.customer')),
-                ('shipping_address', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='sales.shippingaddress')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("order_number", models.CharField(max_length=50, unique=True)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("pending", "Pending"),
+                            ("processing", "Processing"),
+                            ("shipped", "Shipped"),
+                            ("delivered", "Delivered"),
+                            ("cancelled", "Cancelled"),
+                        ],
+                        default="pending",
+                        max_length=20,
+                    ),
+                ),
+                ("order_date", models.DateTimeField(auto_now_add=True)),
+                ("total_amount", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("notes", models.TextField(blank=True)),
+                (
+                    "customer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT, related_name="orders", to="common.customer"
+                    ),
+                ),
+                (
+                    "shipping_address",
+                    models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to="sales.shippingaddress"),
+                ),
             ],
             options={
-                'ordering': ['-order_date'],
+                "ordering": ["-order_date"],
             },
         ),
         migrations.CreateModel(
-            name='CreditCard',
+            name="CreditCard",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('name', models.CharField(max_length=100)),
-                ('is_default', models.BooleanField(default=False)),
-                ('last_4_digits', models.CharField(max_length=4)),
-                ('expiry_month', models.PositiveIntegerField()),
-                ('expiry_year', models.PositiveIntegerField()),
-                ('card_type', models.CharField(max_length=20)),
-                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='%(app_label)s_%(class)s_related', related_query_name='%(app_label)s_%(class)ss', to='common.customer')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("name", models.CharField(max_length=100)),
+                ("is_default", models.BooleanField(default=False)),
+                ("last_4_digits", models.CharField(max_length=4)),
+                ("expiry_month", models.PositiveIntegerField()),
+                ("expiry_year", models.PositiveIntegerField()),
+                ("card_type", models.CharField(max_length=20)),
+                (
+                    "customer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="%(app_label)s_%(class)s_related",
+                        related_query_name="%(app_label)s_%(class)ss",
+                        to="common.customer",
+                    ),
+                ),
             ],
             options={
-                'constraints': [models.CheckConstraint(condition=models.Q(('expiry_month__gte', 1), ('expiry_month__lte', 12)), name='valid_expiry_month')],
+                "constraints": [
+                    check_constraint(
+                        condition=models.Q(("expiry_month__gte", 1), ("expiry_month__lte", 12)),
+                        name="valid_expiry_month",
+                    )
+                ],
             },
         ),
         migrations.CreateModel(
-            name='OrderItem',
+            name="OrderItem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('quantity', models.PositiveIntegerField()),
-                ('unit_price', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='sales.order')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='inventory.product')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("quantity", models.PositiveIntegerField()),
+                ("unit_price", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "order",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="items", to="sales.order"
+                    ),
+                ),
+                ("product", models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to="inventory.product")),
             ],
             options={
-                'unique_together': {('order', 'product')},
+                "unique_together": {("order", "product")},
             },
         ),
         migrations.AddIndex(
-            model_name='shippingaddress',
-            index=models.Index(fields=['customer', 'is_default'], name='sales_shipp_custome_2b1495_idx'),
+            model_name="shippingaddress",
+            index=models.Index(fields=["customer", "is_default"], name="sales_shipp_custome_2b1495_idx"),
         ),
         migrations.AddIndex(
-            model_name='shippingaddress',
-            index=models.Index(fields=['postal_code', 'city'], name='sales_shipp_postal__4bc8fc_idx'),
+            model_name="shippingaddress",
+            index=models.Index(fields=["postal_code", "city"], name="sales_shipp_postal__4bc8fc_idx"),
         ),
         migrations.AddConstraint(
-            model_name='shippingaddress',
-            constraint=models.CheckConstraint(condition=models.Q(('street_address1__isnull', False), models.Q(('street_address1', ''), _negated=True)), name='required_street_address'),
+            model_name="shippingaddress",
+            constraint=check_constraint(
+                condition=models.Q(
+                    ("street_address1__isnull", False), models.Q(("street_address1", ""), _negated=True)
+                ),
+                name="required_street_address",
+            ),
         ),
         migrations.AddIndex(
-            model_name='order',
-            index=models.Index(fields=['order_number', 'status'], name='sales_order_order_n_ecbdb4_idx'),
+            model_name="order",
+            index=models.Index(fields=["order_number", "status"], name="sales_order_order_n_ecbdb4_idx"),
         ),
         migrations.AddIndex(
-            model_name='order',
-            index=models.Index(fields=['customer', '-order_date'], name='sales_order_custome_2bbc57_idx'),
+            model_name="order",
+            index=models.Index(fields=["customer", "-order_date"], name="sales_order_custome_2bbc57_idx"),
         ),
     ]

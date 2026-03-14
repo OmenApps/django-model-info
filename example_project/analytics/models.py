@@ -1,13 +1,13 @@
 """Analytics models for testing."""
+
 from decimal import Decimal
 
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 
-from example_project.common.models import BaseModel, Customer
+from example_project.common.models import BaseModel, Customer, check_constraint
 
 
 class MetricsBase(BaseModel):
@@ -38,7 +38,7 @@ class SalesMetrics(MetricsBase):
         """Meta options for the model."""
 
         verbose_name_plural = "sales metrics"
-        constraints = [models.CheckConstraint(condition=Q(conversion_rate__lte=100), name="conversion_rate_percentage")]
+        constraints = [check_constraint(condition=Q(conversion_rate__lte=100), name="conversion_rate_percentage")]
 
 
 class ProductPerformance(MetricsBase):
