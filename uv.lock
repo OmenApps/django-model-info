@@ -279,7 +279,7 @@ wheels = [
 
 [[package]]
 name = "django-model-info"
-version = "2024.11.5"
+version = "2026.3.1"
 source = { editable = "." }
 dependencies = [
     { name = "django" },

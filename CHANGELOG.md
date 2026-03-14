@@ -1,7 +1,9 @@
 # History
 
-## Unreleased
+## 2026.3.1 (2026-03-14)
 
+-   Fix issue where we were discarding manager names in some cases when we should have been grouping them
+-   Add a set of basic tests for the package
 -   Ensure deterministic output for `migrationgraph` and `modelgraph` commands by sorting nodes and edges.
 -   Update example project for Django 5.1 compatibility.
 
