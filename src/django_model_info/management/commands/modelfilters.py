@@ -41,7 +41,7 @@ def get_cache_key(model: Any, options: dict[str, Any]) -> str:
 
     # Convert to a stable string representation and hash it
     key_str = json.dumps(key_data, sort_keys=True)
-    key_hash = hashlib.md5(key_str.encode()).hexdigest()
+    key_hash = hashlib.md5(key_str.encode(), usedforsecurity=False).hexdigest()
 
     return f"{CACHE_KEY_PREFIX}{key_hash}"
 
