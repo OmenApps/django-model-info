@@ -176,10 +176,12 @@ def group_managers_by_name(managers_info):
     for manager_name, manager_info in managers_info.items():
         class_name = manager_info["name"]
         if class_name in grouped:
+            # Preserve existing manager_names before merge (merge doesn't carry them over)
+            existing_names = grouped[class_name].get("manager_names", [])
             # Merge this manager's info with existing info for this class
             grouped[class_name] = merge_manager_info(grouped[class_name], manager_info)
-            # Add this manager name to the list of names
-            grouped[class_name]["manager_names"] = grouped[class_name].get("manager_names", []) + [manager_name]
+            # Restore and extend the list of names
+            grouped[class_name]["manager_names"] = existing_names + [manager_name]
         else:
             # First occurrence of this class name
             grouped[class_name] = manager_info.copy()
