@@ -117,12 +117,12 @@ class DotOutputFormat(GraphOutputFormat):
         legend.add_node(key2_node)
 
         legend_edges = [
-            ("key:i1:e", "key2:i1:w", {"color": "chartreuse4", "penwidth": "2.0"}),
-            ("key:i2:e", "key2:i2:w", {"color": "chartreuse4", "style": "dashed"}),
-            ("key:i3:e", "key2:i3:w", {"color": "blue", "penwidth": "2.0"}),
-            ("key:i4:e", "key2:i4:w", {"color": "blue", "style": "dashed"}),
-            ("key:i5:e", "key2:i5:w", {"color": "red", "penwidth": "2.0"}),
-            ("key:i6:e", "key2:i6:w", {"color": "red", "style": "dashed"}),
+            ('"key:i1:e"', '"key2:i1:w"', {"color": "chartreuse4", "penwidth": "2.0"}),
+            ('"key:i2:e"', '"key2:i2:w"', {"color": "chartreuse4", "style": "dashed"}),
+            ('"key:i3:e"', '"key2:i3:w"', {"color": "blue", "penwidth": "2.0"}),
+            ('"key:i4:e"', '"key2:i4:w"', {"color": "blue", "style": "dashed"}),
+            ('"key:i5:e"', '"key2:i5:w"', {"color": "red", "penwidth": "2.0"}),
+            ('"key:i6:e"', '"key2:i6:w"', {"color": "red", "style": "dashed"}),
         ]
 
         for src, dst, attrs in legend_edges:
